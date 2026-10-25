@@ -1,5 +1,5 @@
 /*!
- * Flipkart Minutes Deal Radar
+ * PriceDrop Hunter for Flipkart Minutes
  * Runs as a bookmarklet on flipkart.com (uses your own session + pincode),
  * or in DEMO mode anywhere else (synthetic data, for previewing the UI).
  */
@@ -431,7 +431,7 @@ kbd{background:var(--sf2);border:1px solid var(--bd);border-radius:5px;padding:0
     const focused = root.activeElement && root.activeElement.dataset ? root.activeElement.dataset.in : null;
     const count = Object.values(store.list).reduce((a, b) => a + b, 0);
     app.className = 'app' + (dark ? ' dark' : '');
-    app.innerHTML = `<header><button class="ib menu-btn" data-act="side">☰</button><div class="logo">Flipkart Minutes <i>DEAL RADAR</i>${DEMO ? '<span class="demo">DEMO DATA</span>' : ''}</div>
+    app.innerHTML = `<header><button class="ib menu-btn" data-act="side">☰</button><div class="logo">PriceDrop <i>HUNTER</i>${DEMO ? '<span class="demo">DEMO DATA</span>' : ''}</div>
  <div class="search"><input data-in="q" placeholder="Search products, brands…  ( / )" value="${esc(S.q)}"></div><span class="sp"></span>
  <button class="ib" data-act="theme" title="Theme">${dark ? '☀' : '☾'}</button><button class="ib" data-act="panel" title="Shopping list">🛒${count ? `<span class="badge">${count}</span>` : ''}</button><button class="ib" data-act="close" title="Close (Esc)">✕</button></header>
  <div class="body">${sidebar()}${mainView()}</div>${drawer()}<div class="toast" id="toast"></div>`;

@@ -16,7 +16,7 @@ fs.writeFileSync(path.join(__dirname, 'dist/bookmarklet.txt'), bookmarklet);
 fs.copyFileSync(src, path.join(__dirname, 'dist/deals.js'));
 // Tampermonkey/Violentmonkey build: loads quietly, adds a floating launcher button.
 const header = `// ==UserScript==
-// @name         Flipkart Minutes Deal Radar
+// @name         PriceDrop Hunter for Flipkart Minutes
 // @namespace    minutes-deal-radar
 // @version      2.0.0
 // @description  Scan Flipkart Minutes for the best discounts, track price drops, build a shopping list.

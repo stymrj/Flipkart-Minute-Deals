@@ -1,4 +1,4 @@
-# ⚡ Flipkart Minutes Deal Radar
+# ⚡ PriceDrop Hunter for Flipkart Minutes
 
 A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans every department in the background and shows the best deals in a full-screen app. It ranks them, tracks price drops between scans, and lets you build a shopping list. No manual scrolling. Works on PC, Mac, Android and iOS.
 
@@ -30,7 +30,7 @@ A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans ever
 #### Option 1: 1-Click Drag & Drop (Recommended)
 1. Run `node build.js`, then open `index.html` (or start `python3 -m http.server 8765` and visit `http://localhost:8765`).
 2. Show your bookmarks bar (`Ctrl+Shift+B` on Windows/Linux, `Cmd+Shift+B` on Mac).
-3. Drag the yellow **⚡ Deal Radar** button onto the bar.
+3. Drag the yellow **⚡ PriceDrop Hunter** button onto the bar.
 4. Open [flipkart.com](https://www.flipkart.com), set your Minutes delivery location, click the bookmark, then press **Scan deals**.
 
 #### Option 2: Userscript (Tampermonkey / Violentmonkey)
@@ -44,7 +44,7 @@ A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans ever
 Open the installer page and tap **Copy for mobile**.
 
 #### Step 2: Create the bookmark
-- **Chrome / Edge on Android:** Bookmark any page, edit it, rename it `⚡ Deal Radar`, paste the script as the URL.
+- **Chrome / Edge on Android:** Bookmark any page, edit it, rename it `⚡ PriceDrop Hunter`, paste the script as the URL.
 - **Safari on iOS:** Add a bookmark via Share, edit it, then paste the script as the URL.
 
 #### Step 3: Run on Flipkart
