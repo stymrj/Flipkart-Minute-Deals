@@ -9,29 +9,19 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
 
   // ───────────────────────── Catalogue ─────────────────────────
-  // [code, name]. Group-level scan is used when subs is empty.
+  // Flipkart Minutes categories: [page address, name]. Read from the Minutes store page.
   const GROUPS = [
-    { id: 'bpe', name: 'Staples', icon: '🌾', subs: [['3uv', 'Dal & Pulses'], ['4wu', 'Ghee & Oils'], ['9da', 'Atta & Flours'], ['a6m', 'Masala & Spices'], ['zwp', 'Rice'], ['dtp', 'Dry Fruits'], ['fdl', 'Sugar, Jaggery & Salt']] },
-    { id: 'ujs', name: 'Snacks & Beverages', icon: '🍿', subs: [['eb9', 'Biscuits'], ['dd9', 'Chips'], ['amr', 'Tea'], ['t7k', 'Coffee'], ['afd', 'Juices'], ['vnq', 'Nutritional Drinks'], ['dfw', 'Soft Drinks'], ['iau', 'Instant Drink Mixes'], ['wsx', 'Water']] },
-    { id: 'esa', name: 'Dairy, Bakery & Eggs', icon: '🥛', subs: [['dt6', 'Dairy'], ['hh7', 'Eggs'], ['93l', 'Bakery, Sweets & Namkeen']] },
-    { id: 'u0u', name: 'Packaged Goods', icon: '🍝', subs: [['ltz', 'Noodles & Pasta'], ['7o6', 'Chocolates'], ['0tl', 'Ketchups'], ['bx9', 'Cereals'], ['j4e', 'Jam & Honey'], ['wd7', 'Cooking Sauces'], ['td1', 'Baking']] },
-    { id: 'njl', name: 'Personal & Baby Care', icon: '🧴', subs: [['vpw', 'Hair Care'], ['2s3', 'Oral Care'], ['smb', 'Diapers & Wipes']] },
-    { id: 'mk9', name: 'Fruits & Vegetables', icon: '🥦', subs: [['w9z', 'Fruits'], ['aiw', 'Vegetables']] },
-    { id: 'cwl', name: 'Household Care', icon: '🧽', subs: [['2z2', 'Detergents'], ['bdc', 'Utensil Cleaners'], ['u3c', 'Floor Cleaners'], ['qz9', 'Repellents'], ['2wc', 'Paper'], ['0s4', 'Basic Electricals']] },
-    { id: 'uyk', name: 'Home & Kitchen', icon: '🍳', subs: [['hho', 'Kitchen Tools'], ['vdx', 'Cookware'], ['6f4', 'Bath & Bed']] },
-    { id: 'h26', name: 'Fashion & Accessories', icon: '👕', hloc: '0026', subs: [] },
-    { id: 'h38', name: 'Electronics & Gadgets', icon: '🎧', hloc: '0038', subs: [] },
-    { id: 'h34', name: 'Ice Cream & Desserts', icon: '🍦', hloc: '0034', subs: [] },
-    { id: 'h28', name: 'Toys, Games & Sports', icon: '🧸', hloc: '0028', subs: [] },
-    { id: 'h31', name: 'Chicken, Meat & Fish', icon: '🍗', hloc: '3106', subs: [] },
-    { id: 'h49', name: 'Paan Corner & Refreshers', icon: '🌿', hloc: '4901', subs: [] }
+    { id: 'fresh', name: 'Fresh, Meat & Fish', subs: [['/hyperlocal/Vegetables/pr?sid=hloc%2F0072&marketplace=HYPERLOCAL&param=19372648&BU=Minutes', 'Vegetables'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0071&marketplace=HYPERLOCAL&param=23846385&BU=Minutes', 'Fruits'], ['/hyperlocal/hloc/3106/pr?sid=hloc%2F7n35&marketplace=HYPERLOCAL&param=22222111111&BU=Minutes', 'Meat & Fish']] },
+    { id: 'staples', name: 'Atta, Rice, Oil & Masala', subs: [['/hyperlocal/Atta-Rice-Dal/pr?sid=hloc%2F0003&marketplace=HYPERLOCAL&param=29468594&BU=Minutes', 'Atta, Rice & Dal'], ['/hyperlocal/Oil-Ghee-Masala/pr?sid=hloc%2F0009&marketplace=HYPERLOCAL&param=193737489&BU=Minutes', 'Oil, Ghee & Masala'], ['/hyperlocal/hloc/1901/pr?sid=hloc%2F0019%2F1901&marketplace=HYPERLOCAL&param=9019423333&BU=Minutes', 'Dry Fruits']] },
+    { id: 'bakery', name: 'Bakery & Biscuits', subs: [['/hyperlocal/Bakery-Biscuits/pr?sid=hloc%2F0006&marketplace=HYPERLOCAL&param=653330001111&BU=Minutes', 'Bakery & Biscuits'], ['/hyperlocal/hloc/3002/pr?sid=hloc%2F0030%2F3002&marketplace=HYPERLOCAL&param=2365748&BU=Minutes', 'Breads & Buns']] },
+    { id: 'snacks', name: 'Snacks & Sweets', subs: [['/hyperlocal/Chips-Namkeen/pr?sid=hloc%2F0010&marketplace=HYPERLOCAL&param=99900344444&BU=Minutes', 'Chips & Namkeen'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0065&marketplace=HYPERLOCAL&param=886633300222&BU=Minutes', 'Chocolates'], ['/hyperlocal/hloc/2001/pr?sid=hloc%2F0020%2F2001&marketplace=HYPERLOCAL&param=663636626262&BU=Minutes', 'Instant Noodles'], ['/hyperlocal/hloc/0806/pr?sid=hloc%2F0081%2F0806&marketplace=HYPERLOCAL&param=9000333333&BU=Minutes', 'Sweets & Mithai'], ['/hyperlocal/Sauces-Spreads/pr?sid=hloc%2F0021&marketplace=HYPERLOCAL&param=177899002211&BU=Minutes', 'Sauces & Spreads'], ['/hyperlocal/IceCream-Desserts/pr?sid=hloc%2F0034&marketplace=HYPERLOCAL&param=199800233&BU=Minutes', 'Ice Cream']] },
+    { id: 'drinks', name: 'Drinks', subs: [['/hyperlocal/ColdDrinks-Juices/pr?sid=hloc%2F0007&marketplace=HYPERLOCAL&param=99887444&BU=Minutes', 'Cold Drinks & Juices'], ['/hyperlocal/Tea-Coffee-Milk-Drinks/pr?sid=hloc%2F0011&marketplace=HYPERLOCAL&param=141199888&BU=Minutes', 'Tea, Coffee & Milk Drinks']] },
+    { id: 'care', name: 'Personal Care', subs: [['/hyperlocal/Fruits/pr?sid=hloc%2F0056&marketplace=HYPERLOCAL&param=811674322&BU=Minutes', 'Bath & Body'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0044&marketplace=HYPERLOCAL&param=811632217&BU=Minutes', 'Hair Care'], ['/hyperlocal/Fruits/pr?sid=hloc%2Furkm&marketplace=HYPERLOCAL&param=4555321789&BU=Minutes', 'Makeup'], ['/hyperlocal/Fruits/pr?sid=hloc%2F6a5o&marketplace=HYPERLOCAL&param=87678909&BU=Minutes', 'Fragrances'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fqbq2&marketplace=HYPERLOCAL&param=32117834&BU=Minutes', 'Feminine Hygiene'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fzgt0&marketplace=HYPERLOCAL&param=63325589&BU=Minutes', 'Sexual Wellness'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0015&marketplace=HYPERLOCAL&param=param%3D811632217&BU=Minutes', 'Health & First Aid']] },
+    { id: 'baby', name: 'Baby Care', subs: [['/hyperlocal/Fruits/pr?sid=hloc%2F0001&marketplace=HYPERLOCAL&param=811654222&BU=Minutes', 'Baby Care']] },
+    { id: 'home', name: 'Home & Cleaning', subs: [['/hyperlocal/Cleaning-Essentials/pr?sid=hloc%2F0025&marketplace=HYPERLOCAL&param=31191665&BU=Minutes', 'Cleaning Essentials'], ['/hyperlocal/Kitchen/pr?sid=hloc%2F0048&marketplace=HYPERLOCAL&param=311907865&BU=Minutes', 'Kitchen Tools'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0047&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Home Furnishing'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0082&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Pooja Needs'], ['/hyperlocal/PetCare/pr?sid=hloc%2F0029&marketplace=HYPERLOCAL&param=189995342&BU=Minutes', 'Pet Care'], ['/hyperlocal/Electircals-Tools/pr?sid=hloc%2F0043&marketplace=HYPERLOCAL&param=311927765&BU=Minutes', 'Electricals & Batteries'], ['/hyperlocal/School-Supplies/pr?sid=hloc%2F0016&marketplace=HYPERLOCAL&param=3999087&BU=Minutes', 'Stationery']] },
+    { id: 'tech', name: 'Electronics', subs: [['/hyperlocal/Electronics%20and%20Gadgets/pr?sid=hloc%2F0038&marketplace=HYPERLOCAL&param=188299076&BU=Minutes', 'Mobile Accessories'], ['/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&param=7994332167&BU=Minutes', 'Audio & Wearables'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fi6ba&marketplace=HYPERLOCAL&param=3552677&BU=Minutes', 'Mobiles']] },
+    { id: 'toys', name: 'Toys & Games', subs: [['/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Toys & Games']] }
   ];
-  const BASE = '/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z';
-  function groupUri(g) {
-    if (g.hloc) return '/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=hloc%2F' + g.hloc;
-    return BASE + '&p[]=facets.category[]=73z/' + g.id;
-  }
-  function subUri(g, code) { return groupUri(g) + '&p[]=facets.category[]=73z/' + g.id + '/' + code + '/'; }
 
   const EXCLUDED = ['back cover', 'case cover', 'phone cover', 'mobile cover', 'phone case', 'screen guard', 'tempered glass'];
 
@@ -46,38 +36,38 @@
   const KEY = 'fkm_v2';
   const defaults = {
     theme: 'auto', view: 'grid', sort: 'score', minDisc: 30, maxPrice: 0, depth: 3,
-    stockOnly: true, groups: ['bpe', 'ujs', 'esa', 'u0u'], pincode: '560032',
+    stockOnly: true, groups: ['staples', 'snacks', 'drinks', 'care'],
     favs: [], hidden: [], list: {}, prices: {}, lastScan: 0
   };
   let store;
   try { store = Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { store = Object.assign({}, defaults); }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* quota/private mode */ } };
+  store.groups = (store.groups || []).filter(id => GROUPS.some(g => g.id === id));
+  if (!store.groups.length) store.groups = defaults.groups.slice();
 
   // ───────────────────────── Flipkart API ─────────────────────────
-  function activePincode() {
-    if (store.pincode) return store.pincode;
-    try {
-      const m = document.cookie.match(/(?:pincode|snPincode|deliveryPincode)=(\d{6})/);
-      if (m) return m[1];
-    } catch (e) { /* ignore */ }
-    return '560032';
-  }
-  function fkLocCheck() {
-    try { return /(?:pincode|snPincode|deliveryPincode)=\d{6}/.test(document.cookie) || null; } catch (e) { return null; }
-  }
+  // Flipkart keeps the Minutes delivery pincode in localStorage ("mypin"). Never send a different one:
+  // Flipkart would switch the session to that address.
+  function activePincode() { try { return localStorage.getItem('mypin') || ''; } catch (e) { return ''; } }
+  function fkLocCheck() { return !!activePincode(); }
   function sanitizeUri(u) {
     return u.replace(/(sid=)([^&]*)/, (_, p, v) => p + v.replace(/\//g, '%2F'));
   }
+  const FKUA = /Mobi|Android/i.test(navigator.userAgent) ? ' FKUA/msite/0.0.4/msite/Mobile' : ' FKUA/website/42/website/Desktop';
   let dc = '1', noLocation = false;
-  async function fetchRome(uri, signal) {
+  async function fetchRome(uri, signal, pager) {
+    const pin = activePincode();
+    if (!pin) { noLocation = true; return null; }
     const body = {
       pageUri: sanitizeUri(uri),
-      pageContext: { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 1700 },
+      pageContext: pager
+        ? { slotContextMap: {}, pageHashKey: pager.hash, paginatedFetch: true, fetchAllPages: false, paginationContextMap: pager.map, pageNumber: pager.page }
+        : { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 4750 },
       requestContext: { type: 'BROWSE_PAGE' },
-      locationContext: { pincode: activePincode(), changed: false }
+      locationContext: { pincode: +pin || pin, changed: false }
     };
     let ua = navigator.userAgent;
-    if (ua.indexOf('FKUA/') < 0) ua += ' FKUA/msite/0.0.4/msite/Mobile';
+    if (ua.indexOf('FKUA/') < 0) ua += FKUA;
     let lastErr;
     for (let attempt = 0; attempt < 4; attempt++) {
       if (signal.stop) throw new Error('stopped');
@@ -102,6 +92,16 @@
       } catch (e) { lastErr = e; await sleep(600 * (attempt + 1)); }
     }
     throw lastErr;
+  }
+  // One page of a category. Minutes ignores page=N; the next page needs the token from this one.
+  async function fetchPage(job, page, ctl) {
+    if (page === 1) job.pager = null;
+    const json = await fetchRome(job.uri, ctl, job.pager);
+    const items = json ? extract(json, job.g.name + ' › ' + job.name) : [];
+    const pd = json && json.RESPONSE && json.RESPONSE.pageData;
+    items.more = !!(pd && pd.hasMorePages && pd.paginationContextMap);
+    if (items.more) job.pager = { hash: pd.pageHash, map: pd.paginationContextMap, page: page + 1 };
+    return items;
   }
 
   function price(v) {
@@ -136,7 +136,7 @@
       (v.buyability && v.buyability.intent === 'negative');
     const idm = path.match(/pid=([A-Z0-9]+)/i) || path.match(/\/p\/(itm[a-z0-9]+)/i);
     const id = v.id || v.itemId || (idm && idm[1]) || (title + '|' + sell);
-    return { id: String(id), title: String(title), brand: guessBrand(title), price: sell, mrp, disc, save: mrp - sell, img, url: path ? 'https://www.flipkart.com' + path : '', inStock: !oos, cat: catName };
+    return { id: String(id), title: String(title), brand: guessBrand(title), price: sell, mrp, disc, save: mrp - sell, img, url: path ? 'https://www.flipkart.com' + path + (path.indexOf('?') < 0 ? '?' : '&') + 'marketplace=HYPERLOCAL' : '', inStock: !oos, cat: catName };
   }
   function guessBrand(t) { return (t.trim().split(/\s+/)[0] || '').replace(/[^\w&'-]/g, ''); }
   // Walk the whole response instead of hard-coding slot paths: survives layout changes.
@@ -168,35 +168,32 @@
     const jobs = [];
     for (const g of GROUPS) {
       if (!store.groups.includes(g.id)) continue;
-      if (g.subs.length) g.subs.forEach(([c, n]) => jobs.push({ g, name: n, uri: subUri(g, c) }));
-      else jobs.push({ g, name: 'All', uri: groupUri(g) });
+      g.subs.forEach(([uri, n]) => jobs.push({ g, name: n, uri }));
     }
     if (!jobs.length) { toast('Pick at least one category'); return; }
     S.scanning = true; S.ctl = { stop: false }; S.done = 0; S.errors = 0; S.total = jobs.length; S.startedAt = Date.now();
     S.products.clear(); S.shown = 60; render();
     const ctl = S.ctl, queue = jobs.slice();
-    const worker = async () => {
-      while (queue.length && !ctl.stop) {
-        const job = queue.shift();
-        try {
-          for (let page = 1; page <= store.depth && !ctl.stop; page++) {
-            const json = await fetchRome(job.uri + (page > 1 ? '&page=' + page : ''), ctl);
-            const items = json ? extract(json, job.g.name + ' › ' + job.name) : [];
-            const fresh = ingest(items);
-            scheduleRender();
-            if (fresh < 3) break;
-            if (items.length && items[items.length - 1].disc < Math.min(store.minDisc, 20)) break; // sorted by discount: rest is below threshold
-          }
-        } catch (e) { if (!ctl.stop) S.errors++; }
-        S.done++; scheduleRender();
-      }
+    const runJob = async job => {
+      try {
+        for (let page = 1; page <= store.depth && !ctl.stop; page++) {
+          const items = await fetchPage(job, page, ctl);
+          const fresh = ingest(items);
+          scheduleRender();
+          if (!fresh || items.more === false) break;
+        }
+      } catch (e) { if (!ctl.stop) S.errors++; }
+      S.done++; scheduleRender();
     };
-    await Promise.all(Array.from({ length: (typeof P !== 'undefined' && P.workers) || 5 }, worker));
+    // The first request finds the right data centre; then the workers run in parallel.
+    if (queue.length) await runJob(queue.shift());
+    const worker = async () => { while (queue.length && !ctl.stop) await runJob(queue.shift()); };
+    await Promise.all(Array.from({ length: (typeof P !== 'undefined' && P.workers) || 4 }, worker));
     S.scanning = false;
     recordPrices();
     store.lastScan = Date.now(); save(); render();
     notify();
-    if (noLocation && !S.products.size) { toast('No Minutes location set. Open flipkart.com, choose your Minutes delivery address/pincode, then scan again.'); return; }
+    if (noLocation && !S.products.size) { toast('No Minutes delivery address yet. Set it on the Minutes store page, then scan again.'); return; }
     toast(ctl.stop ? 'Scan stopped' : `Scan complete · ${S.products.size} products` + (S.errors ? ` · ${S.errors} failed` : ''));
   }
 
@@ -270,7 +267,7 @@
 
   // ───────────────────────── UI ─────────────────────────
   const PLATFORM = 'Flipkart Minutes';
-  const STORE_URL = 'https://www.flipkart.com/';
+  const STORE_URL = 'https://www.flipkart.com/flipkart-minutes-store?marketplace=HYPERLOCAL&autoSwitchAddress=true';
   const host = document.createElement('div');
   host.id = 'fkm-host';
   host.style.cssText = 'all:initial;position:fixed;inset:0;z-index:2147483647;display:none';
@@ -463,7 +460,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     return `<div><h4>${ic('grid', 15)}Categories</h4><div class="chips">${GROUPS.map(groupChip).join('')}</div>
   <div class="row" style="margin-top:10px;justify-content:flex-start"><button class="chip" data-act="all">Select all</button><button class="chip" data-act="none">Clear</button></div></div>
  <div><h4>${ic('scan', 15)}Scan</h4>
-  <label class="row" style="margin-bottom:6px"><span>Pincode</span><input class="fld" style="width:110px" data-in="pincode" value="${esc(store.pincode)}" maxlength="6" inputmode="numeric"></label>
+  <div class="row" style="margin-bottom:6px"><span>Delivering to</span><b>${esc(activePincode() || 'Not set')}</b></div>
   <label class="row" style="margin-top:10px"><span>Pages per category</span><b>${store.depth}</b></label><input type="range" min="1" max="5" value="${store.depth}" data-in="depth">
   <label class="row" style="margin-top:12px"><span>Auto-scan</span><select data-in="auto" style="height:34px">${[0, 10, 15, 30, 60].map(m => `<option value="${m}" ${(+store.auto || 0) === m ? 'selected' : ''}>${m ? 'Every ' + m + ' min' : 'Off'}</option>`).join('')}</select></label></div>
  ${S.scanning ? `<button class="btn stop" data-act="stop">${ic('stop')}Stop scan</button>` : `<button class="btn" data-act="scan">${ic('scan')}Scan deals</button>`}`;
@@ -518,8 +515,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     return `<div class="watch"><div class="wh"><b>${ic('heart', 16)}Saved items</b><span>${cheaper ? cheaper + ' cheaper than when you saved them' : saved.length + ' found in this scan'}</span></div><div class="wl">${minis}</div></div>`;
   }
   function offsiteCard() {
-    const host = STORE_URL.replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*$/, '');
-    return `<div class="check"><h3>Open ${esc(PLATFORM)} to see live deals</h3><p class="note" style="font-size:14px">PriceDrop Hunter reads live prices from ${esc(PLATFORM)} inside your own logged-in tab, so it can only fetch data on ${esc(host)}. Open the store, set your delivery address, then click your PriceDrop Hunter bookmark there.</p><a class="btn" href="${STORE_URL}" target="_blank" rel="noopener" style="margin-top:16px;text-decoration:none">${ic('ext')}Open ${esc(PLATFORM)}</a></div>`;
+    return `<div class="check"><h3>Open ${esc(PLATFORM)} to see live deals</h3><p class="note" style="font-size:14px">PriceDrop Hunter reads live prices inside your own ${esc(PLATFORM)} tab, so it can only fetch deals there.</p><p class="note" style="font-size:14px;margin-top:8px"><b>Userscript installed?</b> Hunter opens by itself on the store. <b>Using the bookmark?</b> After the store opens, tap your PriceDrop Hunter bookmark again on that page.</p><a class="btn" href="${STORE_URL}#pricedrop" target="_blank" rel="noopener" style="margin-top:16px;text-decoration:none">${ic('ext')}Open ${esc(PLATFORM)}</a></div>`;
   }
   function checklist() {
     const capture = typeof captureUI === 'function';
@@ -698,7 +694,6 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   root.addEventListener('input', e => {
     const k = e.target.dataset && e.target.dataset.in; if (!k) return;
     if (k === 'q') { S.q = e.target.value; reFilter(); return; }
-    if (k === 'pincode') { store.pincode = e.target.value.replace(/\D/g, '').slice(0, 6); save(); return; }
     if (k === 'tgToken' || k === 'tgChat') { store.tg[k === 'tgToken' ? 'token' : 'chat'] = e.target.value.trim(); save(); return; }
     if (k === 'tgMin') { store.tg.minDisc = +e.target.value; save(); const b = root.getElementById('tgminv'); if (b) b.textContent = store.tg.minDisc + '% off'; return; }
     if (k === 'depth' || k === 'minDisc' || k === 'maxPrice') { store[k] = +e.target.value; save(); S.shown = 60; render(); return; }
