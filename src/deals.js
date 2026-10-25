@@ -417,15 +417,6 @@ a.ti:hover{color:var(--pr)}
 .toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:12px;opacity:0;transition:.2s;pointer-events:none;z-index:9;max-width:90%;font-weight:600}
 .toast.on{transform:translateX(-50%);opacity:1}
 .menu-btn{display:none}
-@media(max-width:900px){
- aside{position:absolute;z-index:4;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .22s;width:min(320px,88%);box-shadow:16px 0 40px rgba(0,0,0,.16)}
- aside.open{transform:none}.menu-btn{display:inline-flex}
- header{padding:10px 12px;gap:8px;height:auto;flex-wrap:wrap}
- .logo small,.search kbd,.hb .lb,.sb .lb{display:none}.logo b{font-size:15px}.logo .mk{width:34px;height:34px}
- .search{order:9;flex-basis:100%;max-width:none}
- main{padding:16px 12px 40px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.stats{grid-template-columns:repeat(2,1fr)}
- .st b{font-size:21px}
-}
 kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;font-weight:700}
 .presets{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 16px}
 .presets .chip{padding:6px 13px}
@@ -450,6 +441,30 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
 .ck.no>span{background:color-mix(in srgb,var(--hot) 16%,var(--sf));color:var(--hot)}
 .ck.q>span{background:var(--sf2);color:var(--mt)}
 .ck b{font-weight:700}.ck p{color:var(--mt);font-size:12.5px;margin-top:2px}
+.mob{display:none}
+@media(max-width:900px){
+ aside{position:absolute;z-index:4;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .22s;width:min(320px,88%);box-shadow:16px 0 40px rgba(0,0,0,.16);padding:18px 16px 40px}
+ aside.open{transform:none}.menu-btn{display:inline-flex}.mob{display:flex}
+ header{padding:10px 12px;gap:8px;height:auto;flex-wrap:wrap}
+ .logo{margin-right:0;min-width:0}.logo small,.logo .mk,.search kbd,.hb .lb,.sb .lb,[data-act=bell].ib,[data-act=theme].ib{display:none}
+ .logo b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .ib,.hb,.sb{height:38px}.ib{width:38px}.hb,.sb{padding:0 11px}
+ .search{order:9;flex-basis:100%;max-width:none;min-width:0}.search input{height:40px}
+ main{padding:14px 12px 40px}
+ .stats,.presets,.tools{display:flex;flex-wrap:nowrap;overflow-x:auto;margin-left:-12px;margin-right:-12px;padding:0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .stats::-webkit-scrollbar,.presets::-webkit-scrollbar,.tools::-webkit-scrollbar{display:none}
+ .stats{gap:8px;margin-bottom:12px}.st{flex:0 0 auto;min-width:118px;padding:10px 12px;border-radius:12px}.st b{font-size:18px}.st span{font-size:11.5px;white-space:nowrap}
+ .presets{margin-top:0;margin-bottom:10px}.presets .chip{flex:0 0 auto}
+ .tools{gap:6px;margin-bottom:14px}.tools select{flex:0 0 auto;height:36px;max-width:150px;font-size:13px}.tools .sp{display:none}.seg{flex:0 0 auto}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{border-radius:14px}.card:hover{transform:none;box-shadow:none}
+ .inf{padding:10px 10px 12px}.ti{font-size:13px}.ct{font-size:11px}.pr b{font-size:17px}.pr s{font-size:12px}.sv,.up{font-size:11.5px}
+ .acts button{height:34px;font-size:12px;gap:4px}.acts .hide{width:34px}
+ .dc{font-size:11px;padding:2px 6px;left:8px;top:8px}.tg{left:8px;top:32px;font-size:9.5px}.fv{width:30px;height:30px;top:6px;right:6px}
+ .list .im{width:88px;height:88px}
+ .check{margin:20px 0;padding:18px}
+ .toast{bottom:calc(16px + env(safe-area-inset-bottom))}
+}
 `;
   root.innerHTML = '<style>' + CSS + '</style><div class="app" id="app"></div>';
   const app = root.getElementById('app');
@@ -481,6 +496,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   }
   function sidebar() {
     return `<aside class="${sideOpen ? 'open' : ''}">
+ <div class="mob" style="gap:8px;flex-wrap:wrap"><button class="chip" data-act="theme">${ic('moon', 14)}Theme</button><button class="chip" data-act="bell">${ic('bell', 14)}Alerts ${store.tg.on && tgReady() ? 'on' : 'off'}</button><button class="chip" data-act="side">${ic('x', 14)}Close menu</button></div>
  ${typeof captureUI === 'function' && !OFFSITE ? captureUI() : scanUI()}
  <div><h4>${ic('sliders', 15)}Filters</h4>
   <label class="row"><span>Min discount</span><b>${store.minDisc}%</b></label><input type="range" min="0" max="90" step="5" value="${store.minDisc}" data-in="minDisc">
