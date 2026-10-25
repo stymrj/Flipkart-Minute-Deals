@@ -2,6 +2,8 @@
 
 A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans every department in the background and shows the best deals in a full-screen app. It ranks them, tracks price drops between scans, and lets you build a shopping list. No manual scrolling. Works on PC, Mac, Android and iOS.
 
+**🌐 Live installer & demo: https://stymrj.github.io/Flipkart-Minute-Deals/**
+
 > Runs entirely in your browser with your own Flipkart session. Nothing is sent to any third party.
 
 ---
