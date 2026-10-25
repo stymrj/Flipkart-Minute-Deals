@@ -115,9 +115,9 @@ node build.js
 
 ---
 
-## ⚖️ Disclaimer
+---
 
-Unofficial and unaffiliated with Flipkart.
+<p align="center">Made with ❤️ by <b>Satyam Raj</b> · <a href="https://www.linkedin.com/in/satyamraj1">LinkedIn</a></p>
 
 ## 📄 License
 
