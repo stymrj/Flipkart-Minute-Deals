@@ -27,8 +27,6 @@ Scans Flipkart Minutes departments in the background, ranks products by real sav
 
 **Userscript.** Install `dist/minutes-deal-radar.user.js` in Tampermonkey or Violentmonkey. A small Deals button appears on every flipkart.com page.
 
-**Demo.** Use "Try the demo" on the install page to explore the interface with sample data.
-
 ## Keyboard shortcuts
 
 `/` search, `S` scan or stop, `Esc` close.
