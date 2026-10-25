@@ -1,4 +1,4 @@
-# ⚡ Minutes Deal Radar
+# ⚡ Flipkart Minutes Deal Radar
 
 A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans every department in the background and shows the best deals in a full-screen app. It ranks them, tracks price drops between scans, and lets you build a shopping list. No manual scrolling. Works on PC, Mac, Android and iOS.
 
