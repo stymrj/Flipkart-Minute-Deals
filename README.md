@@ -1,47 +1,122 @@
-# Minutes Deal Radar
+# ⚡ Minutes Deal Radar
 
-Scan Flipkart Minutes categories for the biggest discounts, track price drops between scans, and build a shopping list. Runs entirely in your browser using your own Flipkart session. Nothing is sent to any third party.
+A client-side bookmarklet and userscript for **Flipkart Minutes**. It scans every department in the background and shows the best deals in a full-screen app. It ranks them, tracks price drops between scans, and lets you build a shopping list. No manual scrolling. Works on PC, Mac, Android and iOS.
 
-## Features
+> Runs entirely in your browser with your own Flipkart session. Nothing is sent to any third party.
 
-- Full-screen responsive UI (grid/list, dark mode), style-isolated with Shadow DOM
-- Best-deal score (percent off plus rupees saved) and 6 sort modes
-- NEW / PRICE ↓ badges against your previous scan
-- Filters: search, category, brand, max price, min discount, in-stock, favourites, new only
-- Shopping list with quantities, totals and savings; copy or open all links
-- CSV export and copy-top-20 for sharing
-- Parallel scanning with retries, up to 5 pages per category, stop anytime
-- Remembers pincode, filters, favourites, theme (localStorage)
-- Shortcuts: `/` search, `S` scan/stop, `Esc` close
+---
 
-## Install
+## ✨ Features
 
-### Bookmarklet (desktop and mobile)
-1. `node build.js`
-2. Open `index.html`, drag **⚡ Deal Radar** to your bookmarks bar (mobile: **Copy for mobile**, paste as a bookmark URL).
-3. On flipkart.com set your delivery pincode, click the bookmark, press **Scan deals**.
+- 🎯 **Best-Deal Score**: Ranks by discount **and** rupees saved, so a 40% off on a ₹900 item can beat 60% off on a ₹20 one.
+- ⚡ **Parallel Background Scanning**: 5 workers, retries with backoff, up to 5 pages per category, stop any time.
+- 📉 **Price-Drop Tracking**: `NEW` and `PRICE ↓` badges against your previous scan.
+- 🔍 **Smart Filters**: Search, category, brand, max price, min discount, in-stock only, favourites, new-only.
+- 🛒 **Shopping List**: Quantities, running total, total savings, copy it or open every item link.
+- ⬇️ **Export & Share**: CSV download, or copy the top 20 deals as text for WhatsApp.
+- 🌗 **Modern UI**: Grid or list view, dark mode, phone-friendly layout, style-isolated with Shadow DOM.
+- 💾 **Remembers You**: Pincode, filters, favourites and theme persist locally.
+- 🧩 **Resilient Parser**: Walks the whole API response instead of fixed paths, and auto-handles Flipkart's data-centre redirect.
+- 🔒 **Self-Contained**: No remote code loading, so nothing is fetched from GitHub at runtime.
 
-### Userscript (Tampermonkey / Violentmonkey)
-Install `dist/minutes-deal-radar.user.js`. A yellow **⚡ Deals** button appears on every flipkart.com page.
+---
 
-### Demo
-Run a local server and click **Try live demo** (synthetic data, any site):
+## 🚀 Installation & Usage
+
+### 💻 On PC / Mac / Desktop
+
+#### Option 1: 1-Click Drag & Drop (Recommended)
+1. Run `node build.js`, then open `index.html` (or start `python3 -m http.server 8765` and visit `http://localhost:8765`).
+2. Show your bookmarks bar (`Ctrl+Shift+B` on Windows/Linux, `Cmd+Shift+B` on Mac).
+3. Drag the yellow **⚡ Deal Radar** button onto the bar.
+4. Open [flipkart.com](https://www.flipkart.com), set your Minutes delivery location, click the bookmark, then press **Scan deals**.
+
+#### Option 2: Userscript (Tampermonkey / Violentmonkey)
+1. Install the extension.
+2. Add `dist/minutes-deal-radar.user.js` as a new script.
+3. A yellow **⚡ Deals** button appears on every flipkart.com page.
+
+### 📱 On Mobile
+
+#### Step 1: Copy the script
+Open the installer page and tap **Copy for mobile**.
+
+#### Step 2: Create the bookmark
+- **Chrome / Edge on Android:** Bookmark any page, edit it, rename it `⚡ Deal Radar`, paste the script as the URL.
+- **Safari on iOS:** Add a bookmark via Share, edit it, then paste the script as the URL.
+
+#### Step 3: Run on Flipkart
+1. Open flipkart.com and set your Minutes location.
+2. Type the bookmark name in the address bar.
+3. Tap the bookmark suggestion. The app opens.
+
+### 🎬 Try the demo
+Click **▶ Try live demo** on the installer page. It runs the full UI with synthetic data, on any site.
+
+---
+
+## 🎮 Controls & Interface
+
+| Control | Description |
+| :--- | :--- |
+| **Category chips** | Pick which departments to scan. |
+| **Pincode** | Delivery pincode used for the scan. |
+| **Pages per category** | How deep to scan (1 to 5). Sorted by discount, so 2 to 3 is usually enough. |
+| **⚡ Scan deals / ■ Stop** | Start or stop the background scan. |
+| **Min discount / Max price** | Live sliders that filter the results. |
+| **In-stock / Favourites / New only** | Quick toggles. |
+| **Sort** | Best deal, highest discount, biggest saving ₹, price low or high, name. |
+| **♡ / ✕ on a card** | Favourite or hide a product. |
+| **+ List** | Add to your shopping list (🛒 in the header). |
+| **⬇ CSV / ⧉ Copy top 20** | Export or share results. |
+| **Shortcuts** | `/` search · `S` scan or stop · `Esc` close |
+
+---
+
+## 🧱 Project Structure
+
 ```
-python3 -m http.server 8765   # then open http://localhost:8765
+Flipkart-Minute-Deals/
+├── src/
+│   ├── deals.js           # The whole app (single IIFE, zero dependencies)
+│   └── index.tpl.html     # Installer page template
+├── dist/                  # Generated by build.js
+│   ├── deals.js
+│   ├── bookmarklet.txt
+│   └── minutes-deal-radar.user.js
+├── build.js               # Minify + generate bookmarklet, userscript, installer
+├── index.html             # Generated installer page
+└── README.md
 ```
 
-## Develop
+Rebuild after any change:
 
-- `src/deals.js`: the whole app (single IIFE, no dependencies)
-- `src/index.tpl.html`: installer page template
-- `build.js`: minifies with terser (via npx, optional) and writes `dist/` and `index.html`
+```bash
+node build.js
+```
 
-Run `node build.js` after every change.
+---
 
-## Known limitations
+## 🛡️ Technical & Privacy Details
 
-- Uses Flipkart's undocumented Rome API (`/api/4/page/fetch`); it can change without notice. The parser walks the response generically to tolerate layout changes.
-- Category URIs for the first eight groups come from the public reference project; the last six (Fashion, Electronics, etc.) are best guesses and may need adjusting in `GROUPS`/`groupUri` in `src/deals.js`.
-- Personal & Baby Care, Home & Kitchen and Household Care list only some subcategories, so products in the others are not scanned.
-- Price history is per-browser and only compares against your previous scan.
-- Unofficial and unaffiliated with Flipkart. Use responsibly and keep scan depth modest.
+- **Data source:** Flipkart's internal Rome API (`/api/4/page/fetch`), called from your own logged-in browser session, the same way the Flipkart site does.
+- **Data-centre redirect:** If the API answers `406 DC Change`, the script retries on the data centre it names.
+- **No Minutes location:** If Flipkart has no delivery location for your session, the app tells you to pick one and scan again.
+- **Privacy:** No analytics, no remote calls other than Flipkart. Favourites, price history and settings stay in your browser's `localStorage`.
+- **Stability:** The API is undocumented and can change without notice. The parser is deliberately generic to tolerate layout changes.
+
+### ⚠️ Known limitations
+- Category URIs for the first eight groups come from the public reference project. The last six (Fashion, Electronics, Ice Cream, Toys, Meat, Paan) are best guesses and may need tweaking in `GROUPS` in `src/deals.js`.
+- Personal & Baby Care, Home & Kitchen and Household Care list only some subcategories.
+- Price history is per-browser and compares against your previous scan only.
+- Not yet verified against live Flipkart data in every region. Please open an issue with what you see.
+
+---
+
+## 🙏 Credits
+
+Inspired by [jairaj26/flipkart-minutes-deals](https://github.com/jairaj26/flipkart-minutes-deals). Unofficial and unaffiliated with Flipkart.
+
+## 📄 License
+
+MIT License.
