@@ -16,7 +16,7 @@ function normalise(v, cat, { price, brandOf }) {
   const pa = v.productAction && v.productAction.value;
   const oos = (v.availability && v.availability.displayState === 'OUT_OF_STOCK') || (pa && (pa.enabled === false || pa.actionType === 'NOTIFY_ME')) || (v.buyability && v.buyability.intent === 'negative');
   const idm = path.match(/pid=([A-Z0-9]+)/i) || path.match(/\/p\/(itm[a-z0-9]+)/i);
-  return { id: String(v.id || v.itemId || (idm && idm[1]) || title + '|' + sell), title: String(title), brand: brandOf(title), price: sell, mrp, disc: mrp > sell ? Math.round((mrp - sell) / mrp * 100) : 0, url: path ? 'https://www.flipkart.com' + path : '', inStock: !oos, cat };
+  return { id: String(v.id || v.itemId || (idm && idm[1]) || title + '|' + sell), title: String(title), brand: brandOf(title), price: sell, mrp, disc: mrp > sell ? Math.round((mrp - sell) / mrp * 100) : 0, url: path ? 'https://www.flipkart.com' + path + (path.indexOf('?') < 0 ? '?' : '&') + 'marketplace=HYPERLOCAL' : '', inStock: !oos, cat };
 }
 function extract(json, cat, ctx) {
   const out = [], seen = new Set();
@@ -33,33 +33,36 @@ module.exports = {
   label: 'Flipkart Minutes',
   required: ['FLIPKART_COOKIE'],
   workers: 4,
-  pageSize: 6,
   async fetchPage(job, page, ctx) {
     const { env, fetch, sleep } = ctx;
-    const uri = job.sub[0].replace(/(sid=)([^&]*)/, (_, p, v) => p + v.replace(/\//g, '%2F')) + (page > 1 ? '&page=' + page : '');
-    const body = JSON.stringify({
-      pageUri: uri,
-      pageContext: { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 1700 },
-      requestContext: { type: 'BROWSE_PAGE' },
-      locationContext: { pincode: env.PINCODE || '560032', changed: false }
-    });
+    if (page === 1) job.pager = null;
+    // Minutes ignores page=N: the next page needs the token from the previous response.
+    const pageContext = job.pager
+      ? { slotContextMap: {}, pageHashKey: job.pager.hash, paginatedFetch: true, fetchAllPages: false, paginationContextMap: job.pager.map, pageNumber: page }
+      : { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 4750 };
+    const pin = +(env.PINCODE || 560032) || env.PINCODE;
+    const body = JSON.stringify({ pageUri: job.sub[0], pageContext, requestContext: { type: 'BROWSE_PAGE' }, locationContext: { pincode: pin, changed: false } });
     for (let a = 0; a < 4; a++) {
       const r = await fetch(`https://${dc}.rome.api.flipkart.com/api/4/page/fetch?cacheFirst=false`, {
         method: 'POST', body,
-        headers: { accept: '*/*', 'content-type': 'application/json', flipkart_secure: 'true', 'user-agent': UA, 'x-user-agent': UA + ' FKUA/msite/0.0.4/msite/Mobile', origin: 'https://www.flipkart.com', referer: 'https://www.flipkart.com/', cookie: env.FLIPKART_COOKIE }
+        headers: { accept: '*/*', 'content-type': 'application/json', flipkart_secure: 'true', 'user-agent': UA, 'x-user-agent': UA + ' FKUA/website/42/website/Desktop', origin: 'https://www.flipkart.com', referer: 'https://www.flipkart.com/', cookie: env.FLIPKART_COOKIE }
       });
       if (r.status === 406) { // "DC Change": retry on the data centre the API names
         const j = await r.json().catch(() => null), id = j && j.RESPONSE && j.RESPONSE.id;
         if (id && String(id) !== dc) { dc = String(id); continue; }
-        return [];
+        return Object.assign([], { more: false });
       }
       if (r.status === 401 || r.status === 403) throw Object.assign(new Error(`Flipkart refused the session (HTTP ${r.status}). Refresh FLIPKART_COOKIE.`), { blocked: true });
       if (r.status === 429 || r.status >= 500) { await sleep(1500 * (a + 1)); continue; }
-      if (!r.ok) return [];
+      if (!r.ok) return Object.assign([], { more: false });
       const json = await r.json();
       const red = json && json.RESPONSE && json.RESPONSE.pageMeta && json.RESPONSE.pageMeta.redirectionObject;
       if (red && /hyperlocal-preview/.test(red.url || '')) throw Object.assign(new Error('No Minutes delivery location on this session. Set your address on flipkart.com, then copy a fresh FLIPKART_COOKIE.'), { blocked: true });
-      return extract(json, job.g.name + ' › ' + job.sub[1], ctx);
+      const items = extract(json, job.g.name + ' › ' + job.sub[1], ctx);
+      const pd = json && json.RESPONSE && json.RESPONSE.pageData;
+      items.more = !!(pd && pd.hasMorePages && pd.paginationContextMap);
+      if (items.more) job.pager = { hash: pd.pageHash, map: pd.paginationContextMap };
+      return items;
     }
     throw new Error('rate limited');
   }

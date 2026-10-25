@@ -1,242 +1,214 @@
 {
   "minDiscount": 60,
-  "pages": 1,
+  "pages": 2,
   "groups": [
     {
-      "id": "bpe",
-      "name": "Staples",
+      "id": "fresh",
+      "name": "Fresh, Meat & Fish",
       "minDiscount": 60,
       "subs": [
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/3uv/",
-          "Dal & Pulses"
+          "/hyperlocal/Vegetables/pr?sid=hloc%2F0072&marketplace=HYPERLOCAL&param=19372648&BU=Minutes",
+          "Vegetables"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/4wu/",
-          "Ghee & Oils"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/9da/",
-          "Atta & Flours"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/a6m/",
-          "Masala & Spices"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/zwp/",
-          "Rice"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/dtp/",
-          "Dry Fruits"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/fdl/",
-          "Sugar, Jaggery & Salt"
-        ]
-      ]
-    },
-    {
-      "id": "ujs",
-      "name": "Snacks & Beverages",
-      "minDiscount": 70,
-      "subs": [
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/eb9/",
-          "Biscuits"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dd9/",
-          "Chips"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/amr/",
-          "Tea"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/t7k/",
-          "Coffee"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/afd/",
-          "Juices"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/vnq/",
-          "Nutritional Drinks"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dfw/",
-          "Soft Drinks"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/iau/",
-          "Instant Drink Mixes"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/wsx/",
-          "Water"
-        ]
-      ]
-    },
-    {
-      "id": "esa",
-      "name": "Dairy, Bakery & Eggs",
-      "minDiscount": 60,
-      "subs": [
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/dt6/",
-          "Dairy"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/hh7/",
-          "Eggs"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/93l/",
-          "Bakery, Sweets & Namkeen"
-        ]
-      ]
-    },
-    {
-      "id": "u0u",
-      "name": "Packaged Goods",
-      "minDiscount": 70,
-      "subs": [
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/ltz/",
-          "Noodles & Pasta"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/7o6/",
-          "Chocolates"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/0tl/",
-          "Ketchups"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/bx9/",
-          "Cereals"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/j4e/",
-          "Jam & Honey"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/wd7/",
-          "Cooking Sauces"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/td1/",
-          "Baking"
-        ]
-      ]
-    },
-    {
-      "id": "njl",
-      "name": "Personal & Baby Care",
-      "minDiscount": 70,
-      "subs": [
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/vpw/",
-          "Hair Care"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2s3/",
-          "Oral Care"
-        ],
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/smb/",
-          "Diapers & Wipes"
-        ]
-      ]
-    },
-    {
-      "id": "mk9",
-      "name": "Fruits & Vegetables",
-      "minDiscount": 60,
-      "subs": [
-        [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/w9z/",
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0071&marketplace=HYPERLOCAL&param=23846385&BU=Minutes",
           "Fruits"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/aiw/",
-          "Vegetables"
+          "/hyperlocal/hloc/3106/pr?sid=hloc%2F7n35&marketplace=HYPERLOCAL&param=22222111111&BU=Minutes",
+          "Meat & Fish"
         ]
       ]
     },
     {
-      "id": "cwl",
-      "name": "Household Care",
+      "id": "staples",
+      "name": "Atta, Rice, Oil & Masala",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/hyperlocal/Atta-Rice-Dal/pr?sid=hloc%2F0003&marketplace=HYPERLOCAL&param=29468594&BU=Minutes",
+          "Atta, Rice & Dal"
+        ],
+        [
+          "/hyperlocal/Oil-Ghee-Masala/pr?sid=hloc%2F0009&marketplace=HYPERLOCAL&param=193737489&BU=Minutes",
+          "Oil, Ghee & Masala"
+        ],
+        [
+          "/hyperlocal/hloc/1901/pr?sid=hloc%2F0019%2F1901&marketplace=HYPERLOCAL&param=9019423333&BU=Minutes",
+          "Dry Fruits"
+        ]
+      ]
+    },
+    {
+      "id": "bakery",
+      "name": "Bakery & Biscuits",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/hyperlocal/Bakery-Biscuits/pr?sid=hloc%2F0006&marketplace=HYPERLOCAL&param=653330001111&BU=Minutes",
+          "Bakery & Biscuits"
+        ],
+        [
+          "/hyperlocal/hloc/3002/pr?sid=hloc%2F0030%2F3002&marketplace=HYPERLOCAL&param=2365748&BU=Minutes",
+          "Breads & Buns"
+        ]
+      ]
+    },
+    {
+      "id": "snacks",
+      "name": "Snacks & Sweets",
       "minDiscount": 70,
       "subs": [
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2z2/",
-          "Detergents"
+          "/hyperlocal/Chips-Namkeen/pr?sid=hloc%2F0010&marketplace=HYPERLOCAL&param=99900344444&BU=Minutes",
+          "Chips & Namkeen"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/bdc/",
-          "Utensil Cleaners"
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0065&marketplace=HYPERLOCAL&param=886633300222&BU=Minutes",
+          "Chocolates"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/u3c/",
-          "Floor Cleaners"
+          "/hyperlocal/hloc/2001/pr?sid=hloc%2F0020%2F2001&marketplace=HYPERLOCAL&param=663636626262&BU=Minutes",
+          "Instant Noodles"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/qz9/",
-          "Repellents"
+          "/hyperlocal/hloc/0806/pr?sid=hloc%2F0081%2F0806&marketplace=HYPERLOCAL&param=9000333333&BU=Minutes",
+          "Sweets & Mithai"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2wc/",
-          "Paper"
+          "/hyperlocal/Sauces-Spreads/pr?sid=hloc%2F0021&marketplace=HYPERLOCAL&param=177899002211&BU=Minutes",
+          "Sauces & Spreads"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/0s4/",
-          "Basic Electricals"
+          "/hyperlocal/IceCream-Desserts/pr?sid=hloc%2F0034&marketplace=HYPERLOCAL&param=199800233&BU=Minutes",
+          "Ice Cream"
         ]
       ]
     },
     {
-      "id": "uyk",
-      "name": "Home & Kitchen",
-      "minDiscount": 80,
+      "id": "drinks",
+      "name": "Drinks",
+      "minDiscount": 70,
       "subs": [
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/hho/",
+          "/hyperlocal/ColdDrinks-Juices/pr?sid=hloc%2F0007&marketplace=HYPERLOCAL&param=99887444&BU=Minutes",
+          "Cold Drinks & Juices"
+        ],
+        [
+          "/hyperlocal/Tea-Coffee-Milk-Drinks/pr?sid=hloc%2F0011&marketplace=HYPERLOCAL&param=141199888&BU=Minutes",
+          "Tea, Coffee & Milk Drinks"
+        ]
+      ]
+    },
+    {
+      "id": "care",
+      "name": "Personal Care",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0056&marketplace=HYPERLOCAL&param=811674322&BU=Minutes",
+          "Bath & Body"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0044&marketplace=HYPERLOCAL&param=811632217&BU=Minutes",
+          "Hair Care"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2Furkm&marketplace=HYPERLOCAL&param=4555321789&BU=Minutes",
+          "Makeup"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2F6a5o&marketplace=HYPERLOCAL&param=87678909&BU=Minutes",
+          "Fragrances"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2Fqbq2&marketplace=HYPERLOCAL&param=32117834&BU=Minutes",
+          "Feminine Hygiene"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2Fzgt0&marketplace=HYPERLOCAL&param=63325589&BU=Minutes",
+          "Sexual Wellness"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0015&marketplace=HYPERLOCAL&param=param%3D811632217&BU=Minutes",
+          "Health & First Aid"
+        ]
+      ]
+    },
+    {
+      "id": "baby",
+      "name": "Baby Care",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2F0001&marketplace=HYPERLOCAL&param=811654222&BU=Minutes",
+          "Baby Care"
+        ]
+      ]
+    },
+    {
+      "id": "home",
+      "name": "Home & Cleaning",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/hyperlocal/Cleaning-Essentials/pr?sid=hloc%2F0025&marketplace=HYPERLOCAL&param=31191665&BU=Minutes",
+          "Cleaning Essentials"
+        ],
+        [
+          "/hyperlocal/Kitchen/pr?sid=hloc%2F0048&marketplace=HYPERLOCAL&param=311907865&BU=Minutes",
           "Kitchen Tools"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/vdx/",
-          "Cookware"
+          "/hyperlocal/Toys-Games/pr?sid=hloc%2F0047&marketplace=HYPERLOCAL&param=38879906&BU=Minutes",
+          "Home Furnishing"
         ],
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/6f4/",
-          "Bath & Bed"
+          "/hyperlocal/Toys-Games/pr?sid=hloc%2F0082&marketplace=HYPERLOCAL&param=38879906&BU=Minutes",
+          "Pooja Needs"
+        ],
+        [
+          "/hyperlocal/PetCare/pr?sid=hloc%2F0029&marketplace=HYPERLOCAL&param=189995342&BU=Minutes",
+          "Pet Care"
+        ],
+        [
+          "/hyperlocal/Electircals-Tools/pr?sid=hloc%2F0043&marketplace=HYPERLOCAL&param=311927765&BU=Minutes",
+          "Electricals & Batteries"
+        ],
+        [
+          "/hyperlocal/School-Supplies/pr?sid=hloc%2F0016&marketplace=HYPERLOCAL&param=3999087&BU=Minutes",
+          "Stationery"
         ]
       ]
     },
     {
-      "id": "h38",
-      "name": "Electronics & Gadgets",
-      "minDiscount": 85,
+      "id": "tech",
+      "name": "Electronics",
+      "minDiscount": 80,
       "subs": [
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=hloc%2F0038",
-          "All"
+          "/hyperlocal/Electronics%20and%20Gadgets/pr?sid=hloc%2F0038&marketplace=HYPERLOCAL&param=188299076&BU=Minutes",
+          "Mobile Accessories"
+        ],
+        [
+          "/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&param=7994332167&BU=Minutes",
+          "Audio & Wearables"
+        ],
+        [
+          "/hyperlocal/Fruits/pr?sid=hloc%2Fi6ba&marketplace=HYPERLOCAL&param=3552677&BU=Minutes",
+          "Mobiles"
         ]
       ]
     },
     {
-      "id": "h34",
-      "name": "Ice Cream & Desserts",
-      "minDiscount": 70,
+      "id": "toys",
+      "name": "Toys & Games",
+      "minDiscount": 80,
       "subs": [
         [
-          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=hloc%2F0034",
-          "All"
+          "/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&param=38879906&BU=Minutes",
+          "Toys & Games"
         ]
       ]
     }

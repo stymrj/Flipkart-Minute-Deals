@@ -1,11 +1,13 @@
 # PriceDrop Hunter for Flipkart Minutes
 
-Scans Flipkart Minutes departments in the background, ranks products by real savings, and tracks price changes between scans. It runs in your own browser as a bookmarklet or userscript. Nothing is uploaded and there is no account.
+Scans every Flipkart Minutes category by itself and opens with the biggest discounts, then the best deals of each category. It runs in your own browser as a bookmarklet or userscript. Nothing is uploaded and there is no account.
 
 **Live page:** https://stymrj.github.io/Flipkart-Minute-Deals/
 
 ## Features
 
+- Opens with the biggest discounts, across every category, scanned by itself
+- Best deals of each category in one swipeable row, with See all
 - Ranks by percent off and rupees saved together
 - Labels products that are new, cheaper than last time, or at their lowest price ever
 - Price history sparkline on every product you have seen before
@@ -103,9 +105,9 @@ Optional variables:
 | Variable | Default | What it does |
 | :--- | :--- | :--- |
 | `MIN_DISCOUNT` | per group | One threshold for every group, for example `65` |
-| `THRESHOLDS` | see `bot/config.json` | Per-group thresholds, for example `bpe=55,ujs=65` |
-| `GROUPS` | all | Only scan these groups, for example `bpe,ujs` |
-| `PAGES` | `1` | Pages per aisle, 1 to 5 |
+| `THRESHOLDS` | see `bot/config.json` | Per-group thresholds, for example `fresh=55,staples=55` |
+| `GROUPS` | all | Only scan these groups, for example `fresh,staples` |
+| `PAGES` | `2` | Pages per aisle, 1 to 5 |
 | `DIGEST_HOUR_IST` | `9` | Hour of the morning catalogue; `-1` turns it off |
 | `RUNNER` | `ubuntu-latest` | Set to `self-hosted` to run on your own computer |
 
@@ -132,7 +134,7 @@ Node 18 or newer must be installed on that computer.
 Groups, aisles and default thresholds live in `bot/config.json`:
 
 ```json
-{ "id": "bpe", "name": "Staples", "minDiscount": 60, "subs": [["/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/3uv/", "Dal & Pulses"]] }
+{ "id": "fresh", "name": "Fresh, Meat & Fish", "minDiscount": 60, "subs": [["/hyperlocal/Vegetables/pr?sid=hloc%2F0072&marketplace=HYPERLOCAL&param=19372648&BU=Minutes", "Vegetables"]] }
 ```
 
 Add or remove entries under `subs`, change `minDiscount`, commit, and the next run uses them.
@@ -153,13 +155,13 @@ A session cookie works like your password for that site. Keep it only in GitHub 
 
 ## How it gets data
 
-Calls the same page-fetch endpoint the Flipkart site uses, from your logged-in session. If the API reports a data-centre change (HTTP 406), the request is retried on the data centre it names.
+Calls the same page-fetch API the Flipkart site uses, from your logged-in tab. It sends the Minutes pincode Flipkart already saved for you (it never changes your address), follows Flipkart's pagination token for more pages, and retries on the data centre Flipkart names (HTTP 406).
 
 ## Limitations
 
-- Category addresses for the first eight departments are verified patterns. The last six (Fashion, Electronics, Ice Cream, Toys, Meat, Paan) are best guesses and may need adjusting in `GROUPS`.
-- Personal & Baby Care, Home & Kitchen and Household Care list only some subcategories.
-- Flipkart needs a Minutes delivery location on the session; without one it returns no products.
+- Prices and stock depend on your Minutes delivery address. Set it on the Minutes store page first.
+- The 34 categories were read from the Minutes store; if Flipkart adds or renames one, update `GROUPS` in `src/deals.js`.
+- Flipkart can change its internal API at any time.
 
 ## Project layout
 
