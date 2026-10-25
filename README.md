@@ -23,7 +23,7 @@ Scans Flipkart Minutes departments in the background, ranks products by real sav
 
 **Bookmarklet (desktop).** Run `node build.js`, open `index.html`, and drag the button to your bookmarks bar. Open flipkart.com and click the bookmark.
 
-**Bookmarklet (mobile).** Copy the code from the page, create a bookmark, and paste the code as its address. Run it from the address bar on flipkart.com.
+**Bookmarklet (mobile).** On the install page, tap **Copy mobile loader**. It is a bookmark of about 380 characters that loads the latest version from GitHub Pages, so it fits on any phone. Create a bookmark, paste it as the address, and run it from the address bar on flipkart.com. The full bookmarklet (about 45 KB, no network needed) is in `dist/bookmarklet.txt`.
 
 **Userscript.** Install `dist/minutes-deal-radar.user.js` in Tampermonkey or Violentmonkey. A small Deals button appears on every flipkart.com page.
 
