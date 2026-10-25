@@ -22,7 +22,9 @@ const header = `// ==UserScript==
 // @description  Scan every Flipkart Minutes department in seconds, rank deals by real savings, and track price drops between scans.
 // @match        https://www.flipkart.com/*
 // @run-at       document-idle
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @grant        unsafeWindow
+// @connect      api.telegram.org
 // ==/UserScript==
 `;
 const launcher = `
