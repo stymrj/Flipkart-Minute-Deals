@@ -1,0 +1,244 @@
+{
+  "minDiscount": 60,
+  "pages": 1,
+  "groups": [
+    {
+      "id": "bpe",
+      "name": "Staples",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/3uv/",
+          "Dal & Pulses"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/4wu/",
+          "Ghee & Oils"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/9da/",
+          "Atta & Flours"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/a6m/",
+          "Masala & Spices"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/zwp/",
+          "Rice"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/dtp/",
+          "Dry Fruits"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/fdl/",
+          "Sugar, Jaggery & Salt"
+        ]
+      ]
+    },
+    {
+      "id": "ujs",
+      "name": "Snacks & Beverages",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/eb9/",
+          "Biscuits"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dd9/",
+          "Chips"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/amr/",
+          "Tea"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/t7k/",
+          "Coffee"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/afd/",
+          "Juices"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/vnq/",
+          "Nutritional Drinks"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dfw/",
+          "Soft Drinks"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/iau/",
+          "Instant Drink Mixes"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/wsx/",
+          "Water"
+        ]
+      ]
+    },
+    {
+      "id": "esa",
+      "name": "Dairy, Bakery & Eggs",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/dt6/",
+          "Dairy"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/hh7/",
+          "Eggs"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/93l/",
+          "Bakery, Sweets & Namkeen"
+        ]
+      ]
+    },
+    {
+      "id": "u0u",
+      "name": "Packaged Goods",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/ltz/",
+          "Noodles & Pasta"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/7o6/",
+          "Chocolates"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/0tl/",
+          "Ketchups"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/bx9/",
+          "Cereals"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/j4e/",
+          "Jam & Honey"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/wd7/",
+          "Cooking Sauces"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/td1/",
+          "Baking"
+        ]
+      ]
+    },
+    {
+      "id": "njl",
+      "name": "Personal & Baby Care",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/vpw/",
+          "Hair Care"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2s3/",
+          "Oral Care"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/smb/",
+          "Diapers & Wipes"
+        ]
+      ]
+    },
+    {
+      "id": "mk9",
+      "name": "Fruits & Vegetables",
+      "minDiscount": 60,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/w9z/",
+          "Fruits"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/aiw/",
+          "Vegetables"
+        ]
+      ]
+    },
+    {
+      "id": "cwl",
+      "name": "Household Care",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2z2/",
+          "Detergents"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/bdc/",
+          "Utensil Cleaners"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/u3c/",
+          "Floor Cleaners"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/qz9/",
+          "Repellents"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2wc/",
+          "Paper"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/0s4/",
+          "Basic Electricals"
+        ]
+      ]
+    },
+    {
+      "id": "uyk",
+      "name": "Home & Kitchen",
+      "minDiscount": 80,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/hho/",
+          "Kitchen Tools"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/vdx/",
+          "Cookware"
+        ],
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/6f4/",
+          "Bath & Bed"
+        ]
+      ]
+    },
+    {
+      "id": "h38",
+      "name": "Electronics & Gadgets",
+      "minDiscount": 85,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=hloc%2F0038",
+          "All"
+        ]
+      ]
+    },
+    {
+      "id": "h34",
+      "name": "Ice Cream & Desserts",
+      "minDiscount": 70,
+      "subs": [
+        [
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=hloc%2F0034",
+          "All"
+        ]
+      ]
+    }
+  ]
+}
