@@ -45,7 +45,7 @@
   store.groups = (store.groups || []).filter(id => GROUPS.some(g => g.id === id));
   if (!store.groups.length) store.groups = defaults.groups.slice();
   // v3: Hunter scans every category by itself and leads with the biggest discounts.
-  if (store.v !== 3) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = 2; store.v = 3; save(); }
+  if (store.v !== 3) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = (typeof P !== 'undefined' && P.defaults && P.defaults.depth) || 2; store.v = 3; save(); }
 
   // ───────────────────────── Flipkart API ─────────────────────────
   // Flipkart keeps the Minutes delivery pincode in localStorage ("mypin"). Never send a different one:
