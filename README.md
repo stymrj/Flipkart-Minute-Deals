@@ -108,16 +108,16 @@ node build.js
 - **Stability:** The API is undocumented and can change without notice. The parser is deliberately generic to tolerate layout changes.
 
 ### ⚠️ Known limitations
-- Category URIs for the first eight groups come from the public reference project. The last six (Fashion, Electronics, Ice Cream, Toys, Meat, Paan) are best guesses and may need tweaking in `GROUPS` in `src/deals.js`.
+- Category URIs for the first eight groups are verified patterns. The last six (Fashion, Electronics, Ice Cream, Toys, Meat, Paan) are best guesses and may need tweaking in `GROUPS` in `src/deals.js`.
 - Personal & Baby Care, Home & Kitchen and Household Care list only some subcategories.
 - Price history is per-browser and compares against your previous scan only.
 - Not yet verified against live Flipkart data in every region. Please open an issue with what you see.
 
 ---
 
-## 🙏 Credits
+## ⚖️ Disclaimer
 
-Inspired by [jairaj26/flipkart-minutes-deals](https://github.com/jairaj26/flipkart-minutes-deals). Unofficial and unaffiliated with Flipkart.
+Unofficial and unaffiliated with Flipkart.
 
 ## 📄 License
 
