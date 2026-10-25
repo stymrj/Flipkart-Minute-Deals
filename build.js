@@ -19,7 +19,7 @@ const header = `// ==UserScript==
 // @name         PriceDrop Hunter for Flipkart Minutes
 // @namespace    minutes-deal-radar
 // @version      2.0.0
-// @description  Scan Flipkart Minutes for the best discounts, track price drops, build a shopping list.
+// @description  Scan every Flipkart Minutes department in seconds, rank deals by real savings, and track price drops between scans.
 // @match        https://www.flipkart.com/*
 // @run-at       document-idle
 // @grant        none
@@ -30,8 +30,8 @@ const launcher = `
   if(!window.__FKM__) return;
   window.__FKM__.hide();
   var b=document.createElement('button');
-  b.textContent='⚡ Deals';
-  b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:2147483646;background:#ffe500;color:#111;font:800 14px system-ui,sans-serif;border:0;border-radius:99px;padding:12px 18px;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer';
+  b.textContent='Deals';
+  b.style.cssText='position:fixed;right:16px;bottom:16px;z-index:2147483646;background:#2874f0;color:#fff;font:600 14px system-ui,sans-serif;border:0;border-radius:8px;padding:11px 16px;box-shadow:0 2px 10px rgba(0,0,0,.25);cursor:pointer';
   b.onclick=function(){window.__FKM__.toggle()};
   document.body.appendChild(b);
 })();
