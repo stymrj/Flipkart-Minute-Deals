@@ -1,0 +1,385 @@
+{
+  "RESPONSE": {
+    "slots": [
+      {
+        "slotData": {
+          "widget": {
+            "data": {
+              "products": [
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {
+                        "title": "Test Atta 1 kg"
+                      },
+                      "pricing": {
+                        "finalPrice": {
+                          "value": 120
+                        },
+                        "prices": [
+                          {
+                            "priceType": "MRP",
+                            "value": 240
+                          }
+                        ]
+                      },
+                      "media": {
+                        "images": [
+                          {
+                            "url": "https://example.com/atta.jpg"
+                          }
+                        ]
+                      },
+                      "baseUrl": "/atta/p/itmFK001"
+                    }
+                  }
+                },
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {
+                        "title": "Test Sugar 1 kg"
+                      },
+                      "pricing": {
+                        "finalPrice": {
+                          "value": 300
+                        },
+                        "prices": [
+                          {
+                            "priceType": "MRP",
+                            "value": 200
+                          }
+                        ]
+                      },
+                      "baseUrl": "/sugar/p/itmFK002"
+                    }
+                  }
+                },
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {
+                        "title": "Test Tea 250 g"
+                      },
+                      "pricing": {
+                        "finalPrice": {
+                          "value": 150
+                        },
+                        "totalDiscount": "40%"
+                      },
+                      "baseUrl": "/tea/p/itmFK003"
+                    }
+                  }
+                },
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {
+                        "title": "Test Ghee 1 L"
+                      },
+                      "pricing": {
+                        "finalPrice": {
+                          "value": 472
+                        },
+                        "prices": [
+                          {
+                            "priceType": "MRP",
+                            "value": 75037
+                          }
+                        ],
+                        "totalDiscount": 37
+                      },
+                      "baseUrl": "/ghee/p/itmFK004"
+                    }
+                  }
+                },
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {
+                        "title": "Test Coffee 100 g"
+                      },
+                      "pricing": {
+                        "finalPrice": {
+                          "tracking": {
+                            "fsp": 99,
+                            "mrp": 199
+                          }
+                        },
+                        "prices": [
+                          {
+                            "priceType": "MRP",
+                            "value": 199
+                          }
+                        ]
+                      },
+                      "baseUrl": "/coffee/p/itmFK005"
+                    }
+                  }
+                },
+                {
+                  "productInfo": {
+                    "value": {
+                      "titles": {},
+                      "pricing": {
+                        "finalPrice": {
+                          "value": 90
+                        },
+                        "prices": [
+                          {
+                            "priceType": "MRP",
+                            "value": 120
+                          }
+                        ]
+                      },
+                      "baseUrl": "/Tata-Salt-1-kg/p/itmFK006"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "slotData": {
+          "widget": {
+            "data": {
+              "dlsData": {
+                "gridData_0": {
+                  "value": [
+                    {
+                      "value": {
+                        "snb_hl_text_0": {
+                          "value": {
+                            "label_0": {
+                              "value": {
+                                "text": "Test Fortune Oil 1 L"
+                              }
+                            },
+                            "label_3": {
+                              "value": 300
+                            },
+                            "label_4": {
+                              "value": 149
+                            },
+                            "label_2": {
+                              "value": "50% off"
+                            }
+                          }
+                        },
+                        "col_0": {
+                          "action": {
+                            "url": "/oil/p/itmFK101",
+                            "params": {
+                              "imageUrl": "https://example.com/atlas.jpg"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "snb_hl_text_0": {
+                          "value": {
+                            "label_0": {
+                              "value": {
+                                "text": "Test Aashirvaad Atta 5 kg"
+                              }
+                            }
+                          }
+                        },
+                        "col_0": {
+                          "action": {
+                            "url": "/atta5/p/itmFK102",
+                            "params": {
+                              "imageUrl": "https://example.com/atlas.jpg"
+                            }
+                          }
+                        },
+                        "stepperData_0": {
+                          "action": {
+                            "params": {
+                              "price": 79,
+                              "productImage": "https://example.com/atta5.jpg"
+                            },
+                            "tracking": {
+                              "fsp": 79,
+                              "mrp": 159
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "snb_hl_text_0": {
+                          "value": {
+                            "label_0": {
+                              "value": {
+                                "text": "Test OOS Ghee 1 L"
+                              }
+                            },
+                            "label_3": {
+                              "value": 500
+                            },
+                            "label_4": {
+                              "value": 249
+                            },
+                            "label_2": {
+                              "value": "50% off"
+                            }
+                          }
+                        },
+                        "col_0": {
+                          "action": {
+                            "url": "/ghee-oos/p/itmFK103",
+                            "params": {
+                              "imageUrl": "https://example.com/atlas.jpg"
+                            }
+                          }
+                        },
+                        "stepperData_0": {
+                          "action": {
+                            "tracking": {
+                              "isAvailable": "false",
+                              "fsp": 249,
+                              "mrp": 500
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "hp_reco_pmu_product-card_0": {
+                          "value": {
+                            "label_2": {
+                              "value": {
+                                "text": "Test Maggi Noodles 12 Pack"
+                              }
+                            },
+                            "label_4": {
+                              "value": 240
+                            },
+                            "label_5": {
+                              "value": 119
+                            },
+                            "stepperData_0": {
+                              "action": {
+                                "enabled": true,
+                                "params": {
+                                  "price": 119,
+                                  "productImage": "https://example.com/mrcsv.jpg"
+                                },
+                                "tracking": {
+                                  "fsp": 119,
+                                  "mrp": 240
+                                }
+                              }
+                            },
+                            "box_5": {
+                              "action": {
+                                "url": "/maggi/p/itmFK201"
+                              }
+                            },
+                            "label_15": {
+                              "value": "50% off"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "hp_reco_pmu_product-card_0": {
+                          "value": {
+                            "label_1": {
+                              "value": {
+                                "text": "Test Parle-G Biscuits"
+                              }
+                            },
+                            "label_4": {
+                              "value": 100
+                            },
+                            "label_5": {
+                              "value": 60
+                            },
+                            "stepperData_0": {
+                              "action": {
+                                "enabled": true,
+                                "params": {
+                                  "price": 60,
+                                  "productImage": "https://example.com/mrcsv.jpg"
+                                },
+                                "tracking": {
+                                  "fsp": 60,
+                                  "mrp": 100
+                                }
+                              }
+                            },
+                            "box_5": {
+                              "action": {
+                                "url": "/parle/p/itmFK202"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "value": {
+                        "hp_reco_pmu_product-card_0": {
+                          "value": {
+                            "label_2": {
+                              "value": {
+                                "text": "Test Amul Butter 500 g"
+                              }
+                            },
+                            "label_4": {
+                              "value": 275
+                            },
+                            "label_5": {
+                              "value": 220
+                            },
+                            "stepperData_0": {
+                              "action": {
+                                "enabled": false,
+                                "params": {
+                                  "price": 220,
+                                  "productImage": ""
+                                },
+                                "tracking": {
+                                  "fsp": 220,
+                                  "mrp": 275
+                                }
+                              }
+                            },
+                            "box_5": {
+                              "action": {
+                                "url": "/amul/p/itmFK203"
+                              }
+                            },
+                            "hp_reco_pmu_product-card_image_0": {
+                              "value": {
+                                "image_0": {
+                                  "value": {
+                                    "dynamicImageUrl": "https://example.com/amul.jpg"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

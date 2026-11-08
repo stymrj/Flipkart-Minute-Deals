@@ -16,11 +16,13 @@
     { id: 'bakery', name: 'Bakery & Biscuits', subs: [['/hyperlocal/Bakery-Biscuits/pr?sid=hloc%2F0006&marketplace=HYPERLOCAL&param=653330001111&BU=Minutes', 'Bakery & Biscuits'], ['/hyperlocal/hloc/3002/pr?sid=hloc%2F0030%2F3002&marketplace=HYPERLOCAL&param=2365748&BU=Minutes', 'Breads & Buns']] },
     { id: 'snacks', name: 'Snacks & Sweets', subs: [['/hyperlocal/Chips-Namkeen/pr?sid=hloc%2F0010&marketplace=HYPERLOCAL&param=99900344444&BU=Minutes', 'Chips & Namkeen'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0065&marketplace=HYPERLOCAL&param=886633300222&BU=Minutes', 'Chocolates'], ['/hyperlocal/hloc/2001/pr?sid=hloc%2F0020%2F2001&marketplace=HYPERLOCAL&param=663636626262&BU=Minutes', 'Instant Noodles'], ['/hyperlocal/hloc/0806/pr?sid=hloc%2F0081%2F0806&marketplace=HYPERLOCAL&param=9000333333&BU=Minutes', 'Sweets & Mithai'], ['/hyperlocal/Sauces-Spreads/pr?sid=hloc%2F0021&marketplace=HYPERLOCAL&param=177899002211&BU=Minutes', 'Sauces & Spreads'], ['/hyperlocal/IceCream-Desserts/pr?sid=hloc%2F0034&marketplace=HYPERLOCAL&param=199800233&BU=Minutes', 'Ice Cream']] },
     { id: 'drinks', name: 'Drinks', subs: [['/hyperlocal/ColdDrinks-Juices/pr?sid=hloc%2F0007&marketplace=HYPERLOCAL&param=99887444&BU=Minutes', 'Cold Drinks & Juices'], ['/hyperlocal/Tea-Coffee-Milk-Drinks/pr?sid=hloc%2F0011&marketplace=HYPERLOCAL&param=141199888&BU=Minutes', 'Tea, Coffee & Milk Drinks']] },
-    { id: 'care', name: 'Personal Care', subs: [['/hyperlocal/Fruits/pr?sid=hloc%2F0056&marketplace=HYPERLOCAL&param=811674322&BU=Minutes', 'Bath & Body'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0044&marketplace=HYPERLOCAL&param=811632217&BU=Minutes', 'Hair Care'], ['/hyperlocal/Fruits/pr?sid=hloc%2Furkm&marketplace=HYPERLOCAL&param=4555321789&BU=Minutes', 'Makeup'], ['/hyperlocal/Fruits/pr?sid=hloc%2F6a5o&marketplace=HYPERLOCAL&param=87678909&BU=Minutes', 'Fragrances'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fqbq2&marketplace=HYPERLOCAL&param=32117834&BU=Minutes', 'Feminine Hygiene'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fzgt0&marketplace=HYPERLOCAL&param=63325589&BU=Minutes', 'Sexual Wellness'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0015&marketplace=HYPERLOCAL&param=param%3D811632217&BU=Minutes', 'Health & First Aid']] },
+    { id: 'care', name: 'Personal Care', subs: [['/hyperlocal/Fruits/pr?sid=hloc%2F0056&marketplace=HYPERLOCAL&param=811674322&BU=Minutes', 'Bath & Body'], ['/hyperlocal/Fruits/pr?sid=hloc%2F0044&marketplace=HYPERLOCAL&param=811632217&BU=Minutes', 'Hair Care'], ['/hyperlocal/Fruits/pr?sid=hloc%2Furkm&marketplace=HYPERLOCAL&param=4555321789&BU=Minutes', 'Makeup'], ['/hyperlocal/Fruits/pr?sid=hloc%2F6a5o&marketplace=HYPERLOCAL&param=87678909&BU=Minutes', 'Fragrances'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fqbq2&marketplace=HYPERLOCAL&param=32117834&BU=Minutes', 'Feminine Hygiene'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fzgt0&marketplace=HYPERLOCAL&param=63325589&BU=Minutes', 'Sexual Wellness'], ['/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/07d/', 'Health & First Aid']] },
     { id: 'baby', name: 'Baby Care', subs: [['/hyperlocal/Fruits/pr?sid=hloc%2F0001&marketplace=HYPERLOCAL&param=811654222&BU=Minutes', 'Baby Care']] },
-    { id: 'home', name: 'Home & Cleaning', subs: [['/hyperlocal/Cleaning-Essentials/pr?sid=hloc%2F0025&marketplace=HYPERLOCAL&param=31191665&BU=Minutes', 'Cleaning Essentials'], ['/hyperlocal/Kitchen/pr?sid=hloc%2F0048&marketplace=HYPERLOCAL&param=311907865&BU=Minutes', 'Kitchen Tools'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0047&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Home Furnishing'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0082&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Pooja Needs'], ['/hyperlocal/PetCare/pr?sid=hloc%2F0029&marketplace=HYPERLOCAL&param=189995342&BU=Minutes', 'Pet Care'], ['/hyperlocal/Electircals-Tools/pr?sid=hloc%2F0043&marketplace=HYPERLOCAL&param=311927765&BU=Minutes', 'Electricals & Batteries'], ['/hyperlocal/School-Supplies/pr?sid=hloc%2F0016&marketplace=HYPERLOCAL&param=3999087&BU=Minutes', 'Stationery']] },
-    { id: 'tech', name: 'Electronics', subs: [['/hyperlocal/Electronics%20and%20Gadgets/pr?sid=hloc%2F0038&marketplace=HYPERLOCAL&param=188299076&BU=Minutes', 'Mobile Accessories'], ['/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&param=7994332167&BU=Minutes', 'Audio & Wearables'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fi6ba&marketplace=HYPERLOCAL&param=3552677&BU=Minutes', 'Mobiles']] },
-    { id: 'toys', name: 'Toys & Games', subs: [['/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Toys & Games']] }
+    { id: 'home', name: 'Home & Cleaning', subs: [['/hyperlocal/Cleaning-Essentials/pr?sid=hloc%2F0025&marketplace=HYPERLOCAL&param=31191665&BU=Minutes', 'Cleaning Essentials'], ['/hyperlocal/Kitchen/pr?sid=hloc%2F0048&marketplace=HYPERLOCAL&param=311907865&BU=Minutes', 'Kitchen Tools'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0047&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Home Furnishing'], ['/hyperlocal/Toys-Games/pr?sid=hloc%2F0082&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Pooja Needs'], ['/hyperlocal/PetCare/pr?sid=hloc%2F0029&marketplace=HYPERLOCAL&param=189995342&BU=Minutes', 'Pet Care'], ['/hyperlocal/hloc/4901/pr?sid=hloc%2F0049%2F4901&marketplace=HYPERLOCAL&sort=discount', 'Paan Corner'], ['/hyperlocal/Electircals-Tools/pr?sid=hloc%2F0043&marketplace=HYPERLOCAL&param=311927765&BU=Minutes', 'Electricals & Batteries'], ['/hyperlocal/School-Supplies/pr?sid=hloc%2F0016&marketplace=HYPERLOCAL&param=3999087&BU=Minutes', 'Stationery']] },
+    { id: 'tech', name: 'Electronics', subs: [['/hyperlocal/Electronics%20and%20Gadgets/pr?sid=hloc%2F0038&marketplace=HYPERLOCAL&param=188299076&BU=Minutes', 'Mobile Accessories'], ['/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&param=7994332167&BU=Minutes', 'Audio & Wearables'], ['/hyperlocal/Fruits/pr?sid=hloc%2Fi6ba&marketplace=HYPERLOCAL&param=3552677&BU=Minutes', 'Mobiles'], ['/hyperlocal/Mobile-Accessories/pr?sid=hloc%2F0040&marketplace=HYPERLOCAL&sort=discount', 'Mobile Accessories']] },
+    { id: 'toys', name: 'Toys & Games', subs: [['/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&param=38879906&BU=Minutes', 'Toys & Games']] },
+    { id: 'sports', name: 'Sports & Fitness', subs: [['/hyperlocal/Sports-Fitness/pr?sid=hloc%2F0036&marketplace=HYPERLOCAL&sort=discount', 'Sports & Fitness']] },
+    { id: 'fashion', name: 'Fashion Accessories', subs: [['/hyperlocal/Fashion-Accessories/pr?sid=hloc%2F0026&marketplace=HYPERLOCAL&sort=discount', 'Fashion Accessories']] }
   ];
 
   const EXCLUDED = ['back cover', 'case cover', 'phone cover', 'mobile cover', 'phone case', 'screen guard', 'tempered glass'];
@@ -35,7 +37,7 @@
 
   const KEY = 'fkm_v2';
   const defaults = {
-    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, maxPrice: 0, depth: 2,
+    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, maxPrice: 0, depth: 3,
     stockOnly: true, groups: GROUPS.map(g => g.id),
     favs: [], hidden: [], list: {}, prices: {}, lastScan: 0
   };
@@ -46,27 +48,55 @@
   if (!store.groups.length) store.groups = defaults.groups.slice();
   delete store.auto; // every scan is started by hand
   // v3: Hunter scans every category by itself and leads with the biggest discounts.
-  if (store.v !== 3) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = (typeof P !== 'undefined' && P.defaults && P.defaults.depth) || 2; store.v = 3; save(); }
+  if (store.v !== 4) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = (typeof P !== 'undefined' && P.defaults && P.defaults.depth) || 3; store.v = 4; save(); }
 
   // ───────────────────────── Flipkart API ─────────────────────────
   // Flipkart keeps the Minutes delivery pincode in localStorage ("mypin"). Never send a different one:
   // Flipkart would switch the session to that address.
-  function activePincode() { try { return localStorage.getItem('mypin') || ''; } catch (e) { return ''; } }
+  // Minutes delivery pincode, read from wherever Flipkart saved it: the page's own
+  // session state first, then cookies, then storage. Never invent one: with no saved
+  // pincode the scan stops and asks the user to set their address.
+  function activePincode() {
+    try {
+      const st = W.__INITIAL_STATE__ || window.__INITIAL_STATE__;
+      if (st) {
+        const mw = st.multiWidgetState || {};
+        const pc = (mw.pincode && (mw.pincode.pincode || mw.pincode.systemPincode)) ||
+          (mw.appContext && mw.appContext.meta && mw.appContext.meta.pc) ||
+          (st.pageDataResponse && st.pageDataResponse.pageData && st.pageDataResponse.pageData.pageContext && st.pageDataResponse.pageData.pageContext.pincode) ||
+          (st.pageData && st.pageData.pageContext && st.pageData.pageContext.pincode);
+        if (pc && /^[0-9]{6}$/.test(String(pc))) return String(pc);
+      }
+    } catch (e) { /* fall through to cookies/storage */ }
+    try {
+      const m = document.cookie.match(/(?:^|;\s*)(?:pincode|snPincode|deliveryPincode)=([0-9]{6})/i);
+      if (m) return m[1];
+    } catch (e) { /* fall through */ }
+    try { return localStorage.getItem('mypin') || localStorage.getItem('pincode') || ''; } catch (e) { return ''; }
+  }
+  // Session ids Flipkart attaches to page requests, when the page exposes them.
+  function requestContext() {
+    const ctx = { type: 'BROWSE_PAGE' };
+    try {
+      const st = W.__INITIAL_STATE__ || window.__INITIAL_STATE__;
+      const rc = st && ((st.multiWidgetState && st.multiWidgetState.pageDataResponse && st.multiWidgetState.pageDataResponse.requestContext) || (st.pageDataResponse && st.pageDataResponse.requestContext) || st.requestContext);
+      if (rc) { if (rc.ssid) ctx.ssid = rc.ssid; if (rc.sqid) ctx.sqid = rc.sqid; }
+    } catch (e) { /* optional */ }
+    return ctx;
+  }
   function fkLocCheck() { return !!activePincode(); }
   function sanitizeUri(u) {
     return u.replace(/(sid=)([^&]*)/, (_, p, v) => p + v.replace(/\//g, '%2F'));
   }
   const FKUA = /Mobi|Android/i.test(navigator.userAgent) ? ' FKUA/msite/0.0.4/msite/Mobile' : ' FKUA/website/42/website/Desktop';
   let dc = '1', noLocation = false;
-  async function fetchRome(uri, signal, pager) {
+  async function fetchRome(uri, signal, redirects) {
     const pin = activePincode();
     if (!pin) { noLocation = true; return null; }
     const body = {
       pageUri: sanitizeUri(uri),
-      pageContext: pager
-        ? { slotContextMap: {}, pageHashKey: pager.hash, paginatedFetch: true, fetchAllPages: false, paginationContextMap: pager.map, pageNumber: pager.page }
-        : { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 4750 },
-      requestContext: { type: 'BROWSE_PAGE' },
+      pageContext: { trackingContext: { context: { eVar51: 'neo/merchandising', eVar61: 'creative_card' } }, networkSpeed: 4750 },
+      requestContext: requestContext(),
       locationContext: { pincode: +pin || pin, changed: false }
     };
     let ua = navigator.userAgent;
@@ -77,7 +107,7 @@
       try {
         const r = await W.fetch('https://' + dc + '.rome.api.flipkart.com/api/4/page/fetch?cacheFirst=false', {
           method: 'POST', mode: 'cors', credentials: 'include',
-          headers: { accept: '*/*', 'content-type': 'application/json', flipkart_secure: 'true', 'x-user-agent': ua },
+          headers: { accept: '*/*', 'accept-language': 'en-US,en;q=0.9', 'content-type': 'application/json', flipkart_secure: 'true', 'x-user-agent': ua },
           body: JSON.stringify(body)
         });
         if (r.status === 406) { // "DC Change": this pincode lives in another data centre, retry there
@@ -86,24 +116,59 @@
           if (id && String(id) !== dc) { dc = String(id); continue; }
           return null;
         }
-        if (r.status === 429 || r.status >= 500) throw new Error('HTTP ' + r.status);
+        if (r.status === 429 || r.status >= 500) { if (S.diag) S.diag.rateLimited++; throw new Error('HTTP ' + r.status); }
+        if (r.status === 401 || r.status === 403) { if (S.diag) S.diag.loggedOut = true; return null; }
         if (!r.ok) return null;
         const json = await r.json();
         const red = json && json.RESPONSE && json.RESPONSE.pageMeta && json.RESPONSE.pageMeta.redirectionObject;
         if (red && /hyperlocal-preview/.test(red.url || '')) noLocation = true;
+        // Empty page with a redirect: follow it (at most twice), like the store does.
+        const slots = json && json.RESPONSE && json.RESPONSE.slots;
+        if ((!slots || !slots.length) && red && red.url && !/hyperlocal-preview/.test(red.url) && (redirects || 0) < 2) {
+          let target = red.url;
+          if (/^https?:\/\//.test(target)) { try { const u = new URL(target); target = u.pathname + u.search; } catch (e) { target = target.replace(/^https?:\/\/[^/]+/, ''); } }
+          if (target && target !== sanitizeUri(uri)) return fetchRome(target, signal, (redirects || 0) + 1);
+        }
         return json;
       } catch (e) { lastErr = e; await sleep(600 * (attempt + 1)); }
     }
     throw lastErr;
   }
-  // One page of a category. Minutes ignores page=N; the next page needs the token from this one.
+  // Every category is fetched discount-first. Pages after the first are plain
+  // page=N requests, fetched only while the previous page still ends on a
+  // discount worth showing (50% off, 40% for staples).
+  function pageUriFor(uri, page) {
+    let u = sanitizeUri(uri);
+    if (!/[?&]sort=/.test(u)) u += (u.indexOf('?') < 0 ? '?' : '&') + 'sort=discount';
+    if (page > 1) u = /([?&])page=\d+/.test(u) ? u.replace(/([?&])page=\d+/, '$1page=' + page) : u + '&page=' + page;
+    return u;
+  }
+  // Fallback when Rome returns nothing usable: read the category page itself
+  // and parse the __INITIAL_STATE__ JSON embedded in it. Same products, second shape.
+  async function fetchHtmlState(uri) {
+    try {
+      const r = await W.fetch('https://www.flipkart.com' + sanitizeUri(uri), { credentials: 'include' });
+      if (!r.ok) return null;
+      const html = await r.text();
+      const i = html.indexOf('window.__INITIAL_STATE__');
+      if (i < 0) return null;
+      const js = html.indexOf('{', i), se = html.indexOf('</script>', js);
+      if (js < 0 || se < 0) return null;
+      const je = html.lastIndexOf('}', se);
+      if (je <= js) return null;
+      return JSON.parse(html.slice(js, je + 1));
+    } catch (e) { return null; }
+  }
   async function fetchPage(job, page, ctl) {
-    if (page === 1) job.pager = null;
-    const json = await fetchRome(job.uri, ctl, job.pager);
-    const items = json ? extract(json, job.g.name + ' › ' + job.name) : [];
-    const pd = json && json.RESPONSE && json.RESPONSE.pageData;
-    items.more = !!(pd && pd.hasMorePages && pd.paginationContextMap);
-    if (items.more) job.pager = { hash: pd.pageHash, map: pd.paginationContextMap, page: page + 1 };
+    const json = await fetchRome(pageUriFor(job.uri, page), ctl);
+    let items = extract(json, job.g.name + ' › ' + job.name);
+    if (page === 1 && !items.length) {
+      const state = await fetchHtmlState(job.uri);
+      if (state) { const alt = extract(state, job.g.name + ' › ' + job.name); if (alt.length) items = alt; }
+    }
+    if (page === 1 && !items.length && S.diag) S.diag.emptyCats.push(job.g.name + ' › ' + job.name);
+    const threshold = job.g.id === 'staples' ? 40 : 50;
+    items.more = page < store.depth && items.totalFound >= 6 && items.tailDisc >= threshold;
     return items;
   }
 
@@ -115,33 +180,162 @@
       for (const k of ['value', 'text', 'defaultValue', 'params', 'UNLOCKED', 'LOCKED']) {
         const p = price(v[k]); if (p > 0) return p;
       }
+      if (v.tracking && typeof v.tracking === 'object') {
+        const p = price(v.tracking.fsp) || price(v.tracking.mrp); if (p > 0) return p;
+      }
     }
     return 0;
+  }
+  // Title from a product URL slug, for cards that arrive without a title.
+  function titleFromUrl(u) {
+    const s = String(u || '').split('?')[0].replace(/\/p\/itm[a-z0-9_-]+.*$/i, '').split('/').filter(Boolean).pop() || '';
+    const words = s.replace(/-/g, ' ').replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/\s+/g, ' ');
+    return words ? words.replace(/\b\w/g, c => c.toUpperCase()) : '';
+  }
+  function discOf(v) {
+    if (v == null) return 0;
+    if (typeof v === 'number') return v;
+    const m = String(v).match(/(\d+(?:\.\d+)?)\s*%/);
+    return m ? +m[1] : 0;
+  }
+  function cleanImg(u) {
+    return String(u || '').replace('{@width}', '200').replace('{@height}', '200').replace('?q={@quality}', '?q=80').replace('{@quality}', '80');
+  }
+  // Shared finish for every parser shape: the selling price is never above the
+  // MRP (swap them if they arrive swapped, instead of hiding the discount), a
+  // missing MRP is rebuilt from the discount, and a MRP with the discount digits
+  // glued on the end is repaired.
+  function fromParts(id, title, sell, mrp, disc, img, url, oos, catName) {
+    if (!sell || sell <= 0) return null;
+    title = String(title || '').trim() || titleFromUrl(url) || 'Product';
+    // Swap only when both prices are real: a missing MRP (0) must not zero the price.
+    if (mrp > 0 && sell > mrp) { const t = sell; sell = mrp; mrp = t; }
+    if ((!mrp || mrp <= sell) && disc > 0 && disc < 100) mrp = Math.round(sell / (1 - disc / 100));
+    if (!mrp || mrp < sell) mrp = sell;
+    if (!disc || disc <= 0 || disc > 99) disc = mrp > sell ? Math.round((mrp - sell) / mrp * 100) : 0;
+    if (mrp > sell && disc > 0 && String(mrp).endsWith(String(Math.round(disc)))) {
+      const cur = Math.round((mrp - sell) / mrp * 100);
+      if (Math.abs(cur - disc) > 2) {
+        const clean = parseInt(String(mrp).slice(0, -String(Math.round(disc)).length), 10);
+        if (clean > sell) {
+          const cd = Math.round((clean - sell) / clean * 100);
+          if (Math.abs(cd - disc) <= 2) { mrp = clean; disc = cd; }
+        }
+      }
+    }
+    let link = url ? String(url) : '';
+    if (link && link.indexOf('http') !== 0) link = 'https://www.flipkart.com' + link;
+    if (link && link.indexOf('marketplace=HYPERLOCAL') < 0) link += (link.indexOf('?') < 0 ? '?' : '&') + 'marketplace=HYPERLOCAL';
+    const idm = link.match(/pid=([A-Z0-9_-]+)/i) || link.match(/\/p\/(itm[a-z0-9_-]+)/i);
+    return { id: String(id || (idm && idm[1]) || (title + '|' + sell)), title: String(title), brand: guessBrand(title), price: sell, mrp, disc, save: mrp - sell, img: cleanImg(img), url: link, inStock: !oos, cat: catName };
   }
   function normalise(v, catName) {
     const t = v.titles || {};
     const title = t.title || t.newTitle || t.superTitle || v.productTitle;
     const pr = v.pricing || {};
     const sell = price(pr.finalPrice && (pr.finalPrice.value != null ? pr.finalPrice.value : pr.finalPrice));
-    if (!title || !sell) return null;
+    if (!sell) return null;
     let mrp = 0;
     const prices = pr.prices || [];
     for (const x of prices) if (x.priceType === 'MRP') { mrp = price(x.value); break; }
     if (!mrp) mrp = price(pr.mrp);
-    if (mrp < sell) mrp = sell;
-    const disc = mrp > sell ? Math.round((mrp - sell) / mrp * 100) : 0;
-    let img = (v.media && v.media.images && v.media.images[0] && v.media.images[0].url) || (v.images && v.images[0] && v.images[0].url) || '';
-    img = img.replace('{@width}', '240').replace('{@height}', '240').replace('{@quality}', '70');
+    const disc = discOf(pr.totalDiscount);
+    const img = (v.media && v.media.images && v.media.images[0] && v.media.images[0].url) || (v.images && v.images[0] && v.images[0].url) || '';
     const path = v.baseUrl || v.smartUrl || '';
     const pa = v.productAction && v.productAction.value;
     const oos = (v.availability && v.availability.displayState === 'OUT_OF_STOCK') ||
+      (v.availability && v.availability.displayState && v.availability.displayState !== 'IN_STOCK') ||
       (pa && (pa.enabled === false || pa.actionType === 'NOTIFY_ME')) ||
-      (v.buyability && v.buyability.intent === 'negative');
-    const idm = path.match(/pid=([A-Z0-9]+)/i) || path.match(/\/p\/(itm[a-z0-9]+)/i);
-    const id = v.id || v.itemId || (idm && idm[1]) || (title + '|' + sell);
-    return { id: String(id), title: String(title), brand: guessBrand(title), price: sell, mrp, disc, save: mrp - sell, img, url: path ? 'https://www.flipkart.com' + path + (path.indexOf('?') < 0 ? '?' : '&') + 'marketplace=HYPERLOCAL' : '', inStock: !oos, cat: catName };
+      (v.buyability && v.buyability.intent === 'negative') ||
+      (v.action && v.action.params && v.action.params.isAvailable === false);
+    return fromParts(v.id || v.itemId || '', title, sell, mrp, disc, img, path, oos, catName);
   }
   function guessBrand(t) { return (t.trim().split(/\s+/)[0] || '').replace(/[^\w&'-]/g, ''); }
+  // Minutes also serves Atlas / DLS cards (search-grid and recommendation
+  // widgets) that carry no titles/pricing object, so the generic walk misses
+  // them entirely and those pages come back blank. Parse both card shapes.
+  function parseDls(json, catName, out, seen) {
+    const slots = (json && json.RESPONSE && json.RESPONSE.slots) || (json && json.slots) ||
+      (json && json.multiWidgetState && json.multiWidgetState.widgetsData && json.multiWidgetState.widgetsData.slots) ||
+      (json && json.multiWidgetState && json.multiWidgetState.pageDataResponse && json.multiWidgetState.pageDataResponse.slots) || [];
+    for (const s of slots) {
+      const w = (s.slotData || s).widget || (s.slotData || s);
+      const dls = (w.data && w.data.dlsData) || {};
+      for (const k in dls) {
+        if (k.indexOf('MRCSV') < 0 && k.indexOf('carouselData') < 0 && k.indexOf('gridData') < 0 && k.indexOf('horizontalListData') < 0) continue;
+        const cards = (dls[k] && dls[k].value) || [];
+        if (!Array.isArray(cards)) continue;
+        for (const cw of cards) {
+          try {
+            const cval = (cw && cw.value) || {};
+            // Case A: Atlas search/grid card.
+            if (cval.snb_hl_text_0 && cval.snb_hl_text_0.value) {
+              const snb = cval.snb_hl_text_0.value;
+              const lnk = (cval.col_0 && cval.col_0.action && (cval.col_0.action.url || cval.col_0.action.originalUrl)) || '';
+              const title = (snb.label_0 && snb.label_0.value && snb.label_0.value.text) || (snb.label_1 && snb.label_1.value && snb.label_1.value.text) || (cval.trackerData_0 && cval.trackerData_0.tracking && cval.trackerData_0.tracking.contentTitle) || '';
+              const stepper = (cval.stepperData_0 && cval.stepperData_0.action) || (cval.snb_beauty_gmh_image_0 && cval.snb_beauty_gmh_image_0.value && cval.snb_beauty_gmh_image_0.value.stepperData_0 && cval.snb_beauty_gmh_image_0.value.stepperData_0.action);
+              let p1 = price(snb.label_4), p2 = price(snb.label_3);
+              if (!p1 && stepper) p1 = price((stepper.params && stepper.params.price) || (stepper.tracking && stepper.tracking.fsp));
+              if (!p2 && stepper) p2 = price(stepper.tracking && stepper.tracking.mrp);
+              const sell = p1 && p2 ? Math.min(p1, p2) : (p1 || p2 || 0);
+              const mrp = p1 && p2 ? Math.max(p1, p2) : sell;
+              let disc = 0;
+              const l2 = snb.label_2 && snb.label_2.value;
+              const l2s = typeof l2 === 'object' ? ((l2.params && l2.params.defaultValue) || l2.text || '') : String(l2 || '');
+              const dm = String(l2s).match(/(\d+)%/);
+              if (dm) disc = +dm[1];
+              const oos = (stepper && stepper.tracking && stepper.tracking.isAvailable === 'false') || (stepper && stepper.enabled === false) || (cval.action && cval.action.params && cval.action.params.isAvailable === false);
+              let img = (cval.col_0 && cval.col_0.action && cval.col_0.action.params && cval.col_0.action.params.imageUrl) || (stepper && stepper.params && stepper.params.productImage) || '';
+              if (!img) {
+                const io = (cval.image_0 && cval.image_0.value) || (cval.snb_beauty_gmh_image_0 && cval.snb_beauty_gmh_image_0.value && cval.snb_beauty_gmh_image_0.value.image_0 && cval.snb_beauty_gmh_image_0.value.image_0.value) || {};
+                img = (io.params && io.params.defaultValue) || io.imageHack || io.dynamicImageUrl || '';
+              }
+              const p = fromParts('', title, sell, mrp, disc, img, lnk, oos, catName);
+              if (p && !seen.has(p.id)) { seen.add(p.id); out.push(p); }
+              continue;
+            }
+            // Case B: MRCSV product card.
+            let pcard = null;
+            for (const pk in cval) {
+              if (pk.indexOf('product-card') >= 0 || pk.indexOf('productCard') >= 0) { pcard = (cval[pk] && cval[pk].value) || {}; break; }
+            }
+            if (!pcard) continue;
+            const sa = (pcard.stepperData_0 && pcard.stepperData_0.action) || {};
+            const stk = sa.tracking || {};
+            const pSell = price((sa.params && sa.params.price) || stk.fsp) || price(pcard.label_5) || 0;
+            const pMrp = price(stk.mrp) || price(pcard.label_4) || 0;
+            const sell = pSell && pMrp ? Math.min(pSell, pMrp) : (pSell || pMrp || 0);
+            const mrp = pSell && pMrp ? Math.max(pSell, pMrp) : sell;
+            let disc = 0;
+            if (pcard.label_15 && pcard.label_15.value) {
+              const l15 = pcard.label_15.value;
+              const l15s = typeof l15 === 'object' ? ((l15.UNLOCKED && l15.UNLOCKED.value && l15.UNLOCKED.value.text) || (l15.LOCKED && l15.LOCKED.value && l15.LOCKED.value.text) || l15.text || '') : String(l15);
+              const dm = String(l15s).match(/(\d+)%/);
+              if (dm) disc = +dm[1];
+            }
+            const lnk = (pcard.box_5 && pcard.box_5.action && pcard.box_5.action.url) || (pcard.col_0 && pcard.col_0.action && pcard.col_0.action.url) || (pcard.box_0 && pcard.box_0.action && pcard.box_0.action.url) || '';
+            const title = (pcard.label_2 && pcard.label_2.value && pcard.label_2.value.text) || (pcard.label_1 && pcard.label_1.value && pcard.label_1.value.text) || (pcard.label_0 && pcard.label_0.value && pcard.label_0.value.text) || (pcard.trackerData_0 && pcard.trackerData_0.tracking && pcard.trackerData_0.tracking.contentTitle) || '';
+            let img = (sa.params && sa.params.productImage) || '';
+            if (!img) {
+              const io = (pcard['hp_reco_pmu_product-card_image_0'] && pcard['hp_reco_pmu_product-card_image_0'].value) || {};
+              img = (io.image_0 && io.image_0.value && io.image_0.value.dynamicImageUrl) || (io.video_0 && io.video_0.value && io.video_0.value.dynamicImageUrl) || '';
+            }
+            const oos = sa.enabled === false || (pcard.button_0 && pcard.button_0.value && pcard.button_0.value.actionType === 'NOTIFY_ME') || (pcard.button_0 && pcard.button_0.value && pcard.button_0.value.text && /notify/i.test(pcard.button_0.value.text));
+            const p = fromParts('', title, sell, mrp, disc, img, lnk, oos, catName);
+            if (p && !seen.has(p.id)) { seen.add(p.id); out.push(p); }
+          } catch (e) { /* one bad card must not kill the page */ }
+        }
+      }
+    }
+  }
+  // Built-in self-test payload: the same three parser shapes the live API serves.
+  // The Self-test button in the sidebar runs extract() on this and reports the count.
+  const SELFTEST = {"RESPONSE": {"slots": [{"slotData": {"widget": {"data": {"products": [{"productInfo": {"value": {"titles": {"title": "Self-Test Atta 1 kg"}, "pricing": {"finalPrice": {"value": 120}, "prices": [{"priceType": "MRP", "value": 240}]}, "media": {"images": [{"url": "https://example.com/a.jpg"}]}, "baseUrl": "/atta/p/itmTEST001"}}}]}}}}, {"slotData": {"widget": {"data": {"dlsData": {"gridData_0": {"value": [{"value": {"snb_hl_text_0": {"value": {"label_0": {"value": {"text": "Self-Test Rice 5 kg"}}, "label_3": {"value": 400}, "label_4": {"value": 199}, "label_2": {"value": "50% off"}}}, "col_0": {"action": {"url": "/rice/p/itmTEST002", "params": {"imageUrl": "https://example.com/b.jpg"}}}}}, {"value": {"hp_reco_pmu_product-card_0": {"value": {"label_2": {"value": {"text": "Self-Test Oil 1 L"}}, "label_4": {"value": 300}, "label_5": {"value": 149}, "label_15": {"value": "50% off"}, "stepperData_0": {"action": {"params": {"price": 149, "productImage": "https://example.com/c.jpg"}, "tracking": {"fsp": 149, "mrp": 300}}}, "box_5": {"action": {"url": "/oil/p/itmTEST003"}}}}}}]}}}}}}]}};
+  function selfTest() {
+    const items = extract(SELFTEST, 'Self-test');
+    const bad = items.filter(p => !p.title || !p.price || !p.mrp || !p.url);
+    return { total: 3, got: items.length, bad: bad.length, pass: items.length === 3 && !bad.length };
+  }
   // Walk the whole response instead of hard-coding slot paths: survives layout changes.
   function extract(json, catName) {
     const out = [], seen = new Set();
@@ -155,13 +349,17 @@
       }
       for (const k in o) walk(o[k], d + 1);
     })(json, 0);
+    // Atlas / DLS cards carry no titles+pricing, so the walk above skips them.
+    try { parseDls(json, catName, out, seen); } catch (e) { /* keep shape-1 results */ }
+    out.tailDisc = out.length ? out[out.length - 1].disc : 0;
+    out.totalFound = out.length;
     return out;
   }
   const allowed = p => { const t = p.title.toLowerCase(); return !EXCLUDED.some(k => t.includes(k)); };
 
   // ───────────────────────── State ─────────────────────────
   const S = { products: new Map(), scanning: false, done: 0, total: 0, errors: 0, ctl: { stop: false },
-    q: '', brand: '', cat: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0 };
+    q: '', brand: '', cat: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
 
   // ───────────────────────── Scanner ─────────────────────────
   async function scan() {
@@ -175,6 +373,7 @@
     }
     if (!jobs.length) { toast('Pick at least one category'); return; }
     S.scanning = true; S.ctl = { stop: false }; S.done = 0; S.errors = 0; S.total = jobs.length; S.startedAt = Date.now();
+    S.diag = { ran: true, loggedOut: false, rateLimited: 0, emptyCats: [] };
     S.products.clear(); S.shown = 60; render();
     const ctl = S.ctl, queue = jobs.slice();
     const runJob = async job => {
@@ -249,8 +448,14 @@
     unit: ['Unit price: low → high', (a, b) => unitVal(a) - unitVal(b)],
     name: ['Name A–Z', (a, b) => a.title.localeCompare(b.title)]
   };
+  // Comma separates OR groups; spaces inside a group are AND.
+  function matchQuery(p, q) {
+    const groups = String(q || '').trim().toLowerCase().split(',').map(g => g.trim().split(/\s+/).filter(Boolean)).filter(g => g.length);
+    if (!groups.length) return true;
+    const t = (p.title + ' ' + p.cat).toLowerCase();
+    return groups.some(g => g.every(w => t.includes(w)));
+  }
   function filtered() {
-    const q = S.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
     const fav = new Set(store.favs), hid = new Set(store.hidden);
     const out = [];
     S.products.forEach(p => {
@@ -263,7 +468,7 @@
       if ((S.favOnly || S.tab === 'saved') && !fav.has(p.id)) return;
       if (S.newOnly && !p.isNew && !p.was) return;
       if (S.preset && !PRESETS[S.preset][1](p)) return;
-      if (q.length) { const t = (p.title + ' ' + p.cat).toLowerCase(); if (!q.every(w => t.includes(w))) return; }
+      if (!matchQuery(p, S.q)) return;
       out.push(p);
     });
     return out.sort(S.preset === 'value' ? SORTS.unit[1] : SORTS[store.sort][1]);
@@ -569,7 +774,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   <label class="sw" style="margin-top:16px"><input type="checkbox" data-in="stockOnly" ${store.stockOnly ? 'checked' : ''}> In stock only</label>
   <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="favOnly" ${S.favOnly ? 'checked' : ''}> Saved only</label>
   <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="newOnly" ${S.newOnly ? 'checked' : ''}> New or price dropped</label></div>
- <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button></div>
+ <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="json">${ic('download', 14)}JSON</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button><button class="chip" data-act="selftest">${ic('check', 14)}Self-test</button></div>${S.selfTest ? `<p class="note" style="margin-top:10px">Self-test: ${S.selfTest.pass ? 'PASS' : 'FAIL'} — ${S.selfTest.got}/${S.selfTest.total} sample products parsed${S.selfTest.bad ? `, ${S.selfTest.bad} incomplete` : ''}.</p>` : ''}
   <p class="note" style="margin-top:14px"><kbd>/</kbd> search &nbsp;<kbd>S</kbd> scan &nbsp;<kbd>Esc</kbd> close</p></div>
 </aside>`;
   }
@@ -594,7 +799,20 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
       [typeof GM_xmlhttpRequest === 'function' ? true : null, 'Userscript installed', 'Optional. Recommended for reliable Telegram alerts.'],
       [tgReady() ? true : null, 'Telegram connected', 'Optional. Press Telegram in the top bar to connect your bot.']
     ];
-    return `<div class="check"><h3>Before your first ${capture ? 'capture' : 'scan'}</h3>${rows.map(([ok, t, hint]) => `<div class="ck ${ok ? 'ok' : ok === false ? 'no' : 'q'}"><span>${ic(ok ? 'check' : ok === false ? 'x' : 'info', 15)}</span><div><b>${t}</b>${!ok && hint ? `<p>${hint}</p>` : ''}</div></div>`).join('')}<button class="btn" data-act="scan" style="margin-top:16px">${ic('scan')}${capture ? 'Auto-scroll page' : 'Scan deals'}</button></div>`;
+    return `<div class="check"><h3>Before your first ${capture ? 'capture' : 'scan'}</h3>${rows.map(([ok, t, hint]) => `<div class="ck ${ok ? 'ok' : ok === false ? 'no' : 'q'}"><span>${ic(ok ? 'check' : ok === false ? 'x' : 'info', 15)}</span><div><b>${t}</b>${!ok && hint ? `<p>${hint}</p>` : ''}</div></div>`).join('')}<button class="btn" data-act="scan" style="margin-top:16px">${ic('scan')}${capture ? 'Auto-scroll page' : 'Scan deals'}</button></div>` + diagHtml();
+  }
+  // After a scan that found nothing, say why instead of showing a blank page.
+  function diagHtml() {
+    const d = S.diag;
+    if (!d || !d.ran || S.products.size) return '';
+    const rows = [];
+    if (d.loggedOut) rows.push(['Flipkart refused the session', 'Log in on flipkart.com, set your Minutes delivery address, then scan again.']);
+    if (noLocation) rows.push(['No Minutes delivery address found', 'Set your delivery address on the Minutes store page, then scan again.']);
+    if (d.rateLimited) rows.push([`Rate-limited ${d.rateLimited} time${d.rateLimited > 1 ? 's' : ''}`, 'Flipkart slowed the scan down. Wait a few minutes and scan again.']);
+    if (d.emptyCats.length) rows.push([`${d.emptyCats.length} categor${d.emptyCats.length > 1 ? 'ies' : 'y'} returned no products`, esc(d.emptyCats.slice(0, 3).join(' · ')) + (d.emptyCats.length > 3 ? ` · +${d.emptyCats.length - 3} more` : '') + ' — they may have no deals above your minimum discount, or the page served a layout this version cannot read. Lower the minimum discount and try again.']);
+    if (!rows.length && S.errors) rows.push(['Some categories failed to load', 'Check your connection and scan again.']);
+    if (!rows.length) return '';
+    return `<div class="check" style="margin-top:16px"><h3>Why 0 results</h3>${rows.map(([t, hint]) => `<div class="ck no"><span>${ic('info', 15)}</span><div><b>${esc(t)}</b><p>${hint}</p></div></div>`).join('')}</div>`;
   }
   function card(p, fav, qtyMap) {
     const inList = qtyMap[p.id];
@@ -663,7 +881,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     app.className = 'app' + (dark ? ' dark' : '');
     app.innerHTML = `<header><button class="ib menu-btn" data-act="side" title="Menu">${ic('menu')}</button>
  <div class="logo"><span class="mk">${ic('arrowdown', 20)}</span><div><b>PriceDrop Hunter</b><small><i class="plat">${esc(PLATFORM)}</i>${OFFSITE ? '<span class="flag">Not on store</span>' : ''}</small></div></div>
- <label class="search">${ic('search', 17)}<input data-in="q" placeholder="Search products or brands" value="${esc(S.q)}"><kbd>/</kbd></label><span class="sp"></span>
+ <label class="search">${ic('search', 17)}<input data-in="q" placeholder="Search products or brands (comma = or)" value="${esc(S.q)}"><kbd>/</kbd></label><span class="sp"></span>
  ${capture ? '' : S.scanning ? `<button class="sb stop" data-act="stop">${ic('stop', 16)}<span class="lb">Stop</span></button>` : `<button class="sb" data-act="scan">${ic('scan', 16)}<span class="lb">Scan</span></button>`}
  <button class="hb tgb" data-act="tgopen" title="Telegram alerts">${ic('send', 16)}<span class="lb">Telegram</span><span class="dot ${store.tg.on && tgReady() ? 'on' : ''}"></span></button>
  <button class="ib" data-act="theme" title="${dark ? 'Light' : 'Dark'} mode">${ic(dark ? 'sun' : 'moon')}</button>
@@ -688,6 +906,17 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   function listText() {
     const lines = Object.entries(store.list).map(([id, q]) => { const p = S.products.get(id) || (store._cache && store._cache[id]); return p ? `- ${p.title} x${q}: ${$inr(p.price * q)}${p.url ? '\n  ' + p.url : ''}` : null; }).filter(Boolean);
     return lines.join('\n');
+  }
+  // Pure serialisers for the filtered list, shared by the CSV/JSON buttons
+  // and covered by the regression test.
+  function serialise(list) {
+    const rows = [['Title', 'Brand', 'Category', 'Price', 'MRP', 'Discount %', 'Saving', 'In stock', 'URL']].concat(list.map(p => [p.title, p.brand, p.cat, p.price, p.mrp, p.disc, p.save, p.inStock, p.url]));
+    const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+    const json = JSON.stringify(list.map(p => ({ title: p.title, brand: p.brand, category: p.cat, price: p.price, mrp: p.mrp, discountPct: p.disc, saving: p.save, inStock: p.inStock, url: p.url })), null, 2);
+    return { csv, json };
+  }
+  function downloadFile(name, text, type) {
+    const a2 = document.createElement('a'); a2.href = URL.createObjectURL(new Blob([text], { type })); a2.download = name; a2.click();
   }
   // Add products from any source (scan, passive capture) with price-history flags.
   function ingest(items) {
@@ -818,11 +1047,9 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
       case 'copylist': copy(listText() || 'Empty list', 'List copied'); break;
       case 'openlinks': Object.keys(store.list).map(i => S.products.get(i)).filter(p => p && p.url).forEach(p => window.open(p.url, '_blank', 'noopener')); break;
       case 'copyall': copy(filtered().slice(0, 20).map(p => `${p.disc}% off · ${p.title} · ${$inr(p.price)} (MRP ${$inr(p.mrp)})${p.url ? '\n' + p.url : ''}`).join('\n'), 'Top 20 deals copied'); break;
-      case 'csv': {
-        const rows = [['Title', 'Brand', 'Category', 'Price', 'MRP', 'Discount %', 'Saving', 'In stock', 'URL']].concat(filtered().map(p => [p.title, p.brand, p.cat, p.price, p.mrp, p.disc, p.save, p.inStock, p.url]));
-        const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
-        const a2 = document.createElement('a'); a2.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a2.download = 'minutes-deals.csv'; a2.click(); toast('CSV downloaded'); break;
-      }
+      case 'csv': { const s2 = serialise(filtered()); downloadFile('minutes-deals.csv', s2.csv, 'text/csv'); toast('CSV downloaded'); break; }
+      case 'json': { const s2 = serialise(filtered()); downloadFile('minutes-deals.json', s2.json, 'application/json'); toast('JSON downloaded'); break; }
+      case 'selftest': { S.selfTest = selfTest(); render(); toast(S.selfTest.pass ? `Self-test PASS: ${S.selfTest.got}/${S.selfTest.total} sample products parsed` : `Self-test FAIL: ${S.selfTest.got}/${S.selfTest.total} parsed`); break; }
     }
   });
   document.addEventListener('keydown', e => {

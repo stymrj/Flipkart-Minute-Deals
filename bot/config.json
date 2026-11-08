@@ -131,7 +131,7 @@
           "Sexual Wellness"
         ],
         [
-          "/hyperlocal/Fruits/pr?sid=hloc%2F0015&marketplace=HYPERLOCAL&param=param%3D811632217&BU=Minutes",
+          "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/07d/",
           "Health & First Aid"
         ]
       ]
@@ -179,6 +179,10 @@
         [
           "/hyperlocal/School-Supplies/pr?sid=hloc%2F0016&marketplace=HYPERLOCAL&param=3999087&BU=Minutes",
           "Stationery"
+        ],
+        [
+          "/hyperlocal/hloc/4901/pr?sid=hloc%2F0049%2F4901&marketplace=HYPERLOCAL&sort=discount",
+          "Paan Corner"
         ]
       ]
     },
@@ -198,6 +202,10 @@
         [
           "/hyperlocal/Fruits/pr?sid=hloc%2Fi6ba&marketplace=HYPERLOCAL&param=3552677&BU=Minutes",
           "Mobiles"
+        ],
+        [
+          "/hyperlocal/Mobile-Accessories/pr?sid=hloc%2F0040&marketplace=HYPERLOCAL&sort=discount",
+          "Mobile Accessories"
         ]
       ]
     },
@@ -209,6 +217,28 @@
         [
           "/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&param=38879906&BU=Minutes",
           "Toys & Games"
+        ]
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "Sports & Fitness",
+      "minDiscount": 80,
+      "subs": [
+        [
+          "/hyperlocal/Sports-Fitness/pr?sid=hloc%2F0036&marketplace=HYPERLOCAL&sort=discount",
+          "Sports & Fitness"
+        ]
+      ]
+    },
+    {
+      "id": "fashion",
+      "name": "Fashion Accessories",
+      "minDiscount": 80,
+      "subs": [
+        [
+          "/hyperlocal/Fashion-Accessories/pr?sid=hloc%2F0026&marketplace=HYPERLOCAL&sort=discount",
+          "Fashion Accessories"
         ]
       ]
     }
