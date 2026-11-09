@@ -16,6 +16,7 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 - **Deeper by default:** 3 pages per category (was 2), 12 groups / 39 sub-categories (added Sports & Fitness, Fashion Accessories, Mobile Accessories, Paan Corner; fixed the broken Health & First Aid link).
 - **Multi-keyword search:** comma separates OR groups, spaces inside a group are AND — `atta, rice` finds either; `atta 1kg` needs both words.
 - **JSON export** alongside CSV, from the same filtered list.
+- **Bookmark name fixed:** the install button now reads **Flipkart Minutes Deals** instead of the generic “PriceDrop Hunter”, so the bookmark you drag to your bookmarks bar is named after this store.
 
 ## Why v2 is stronger
 
@@ -48,9 +49,9 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 
 [Watch the walkthrough video (MP4)](https://stymrj.github.io/PriceDrop-Hunter/media/install-demo.mp4)
 
-**Bookmarklet (desktop).** Run `node build.js`, open `index.html`, and drag the button to your bookmarks bar. Open flipkart.com and click the bookmark.
+**Bookmarklet (desktop).** Run `node build.js`, open `index.html`, and drag the **Flipkart Minutes Deals** button to your bookmarks bar. Open flipkart.com and click the bookmark.
 
-**Bookmarklet (mobile).** On the install page, tap **Copy mobile loader**. It is a bookmark of about 380 characters that loads the latest version from GitHub Pages, so it fits on any phone. Create a bookmark, paste it as the address, and run it from the address bar on flipkart.com. The full bookmarklet (about 45 KB, no network needed) is in `dist/bookmarklet.txt`.
+**Bookmarklet (mobile).** On the install page, tap **Copy mobile loader**. It is a bookmark of about 380 characters that loads the latest version from GitHub Pages, so it fits on any phone. Create a bookmark named **Flipkart Minutes Deals**, paste it as the address, and run it from the address bar on flipkart.com. The full bookmarklet (about 45 KB, no network needed) is in `dist/bookmarklet.txt`.
 
 **Userscript.** Install `dist/minutes-deal-radar.user.js` in Tampermonkey or Violentmonkey. A small Deals button appears on every flipkart.com page.
 

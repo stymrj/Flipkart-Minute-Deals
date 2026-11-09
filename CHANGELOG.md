@@ -1,6 +1,7 @@
 # Changelog
 
 ## v2.0.0 — 2026-11-08
+- Fixed (2026-11-09): install button now reads “Flipkart Minutes Deals” instead of the generic “PriceDrop Hunter”, so the dragged bookmark is named after this store instead of colliding with every other tool.
 
 - Fetch layer rewritten around discount-first requests: every category is fetched
   with `sort=discount`; pages after the first are plain `page=N` requests, taken
