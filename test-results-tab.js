@@ -22,6 +22,9 @@ function slice(startMark, endMark, name) {
 // Parser slice: price -> extract (covers fromParts, normalise, parseDls,
 // SELFTEST + selfTest). serialise slice and matchQuery slice likewise.
 eval(slice('  function price(v) {', '  const allowed = ', 'parser'));
+// byDisc is a const in src, so a plain eval() would scope it to the eval
+// itself: capture the comparator expression instead of the declaration.
+const byDisc = eval(slice('  const byDisc = ', '  function bestView', 'byDisc').replace(/^\s*const byDisc =\s*/, '').replace(/;\s*$/, ''));
 eval(slice('  function card(p, fav, qtyMap) {', '  const byDisc = ', 'card'));
 eval(slice('  function listText() {', '  // Add products from any source', 'serialise'));
 eval(slice('  // Comma separates OR groups', '  function filtered() {', 'matchQuery'));
@@ -45,11 +48,30 @@ check('title falls back to URL slug', byTitle('Tata Salt 1 Kg') && byTitle('Tata
 check('Atlas cards parsed (3)', items.filter(p => /Fortune Oil|Aashirvaad|OOS Ghee/.test(p.title)).length === 3);
 check('MRCSV cards parsed (3)', items.filter(p => /Maggi|Parle-G|Amul Butter/.test(p.title)).length === 3);
 check('out-of-stock flagged, not dropped', items.filter(p => !p.inStock).length === 2);
-check('tail discount recorded', items.tailDisc === items[items.length - 1].disc && items.totalFound === 12, 'tailDisc=' + items.tailDisc);
+check('tail discount is the listing minimum, not the last card', items.tailDisc === 25 && items.totalFound === 12, 'tailDisc=' + items.tailDisc);
 
 // Same payload wrapped as an __INITIAL_STATE__ object (HTML fallback shape).
 const statePayload = { multiWidgetState: { widgetsData: { slots: fixture.RESPONSE.slots } } };
 check('HTML-fallback state shape parses', extract(statePayload, 'Test').length === 12);
+
+// Highest-discount fixture: 85-95% items plus the shapes that used to drop them.
+// The 5% trailing DLS card must not decide paging; the object discount and
+// the LOW_STOCK clearance item must survive to the results tab.
+const hd = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-high-discount.json'), 'utf8'));
+const hi = extract(hd, 'Test');
+check('high-discount fixture parses 8 products', hi.length === 8, 'got ' + hi.length);
+const byHd = t => hi.find(p => p.title === t);
+check('object totalDiscount + missing MRP: 85% (mrp rebuilt to 1000)', byHd('HD Object Discount Tea 85') && byHd('HD Object Discount Tea 85').disc === 85 && byHd('HD Object Discount Tea 85').mrp === 1000);
+check('LOW_STOCK clearance item stays in stock', byHd('HD Low Stock Coffee 90') && byHd('HD Low Stock Coffee 90').inStock === true);
+check('OUT_OF_STOCK item still flagged, not dropped', byHd('HD Out Of Stock Ghee 90') && byHd('HD Out Of Stock Ghee 90').inStock === false);
+check('tail discount is the listing minimum (85), not the trailing 5% card', hi.tailDisc === 85, 'tailDisc=' + hi.tailDisc);
+check('paging continues past page 1 (tail 85 >= 50 threshold, 8 found)', hi.tailDisc >= 50 && hi.totalFound >= 6);
+// Best deals: the same byDisc order the Best tab renders, minDisc 30 + in stock.
+const best = hi.filter(p => p.inStock && p.disc >= 30).slice().sort(byDisc);
+check('highest-discount item sorts first for Best deals', best[0] && best[0].title === 'HD Clearance Mixer 95' && best[0].disc === 95);
+const bestHtml = best.slice(0, 12).map(p => card(p, false, {})).join('');
+check('Best-deals grid renders the 95% item first', bestHtml.indexOf('HD Clearance Mixer 95') !== -1 && bestHtml.indexOf('HD Clearance Mixer 95') < bestHtml.indexOf('HD String MRP Rice 90'));
+check('Best-deals grid shows the 95% badge', bestHtml.includes('95% OFF'));
 
 // Render: the real card() must emit one <article class="card" per product.
 const gridHtml = items.map(p => card(p, false, {})).join('');

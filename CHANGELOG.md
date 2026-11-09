@@ -2,6 +2,7 @@
 
 ## v2.0.0 — 2026-11-08
 - Fixed (2026-11-09): install button now reads “Flipkart Minutes Deals” instead of the generic “PriceDrop Hunter”, so the dragged bookmark is named after this store instead of colliding with every other tool.
+- Fixed (2026-11-09): highest-discount products were missed — the paging signal read the last card's discount, and a low-discount recommendation card trailing page 1 stopped the scan, so deeper pages were never fetched; it now reads the lowest discount in the discount-sorted listing. Also: object-shaped `totalDiscount` is now read (it parsed as 0% and the item was filtered out), and `LOW_STOCK` items are no longer treated as out of stock. Same fixes mirrored in `bot/platform.js`, and the bot's early-stop now uses the same tail discount in `bot/core.js`. No version bump (stays 2.0.0).
 
 - Fetch layer rewritten around discount-first requests: every category is fetched
   with `sort=discount`; pages after the first are plain `page=N` requests, taken

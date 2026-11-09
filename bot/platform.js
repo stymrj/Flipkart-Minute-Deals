@@ -8,6 +8,10 @@ let dc = '1';
 function discOf(v) {
   if (v == null) return 0;
   if (typeof v === 'number') return v;
+  // Discount can arrive wrapped in an object ({value: "85% off"}):
+  // unwrap it first instead of stringifying the object (which reads 0
+  // and silently drops the item under the minimum-discount filter).
+  if (typeof v === 'object') return discOf(v.value != null ? v.value : (v.text != null ? v.text : v.defaultValue));
   const m = String(v).match(/(\d+(?:\.\d+)?)\s*%/);
   return m ? +m[1] : 0;
 }
@@ -57,8 +61,10 @@ function normalise(v, cat, ctx) {
   const img = (v.media && v.media.images && v.media.images[0] && v.media.images[0].url) || (v.images && v.images[0] && v.images[0].url) || '';
   const path = v.baseUrl || v.smartUrl || '';
   const pa = v.productAction && v.productAction.value;
+  // Only an explicit out-of-stock state hides an item: any other state
+  // (e.g. LOW_STOCK on a clearance line) is still buyable, and treating
+  // it as out of stock hid the deepest discounts behind "in stock only".
   const oos = (v.availability && v.availability.displayState === 'OUT_OF_STOCK') ||
-    (v.availability && v.availability.displayState && v.availability.displayState !== 'IN_STOCK') ||
     (pa && (pa.enabled === false || pa.actionType === 'NOTIFY_ME')) ||
     (v.buyability && v.buyability.intent === 'negative') ||
     (v.action && v.action.params && v.action.params.isAvailable === false);
@@ -139,19 +145,24 @@ function parseDls(json, cat, ctx, out, seen) {
   }
 }
 function extract(json, cat, ctx) {
-  const out = [], seen = new Set();
+  const out = [], seen = new Set(), listingDiscs = [];
   (function walk(o, d) {
     if (!o || typeof o !== 'object' || d > 14) return;
     if (Array.isArray(o)) { for (const x of o) walk(x, d + 1); return; }
     if (o.titles && o.pricing) {
       const p = normalise(o, cat, ctx);
-      if (p && !seen.has(p.id)) { seen.add(p.id); out.push(p); }
+      if (p && !seen.has(p.id)) { seen.add(p.id); out.push(p); listingDiscs.push(p.disc); }
       return;
     }
     for (const k in o) walk(o[k], d + 1);
   })(json, 0);
   try { parseDls(json, cat, ctx, out, seen); } catch (e) { /* keep shape-1 results */ }
-  out.tailDisc = out.length ? out[out.length - 1].disc : 0;
+  // Paging signal: the lowest discount in the discount-sorted listing
+  // (shape-1 products) only. Atlas/DLS recommendation cards carry
+  // arbitrary discounts and sit last in the array, so reading the last
+  // item's discount stopped paging after page 1 whenever a low-discount
+  // card trailed a page full of 85-95% deals.
+  out.tailDisc = listingDiscs.length ? Math.min(...listingDiscs) : (out.length ? Math.min(...out.map(p => p.disc)) : 0);
   out.totalFound = out.length;
   return out;
 }
