@@ -10,11 +10,11 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 - **Highest-discount fix (2026-11-09):** the page-end discount that decides whether deeper pages are fetched is now the lowest discount in the discount-sorted listing — a low-discount recommendation card trailing page 1 used to stop the scan there, so the deepest discounts on later pages were never fetched. A discount wrapped in an object (e.g. `totalDiscount: {value: "85% off"}`) is now read instead of parsing as 0%, and clearance items flagged `LOW_STOCK` are no longer treated as out of stock.
 - **Atlas / DLS cards parsed:** Minutes pages that serve search-grid and recommendation cards (no `titles`/`pricing` object) used to come back blank. Both card shapes are now parsed, so those pages return products.
 - **Price repair:** a selling price above the MRP is swapped back instead of hiding the discount; a missing MRP is rebuilt from the discount; a MRP with the discount digits glued on the end is repaired. Prices hidden in `tracking.fsp`/`tracking.mrp` and the `totalDiscount` field are now read.
-- **Pincode from the session:** the delivery pincode is read from the page's own session state, then cookies, then storage. It never invents one and never sends a different address than the one you already set.
+- **Pincode from the session:** the delivery pincode is read from the page's own session state, then cookies, then storage. The browser tool never invents one and never sends a different address than the one you already set. (The Telegram bot reads `PINCODE` if set, else the pincode saved in the session cookie, else 560032 — see the bot table below.)
 - **HTML fallback:** if the page-fetch API returns nothing usable for a category, Hunter reads the category page itself and parses the `__INITIAL_STATE__` JSON embedded in it.
 - **Empty-state diagnostics:** a scan that finds nothing now says why — signed out, no delivery address, rate-limited, or categories that returned no products — instead of a blank page.
 - **Self-test button:** the sidebar has a Self-test that runs the parser on a built-in sample payload (all three card shapes) and reports PASS/FAIL. Run it any time the results look wrong.
-- **Deeper by default:** 3 pages per category (was 2), 12 groups / 39 sub-categories (added Sports & Fitness, Fashion Accessories, Mobile Accessories, Paan Corner; fixed the broken Health & First Aid link).
+- **Deeper by default:** 3 pages per category in the browser tool (was 2); the Telegram bot still scans 2 pages per aisle by default (see `PAGES` below). 12 groups / 39 sub-categories (added Sports & Fitness, Fashion Accessories, Mobile Accessories, Paan Corner; fixed the broken Health & First Aid link).
 - **Multi-keyword search:** comma separates OR groups, spaces inside a group are AND — `atta, rice` finds either; `atta 1kg` needs both words.
 - **JSON export** alongside CSV, from the same filtered list.
 - **Bookmark name fixed:** the install button now reads **Flipkart Minutes Deals** instead of the generic “PriceDrop Hunter”, so the bookmark you drag to your bookmarks bar is named after this store.
@@ -39,6 +39,9 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 - Unit price (per kg, litre or piece) with a value sort
 - One-tap presets: under ₹99, 50% off, save ₹100+, price drops, lowest ever, best value
 - A setup checklist on first open, plus a "Why 0 results" box after an empty scan
+- Self-test button in the sidebar: parses a built-in sample payload and reports PASS/FAIL
+- In-stock-only filter, on by default (toggle it in Settings)
+- Keyboard shortcuts: `/` search, `S` scan (or stop a running scan), `Esc` close
 - Filters: search, category, brand, maximum price, minimum discount, stock, saved items
 - Shopping list with quantities, total and total savings
 - CSV and JSON export, copy-to-share text, grid/list views, light and dark themes
@@ -52,7 +55,7 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 
 **Bookmarklet (desktop).** Run `node build.js`, open `index.html`, and drag the **Flipkart Minutes Deals** button to your bookmarks bar. Open flipkart.com and click the bookmark.
 
-**Bookmarklet (mobile).** On the install page, tap **Copy mobile loader**. It is a bookmark of about 380 characters that loads the latest version from GitHub Pages, so it fits on any phone. Create a bookmark named **Flipkart Minutes Deals**, paste it as the address, and run it from the address bar on flipkart.com. The full bookmarklet (about 45 KB, no network needed) is in `dist/bookmarklet.txt`.
+**Bookmarklet (mobile).** On the install page, tap **Copy mobile loader**. It is a bookmark of about 380 characters that loads the latest version from GitHub Pages, so it fits on any phone. Create a bookmark named **Flipkart Minutes Deals**, paste it as the address, and run it from the address bar on flipkart.com. The full bookmarklet (about 70 KB, no network needed) is in `dist/bookmarklet.txt`.
 
 **Userscript.** Install `dist/minutes-deal-radar.user.js` in Tampermonkey or Violentmonkey. A small Deals button appears on every flipkart.com page.
 
@@ -125,9 +128,12 @@ Optional variables:
 | Variable | Default | What it does |
 | :--- | :--- | :--- |
 | `MIN_DISCOUNT` | per group | One threshold for every group, for example `65` |
+| `THRESHOLDS` | per group | Per-group discount thresholds, for example `fresh=60,staples=65` (group ids from `bot/config.json`) |
 | `GROUPS` | all | Only scan these groups, for example `fresh,staples` |
 | `PAGES` | `2` | Pages per aisle, 1 to 5 |
 | `DIGEST_HOUR_IST` | `9` | Hour of the morning catalogue; `-1` turns it off |
+| `MAX_WORKERS` | `4` | How many aisles the bot scans at once |
+| `MAX_ALERTS` | `40` | Most deals sent per message section (new / cheaper / back in stock) |
 | `RUNNER` | `ubuntu-latest` | Set to `self-hosted` to run on your own computer |
 
 ### Step 5: Enable and test
@@ -163,6 +169,8 @@ A session cookie works like your password for that site. Keep it only in GitHub 
 - **Login / location:** Hunter only works inside your own logged-in flipkart.com tab, and always uses the delivery pincode Flipkart already saved for you — it never changes your address. If the pincode is wrong, fix it on the Minutes store page, not in Hunter.
 - **Self-test fails:** the parser itself is broken for the built-in sample — check that `dist/` was rebuilt with `node build.js` after the last change, and report the FAIL line.
 - **Telegram test fails:** use the userscript version; the bookmarklet is blocked from calling Telegram on some pages.
+- **Bot never runs on schedule:** scheduled runs only start once the `BOT_ENABLED` variable is `true` (Step 4) and the workflow is enabled in the Actions tab. A manual **Run workflow** still works without it.
+- **Bot run exits 1 (no token/chat ID, or "Missing settings"):** the `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` or `FLIPKART_COOKIE` secret is missing or empty — re-add it under Settings → Secrets and variables → Actions → Secrets. A dry run (`--dry-run` locally, or the dry-run tickbox on Run workflow) does not need the Telegram secrets.
 
 ## Testing
 
