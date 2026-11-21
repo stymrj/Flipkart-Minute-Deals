@@ -2,7 +2,7 @@
 
 Scans the Flipkart Minutes categories you pick and shows the biggest discounts first, then the best deals of each category. It runs in your own browser as a bookmarklet or userscript. Nothing is uploaded and there is no account.
 
-**Live page:** http://satyamraj.in/Flipkart-Minute-Deals/
+**Live page:** https://satyamraj.in/Flipkart-Minute-Deals/
 
 ## What's new in v2 (2026-11-08)
 
@@ -49,9 +49,9 @@ Scans the Flipkart Minutes categories you pick and shows the biggest discounts f
 
 ## Install
 
-![Install walkthrough](http://satyamraj.in/PriceDrop-Hunter/media/install-demo.gif)
+![Install walkthrough](https://satyamraj.in/PriceDrop-Hunter/media/install-demo.gif)
 
-[Watch the walkthrough video (MP4)](http://satyamraj.in/PriceDrop-Hunter/media/install-demo.mp4)
+[Watch the walkthrough video (MP4)](https://satyamraj.in/PriceDrop-Hunter/media/install-demo.mp4)
 
 **Bookmarklet (desktop).** Run `node build.js`, open `index.html`, and drag the **Flipkart Minutes Deals** button to your bookmarks bar. Open flipkart.com and click the bookmark.
 
