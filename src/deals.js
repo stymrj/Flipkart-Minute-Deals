@@ -1056,7 +1056,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
       case 'dec': if (--store.list[id] <= 0) delete store.list[id]; save(); render(); break;
       case 'clearlist': store.list = {}; save(); render(); break;
       case 'copylist': copy(listText() || 'Empty list', 'List copied'); break;
-      case 'openlinks': Object.keys(store.list).map(i => S.products.get(i) || store._cache[i]).filter(p => p && p.url).forEach(p => window.open(p.url, '_blank', 'noopener')); break;
+      case 'openlinks': { const ids = Object.keys(store.list), live = ids.filter(i => S.products.has(i)); live.map(i => S.products.get(i)).concat(ids.filter(i => !S.products.has(i)).map(i => store._cache[i])).filter(p => p && p.url).forEach(p => window.open(p.url, '_blank', 'noopener')); break; }
       case 'copyall': copy(filtered().slice(0, 20).map(p => `${p.disc}% off · ${p.title} · ${$inr(p.price)} (MRP ${$inr(p.mrp)})${p.url ? '\n' + p.url : ''}`).join('\n'), 'Top 20 deals copied'); break;
       case 'csv': { const s2 = serialise(filtered()); downloadFile('minutes-deals.csv', s2.csv, 'text/csv'); toast('CSV downloaded'); break; }
       case 'json': { const s2 = serialise(filtered()); downloadFile('minutes-deals.json', s2.json, 'application/json'); toast('JSON downloaded'); break; }
