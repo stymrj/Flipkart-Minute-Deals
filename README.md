@@ -174,7 +174,7 @@ A session cookie works like your password for that site. Keep it only in GitHub 
 
 ## Testing
 
-Run `node test-results-tab.js` (sample Rome payload: 12 products, all 3 card shapes, parser -> real card() render) and `node build.js` to rebuild `dist/` and `index.html`.
+Run `node test-results-tab.js` (sample Rome payload: 12 products, all 3 card shapes, parser -> real card() render), `node test-bot.js` (Telegram bot with a fake store and fake Telegram: new deals, price drops, restocks, dedupe, the dead-session warning and `--json` feed mode) and `node build.js` to rebuild `dist/` and `index.html`. The Tests workflow runs all of them on every pull request and fails if `dist/` was not rebuilt.
 
 The regression test asserts 12 parsed products render 12 cards, plus the swapped-price, glued-MRP, tracking-price and title-fallback repairs, the self-test, CSV/JSON export and multi-keyword search. Live Flipkart results still need a manual browser test: the API cannot be fully verified from a machine without a logged-in Minutes session.
 
@@ -195,9 +195,10 @@ Calls the same page-fetch API the Flipkart site uses (`1.rome.api.flipkart.com/a
 src/deals.js         the app (one file, no dependencies)
 src/index.tpl.html   install page template
 bot/                 Telegram bot: run.js, core.js, platform.js, config.json
-.github/workflows/   telegram-bot.yml (every 30 minutes)
+.github/workflows/   telegram-bot.yml (every 30 minutes), deals-feed.yml (daily feed), tests.yml (pull requests)
 .env.example         settings for local runs
 test-results-tab.js  regression test (node test-results-tab.js)
+test-bot.js          bot regression test (node test-bot.js)
 fixtures/sample-api.json   sample Rome payload for the test
 build.js             builds dist/ and index.html
 favicon.svg

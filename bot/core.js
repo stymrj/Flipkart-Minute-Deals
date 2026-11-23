@@ -136,7 +136,8 @@ async function run(platform, argv = process.argv.slice(2)) {
   // stale/empty feed. The JSON object is always the LAST stdout line; the
   // workflow extracts it with `tail -n 1` (other console.log lines stay).
   if (jsonMode) {
-    if (blocked) return 1;
+    // A dead session or a scan where every aisle failed must not publish an empty feed.
+    if (blocked || (!found.size && failed)) return 1;
     const minJson = +env.MIN_DISCOUNT || 50;
     const deals = [...found.values()]
       .filter(p => p.inStock && p.disc >= minJson)
@@ -146,13 +147,25 @@ async function run(platform, argv = process.argv.slice(2)) {
     console.log(JSON.stringify({ store: platform.label, generatedAt: new Date().toISOString(), deals }));
     return 0;
   }
-  if (!found.size) return blocked || failed === jobs.length ? 1 : 0;
-
   const stateFile = path.join(ROOT, 'data', 'state.json');
   let st = {};
   try { st = JSON.parse(fs.readFileSync(stateFile, 'utf8')); } catch (e) { /* first run */ }
   st.items = st.items || {};
   const now = ist();
+  const save = () => { if (dry) return; fs.mkdirSync(path.dirname(stateFile), { recursive: true }); fs.writeFileSync(stateFile, JSON.stringify(st)); };
+  // A refused session (expired cookie, no Minutes address) is sent to Telegram
+  // once per IST day, so alerts never stop silently. The run still exits 1.
+  const warnBlocked = async () => {
+    if (!blocked) { delete st.blockedDate; return; }
+    if (st.blockedDate === now.date) return;
+    const text = `<b>PriceDrop Hunter · ${esc(platform.label)}</b>\nAlerts are paused: ${esc(blocked)}`;
+    if (dry) { console.log('\n----- message -----\n' + text.replace(/<[^>]+>/g, '')); return; }
+    try { await telegram(fetch, token, chat, text); st.blockedDate = now.date; }
+    catch (e) { console.error('Could not send the session warning: ' + e.message); }
+  };
+  const finish = async code => { await warnBlocked(); save(); return blocked ? 1 : code; };
+  if (!found.size) return finish(failed === jobs.length ? 1 : 0);
+
   const digestHour = env.DIGEST_HOUR_IST === undefined || env.DIGEST_HOUR_IST === '' ? 9 : +env.DIGEST_HOUR_IST;
   const digest = digestHour >= 0 && st.digestDate !== now.date && now.hour >= digestHour;
 
@@ -160,7 +173,7 @@ async function run(platform, argv = process.argv.slice(2)) {
   for (const p of found.values()) {
     const prev = st.items[p.id];
     if (p.inStock && p.disc >= p.min) {
-      if (digest || !prev) fresh.push(p);
+      if (digest || !prev) { if (prev && p.price < prev.price) p.was = prev.price; fresh.push(p); }
       else if (p.price < prev.price) { p.was = prev.price; drops.push(p); }
       else if (prev.inStock === false) back.push(p);
     }
@@ -172,8 +185,7 @@ async function run(platform, argv = process.argv.slice(2)) {
 
   const max = +env.MAX_ALERTS || 40;
   const total = fresh.length + drops.length + back.length;
-  const save = () => { if (dry) return; fs.mkdirSync(path.dirname(stateFile), { recursive: true }); fs.writeFileSync(stateFile, JSON.stringify(st)); };
-  if (!total) { console.log('No new deals, price drops or restocks. Nothing sent.'); if (digest) st.digestDate = now.date; save(); return 0; }
+  if (!total) { console.log('No new deals, price drops or restocks. Nothing sent.'); if (digest) st.digestDate = now.date; return finish(0); }
 
   const summary = [fresh.length && `${fresh.length} ${digest ? 'deals today' : 'new'}`, drops.length && `${drops.length} cheaper`, back.length && `${back.length} back in stock`].filter(Boolean).join(' · ');
   const head = `<b>PriceDrop Hunter · ${esc(platform.label)}</b>\n${summary}`;
@@ -181,13 +193,12 @@ async function run(platform, argv = process.argv.slice(2)) {
   if (dry) {
     msgs.forEach(m => console.log('\n----- message -----\n' + m.replace(/<[^>]+>/g, '')));
     console.log(`\nDry run: ${msgs.length} message(s) not sent, state not saved.`);
-    return 0;
+    return finish(0);
   }
   for (const m of msgs) { await telegram(fetch, token, chat, m); await sleep(1100); }
   if (digest) st.digestDate = now.date;
-  save();
   console.log(`Sent ${msgs.length} message(s): ${summary}`);
-  return 0;
+  return finish(0);
 }
 
 module.exports = { run, price, sleep, esc, brandOf, compose };
