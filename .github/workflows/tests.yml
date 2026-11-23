@@ -1,0 +1,26 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Parser and results tab
+        run: node test-results-tab.js
+      - name: Install button name
+        run: node test-bookmark-name.js
+      - name: Telegram bot
+        run: node test-bot.js
+      - name: Built files match src/
+        run: |
+          node build.js
+          git diff --exit-code -- dist index.html || { echo "dist/ or index.html is stale: run node build.js and commit"; exit 1; }
