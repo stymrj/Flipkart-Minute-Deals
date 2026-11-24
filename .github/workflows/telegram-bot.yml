@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Check required secrets
         id: check
+        shell: bash
         env:
           FLIPKART_COOKIE: ${{ secrets.FLIPKART_COOKIE }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
