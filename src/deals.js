@@ -372,7 +372,7 @@
 
   // ───────────────────────── State ─────────────────────────
   const S = { products: new Map(), scanning: false, done: 0, total: 0, errors: 0, ctl: { stop: false },
-    q: '', brand: '', cat: '', sub: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
+    q: '', kw: '', brand: '', cat: '', sub: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
 
   // ───────────────────────── Scanner ─────────────────────────
   async function scan() {
@@ -491,6 +491,7 @@
       if (S.newOnly && !p.isNew && !p.was) return;
       if (S.preset && !PRESETS[S.preset][1](p)) return;
       if (!matchQuery(p, S.q)) return;
+      if (S.kw && !matchQuery({ title: p.title, cat: '' }, S.kw)) return;
       out.push(p);
     });
     return out.sort(S.preset === 'value' ? SORTS.unit[1] : SORTS[store.sort][1]);
@@ -813,7 +814,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
    <button class="pill tgl ${store.stockOnly ? 'on' : ''}" data-act="flag" data-v="stockOnly">${ic('check', 13)}In stock only</button>
    <button class="pill tgl ${S.newOnly ? 'on' : ''}" data-act="flag" data-v="newOnly">${ic('arrowdown', 13)}New or price dropped</button>
    <button class="pill tgl ${S.favOnly ? 'on' : ''}" data-act="flag" data-v="favOnly">${ic('heart', 13)}Saved only</button></div>
-  <h5>Quick search</h5><div class="pills c2">${QUICK.map(k => `<button class="pill ${S.q.toLowerCase() === k.toLowerCase() ? 'on' : ''}" data-act="kw" data-v="${esc(k)}">${esc(k)}</button>`).join('')}</div></div>
+  <h5>Quick search</h5><div class="pills c2">${QUICK.map(k => `<button class="pill ${S.kw === k ? 'on' : ''}" data-act="kw" data-v="${esc(k)}">${esc(k)}</button>`).join('')}</div></div>
  <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="json">${ic('download', 14)}JSON</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button><button class="chip" data-act="selftest">${ic('check', 14)}Self-test</button></div>${S.selfTest ? `<p class="note" style="margin-top:10px">Self-test: ${S.selfTest.pass ? 'PASS' : 'FAIL'} — ${S.selfTest.got}/${S.selfTest.total} sample products parsed${S.selfTest.bad ? `, ${S.selfTest.bad} incomplete` : ''}.</p>` : ''}
   <p class="note" style="margin-top:14px"><kbd>/</kbd> search &nbsp;<kbd>S</kbd> scan &nbsp;<kbd>Esc</kbd> close</p></div>
 </aside>`;
@@ -895,6 +896,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
       const subs = S.cat ? [...new Set([...S.products.values()].filter(p => p.cat.split(' › ')[0] === S.cat && p.cat.includes(' › ')).map(p => p.cat))] : [];
       const bc = {};
       filtered('brand').forEach(p => { if (p.brand) bc[p.brand] = (bc[p.brand] || 0) + 1; });
+      if (S.brand && !bc[S.brand]) bc[S.brand] = 0;
       const brands = Object.keys(bc).sort((x, y) => bc[y] - bc[x] || x.localeCompare(y));
       const tools = S.tab === 'all' ? `<div class="tools">
   <select data-in="cat"><option value="">All categories</option>${cats.map(c => `<option ${S.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
@@ -911,6 +913,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   function activeFilters() {
     const f = [];
     if (S.q) f.push(['q', `“${S.q}”`]);
+    if (S.kw) f.push(['kw', S.kw]);
     if (store.minDisc) f.push(['disc', store.minDisc + '%+ off']);
     store.bands.forEach(id => { const b = BANDS.find(x => x[0] === id); if (b) f.push(['band:' + id, b[1]]); });
     if (S.tab === 'all' && S.cat) f.push(['cat', S.sub ? S.sub.split(' › ').pop() : S.cat]);
@@ -1065,7 +1068,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     if (k === 'stockOnly') { store.stockOnly = v; save(); }
     else if (k === 'sort') { store.sort = v; save(); }
     else if (k === 'favOnly') S.favOnly = v; else if (k === 'newOnly') S.newOnly = v;
-    else if (k === 'cat') { S.cat = v; S.sub = ''; } else if (k === 'sub') S.sub = v; else if (k === 'brand') S.brand = v;
+    else if (k === 'cat') { S.cat = v; S.sub = ''; S.brand = ''; } else if (k === 'sub') { S.sub = v; S.brand = ''; } else if (k === 'brand') S.brand = v;
     else return;
     S.shown = 60; render();
   });
@@ -1099,12 +1102,12 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
       case 'disc': store.minDisc = +el.dataset.v; save(); S.shown = 60; render(); break;
       case 'band': { const v = el.dataset.v; store.bands = store.bands.includes(v) ? store.bands.filter(x => x !== v) : store.bands.concat(v).slice(-2); save(); S.shown = 60; render(); break; }
       case 'flag': { const v = el.dataset.v; if (v === 'stockOnly') { store.stockOnly = !store.stockOnly; save(); } else S[v] = !S[v]; S.shown = 60; render(); break; }
-      case 'kw': S.q = S.q.toLowerCase() === el.dataset.v.toLowerCase() ? '' : el.dataset.v; S.shown = 60; render(); break;
+      case 'kw': S.kw = S.kw === el.dataset.v ? '' : el.dataset.v; S.shown = 60; render(); break;
       case 'rmf': { const v = el.dataset.v;
-        if (v === 'q') S.q = ''; else if (v === 'disc') { store.minDisc = 0; save(); } else if (v.startsWith('band:')) { store.bands = store.bands.filter(x => x !== v.slice(5)); save(); }
+        if (v === 'q') S.q = ''; else if (v === 'kw') S.kw = ''; else if (v === 'disc') { store.minDisc = 0; save(); } else if (v.startsWith('band:')) { store.bands = store.bands.filter(x => x !== v.slice(5)); save(); }
         else if (v === 'cat') { S.cat = ''; S.sub = ''; } else if (v === 'brand') S.brand = ''; else S[v] = false;
         S.shown = 60; render(); break; }
-      case 'clearf': S.q = ''; S.cat = ''; S.sub = ''; S.brand = ''; S.newOnly = false; S.favOnly = false; store.minDisc = 0; store.bands = []; save(); S.shown = 60; render(); break;
+      case 'clearf': S.q = ''; S.kw = ''; S.cat = ''; S.sub = ''; S.brand = ''; S.newOnly = false; S.favOnly = false; store.minDisc = 0; store.bands = []; save(); S.shown = 60; render(); break;
       case 'preset': S.preset = S.preset === id ? '' : id; S.shown = 60; render(); break;
       case 'tab': S.tab = el.dataset.v; S.shown = 60; if (S.tab !== 'all') { S.cat = ''; S.sub = ''; } render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
       case 'seeall': S.tab = 'all'; S.cat = id; S.sub = ''; S.shown = 60; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
