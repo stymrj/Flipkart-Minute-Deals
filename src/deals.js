@@ -37,7 +37,7 @@
 
   const KEY = 'fkm_v2';
   const defaults = {
-    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, maxPrice: 0, depth: 3,
+    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, bands: [], depth: 3,
     stockOnly: true, groups: GROUPS.map(g => g.id),
     favs: [], hidden: [], list: {}, prices: {}, lastScan: 0
   };
@@ -47,6 +47,8 @@
   store.groups = (store.groups || []).filter(id => GROUPS.some(g => g.id === id));
   if (!store.groups.length) store.groups = defaults.groups.slice();
   delete store.auto; // every scan is started by hand
+  delete store.maxPrice; // replaced by price bands
+  if (!Array.isArray(store.bands)) store.bands = [];
   // v3: Hunter scans every category by itself and leads with the biggest discounts.
   if (store.v !== 4) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = (typeof P !== 'undefined' && P.defaults && P.defaults.depth) || 3; store.v = 4; save(); }
 
@@ -370,7 +372,7 @@
 
   // ───────────────────────── State ─────────────────────────
   const S = { products: new Map(), scanning: false, done: 0, total: 0, errors: 0, ctl: { stop: false },
-    q: '', brand: '', cat: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
+    q: '', kw: '', brand: '', cat: '', sub: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
 
   // ───────────────────────── Scanner ─────────────────────────
   async function scan() {
@@ -466,20 +468,30 @@
     const t = (p.title + ' ' + p.cat).toLowerCase();
     return groups.some(g => g.every(w => t.includes(w)));
   }
-  function filtered() {
+  const BANDS = [['u50', 'Under ₹50', 0, 50], ['50', '₹50–100', 50, 100], ['100', '₹100–200', 100, 200], ['200', '₹200–500', 200, 500], ['500', 'Above ₹500', 500, Infinity]];
+  const DISCS = [0, 30, 50, 60, 70];
+  const QUICK = ['Atta', 'Rice', 'Dal', 'Oil', 'Ghee', 'Milk', 'Biscuits', 'Chocolate', 'Snacks', 'Tea, Coffee', 'Detergent', 'Shampoo', 'Soap', 'Diapers'];
+  // A product passes when its price is inside any selected band (none selected = any price).
+  function inBands(p, bands) {
+    if (!bands || !bands.length) return true;
+    return BANDS.some(([id, , lo, hi]) => bands.includes(id) && p.price >= lo && p.price < hi);
+  }
+  function filtered(skip) {
     const fav = new Set(store.favs), hid = new Set(store.hidden);
     const out = [];
     S.products.forEach(p => {
       if (hid.has(p.id)) return;
       if (store.stockOnly && !p.inStock) return;
       if (p.disc < store.minDisc) return;
-      if (store.maxPrice && p.price > store.maxPrice) return;
-      if (S.brand && p.brand !== S.brand) return;
+      if (!inBands(p, store.bands)) return;
+      if (skip !== 'brand' && S.brand && p.brand !== S.brand) return;
       if (S.tab === 'all' && S.cat && p.cat.split(' › ')[0] !== S.cat) return;
+      if (S.tab === 'all' && S.sub && p.cat !== S.sub) return;
       if ((S.favOnly || S.tab === 'saved') && !fav.has(p.id)) return;
       if (S.newOnly && !p.isNew && !p.was) return;
       if (S.preset && !PRESETS[S.preset][1](p)) return;
       if (!matchQuery(p, S.q)) return;
+      if (S.kw && !matchQuery({ title: p.title, cat: '' }, S.kw)) return;
       out.push(p);
     });
     return out.sort(S.preset === 'value' ? SORTS.unit[1] : SORTS[store.sort][1]);
@@ -522,42 +534,59 @@
   const CSS = `
 :host{all:initial}
 *{box-sizing:border-box;margin:0}
-.app{--bg:#f4f5f8;--sf:#fff;--sf2:#eef0f4;--tx:#101218;--mt:#5f6573;--bd:#e2e5eb;--pr:#2874f0;--pr2:#1c5fd4;--ac:#ffe500;--on:#111;--hd:#2874f0;--ok:#0b8a3d;--hot:#e0331f;
+.app{--bg:#f4f6f8;--sf:#fff;--sf2:#eef0f4;--tx:#101218;--mt:#5f6573;--bd:#e2e5eb;--pr:#2874f0;--pr2:#1c5fd4;--ac:#ffe500;--on:#111;--hd:#2874f0;--ok:#0b8a3d;--hot:#e0331f;
  position:absolute;inset:0;background:var(--bg);color:var(--tx);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 .app.dark{--bg:#0d0f14;--sf:#161920;--sf2:#1e222b;--tx:#eef0f4;--mt:#9097a6;--bd:#2a2f3a;--pr:#5b95ff;--pr2:#7aaaff;--ok:#34c26b;--hot:#ff5a45}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
 .i{display:block;flex:none}
-header{display:flex;align-items:center;gap:10px;padding:0 18px;height:68px;flex:none;background:var(--hd);color:#fff;position:relative;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+header{display:flex;align-items:center;gap:10px;padding:0 18px;height:68px;flex:none;background:var(--sf);color:var(--tx);position:relative;box-shadow:0 1px 3px rgba(0,0,0,.08);border-bottom:1px solid var(--bd)}
 .logo{display:flex;align-items:center;gap:11px;white-space:nowrap;margin-right:6px}
 .logo .mk{width:38px;height:38px;border-radius:11px;background:var(--ac);color:var(--on);display:grid;place-items:center;flex:none}
 .logo b{display:block;font-weight:800;font-size:16px;letter-spacing:-.3px;line-height:1.15}
 .logo small{display:flex;align-items:center;gap:6px;font-weight:600;font-size:12px;line-height:1.3;margin-top:2px}
 .plat{font-style:normal;background:#ffd43b;color:#111;font-weight:800;border-radius:6px;padding:1px 7px;font-size:11.5px;letter-spacing:.01em;white-space:nowrap}
-.flag{font-size:10.5px;font-weight:800;background:rgba(255,255,255,.2);border-radius:5px;padding:0 6px;letter-spacing:.03em;text-transform:uppercase}
+.flag{font-size:10.5px;font-weight:800;background:var(--sf2);color:var(--mt);border-radius:5px;padding:0 6px;letter-spacing:.03em;text-transform:uppercase}
 .search{flex:1;max-width:540px;min-width:140px;position:relative;display:flex;align-items:center}
 .search .i{position:absolute;left:13px;color:#7a808c;pointer-events:none}
-.search input{width:100%;height:42px;border:0;border-radius:12px;padding:0 44px 0 40px;background:#fff;color:#111;outline:0;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.search input:focus{box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.search input{width:100%;height:42px;border:1px solid var(--bd);border-radius:12px;padding:0 44px 0 40px;background:var(--sf2);color:var(--tx);outline:0;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.search input:focus{box-shadow:0 0 0 3px rgba(40,116,240,.22);border-color:var(--pr)}
 .search input::placeholder{color:#8a8f9b}
 .search kbd{position:absolute;right:10px;color:#7a808c;background:#f1f2f5;border:1px solid #e2e5eb}
 .sp{flex:1}
 .ib,.hb,.sb{height:42px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:13.5px;white-space:nowrap;position:relative;transition:background .15s}
-.ib{width:42px;background:rgba(255,255,255,.14);color:#fff}
-.hb{padding:0 14px;background:rgba(255,255,255,.14);color:#fff}
-.ib:hover,.hb:hover{background:rgba(255,255,255,.26)}
+.ib{width:42px;background:var(--sf2);color:var(--tx)}
+.hb{padding:0 14px;background:var(--sf2);color:var(--tx)}
+.ib:hover,.hb:hover{background:var(--bd)}
 .sb{padding:0 16px;background:var(--ac);color:var(--on);font-weight:800}
 .sb:hover{filter:brightness(.95)}
-.sb.stop{background:#fff;color:#111}
+.sb.stop{background:var(--tx);color:var(--bg)}
 .hb .n{background:var(--ac);color:var(--on);border-radius:99px;padding:0 7px;font-size:11px;font-weight:800;line-height:18px}
-.dot{position:absolute;top:9px;right:9px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);box-shadow:0 0 0 2px var(--hd)}
+.dot{position:absolute;top:9px;right:9px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);box-shadow:0 0 0 2px var(--sf2)}
 .dot.on{background:#3ddc84}
 .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--ac);transition:width .3s}
 .body{flex:1;display:flex;min-height:0}
-aside{width:284px;flex:none;background:var(--sf);border-right:1px solid var(--bd);overflow:auto;padding:22px 20px 40px;display:flex;flex-direction:column;gap:28px}
+aside{position:absolute;z-index:4;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .22s;width:min(320px,88%);box-shadow:16px 0 40px rgba(0,0,0,.16);background:var(--sf);border-right:1px solid var(--bd);overflow:auto;padding:22px 20px 40px;display:flex;flex-direction:column;gap:28px}
+aside>*{flex:none}
+aside.open{transform:none}.scrim.side{display:block}
 aside h4{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
 aside h4 .i{color:var(--pr)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+.lnk{font-size:12px;font-weight:700;color:var(--pr);text-transform:none;letter-spacing:0}
+.lnk:hover{text-decoration:underline}
+.fp{display:flex;flex-wrap:wrap;gap:10px 22px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.frow{display:flex;align-items:center;gap:8px;min-width:0}.frow.wide{flex-basis:100%}
+.fl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mt);white-space:nowrap}
+.fl small{display:block;text-transform:none;letter-spacing:0;font-weight:700;color:var(--pr);font-size:10.5px}
+.pills{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:30px;padding:0 11px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);font-size:12px;font-weight:700;color:var(--tx);white-space:nowrap;transition:background .12s,border-color .12s}
+.pill:hover{border-color:var(--ok)}
+.pill.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.pill.tgl .i{opacity:.35}.pill.tgl.on .i{opacity:1}
+.fbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px;flex-basis:100%;border-top:1px solid var(--bd);padding-top:10px}
+.fbar .cnt{background:var(--tx);color:var(--bg);border-radius:6px;padding:3px 9px;font-size:12.5px;margin-right:4px}
+.ac{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--ok);color:var(--ok);background:transparent;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700}
+.ac:hover{background:var(--ok);color:#fff}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);background:var(--sf);border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:600;white-space:nowrap}
 .chip:hover{border-color:var(--tx)}
 .chip.on{background:var(--pr);border-color:var(--pr);color:#fff}
@@ -590,22 +619,22 @@ select{height:38px;border:1px solid var(--bd);border-radius:10px;background:var(
 .seg{display:inline-flex;background:var(--sf2);border-radius:10px;padding:3px}
 .seg button{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;font-size:13px;font-weight:700;border-radius:8px;color:var(--mt)}
 .seg button.on{background:var(--sf);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:12px}
 .grid.list{grid-template-columns:1fr;gap:10px}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(16,18,24,.08)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(16,18,24,.1);border-color:var(--pr)}
 .card.oos .im,.card.oos .inf{opacity:.5}
 .list .card{flex-direction:row}.list .card:hover{transform:none}
 .list .im{width:110px;height:110px;flex:none;aspect-ratio:auto}
-.im{aspect-ratio:1;background:var(--sf2) center/cover no-repeat;position:relative}
-.dc{position:absolute;left:10px;top:10px;background:var(--ok);color:#fff;border-radius:8px;font-size:12px;font-weight:800;padding:3px 8px}
+.im{aspect-ratio:1;background:#fff center/contain no-repeat;background-origin:content-box;padding:12px;position:relative;border-bottom:1px solid var(--bd)}
+.dc{position:absolute;left:8px;top:8px;background:var(--ok);color:#fff;border-radius:5px;font-size:12.5px;font-weight:900;padding:4px 7px;box-shadow:0 2px 6px rgba(11,138,61,.35);letter-spacing:.01em}
 .dc.hot{background:var(--hot)}
 .tg{position:absolute;left:10px;top:38px;display:inline-flex;align-items:center;gap:4px;background:var(--ac);color:var(--on);border-radius:6px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;padding:2px 7px}
 .fv{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;background:#fff;color:#7a808c;display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.14)}
 .fv:hover{color:var(--hot)}
 .fv.on{color:var(--hot)}.fv.on svg{fill:currentColor}
-.inf{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
-.ti{font-size:14px;font-weight:650;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--tx);text-decoration:none}
+.inf{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.ti{font-size:13px;font-weight:650;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--tx);text-decoration:none}
 a.ti:hover{color:var(--pr)}
 .ct{font-size:12px;color:var(--mt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px}
@@ -637,7 +666,7 @@ a.ti:hover{color:var(--pr)}
 .df .tot{font-size:24px;font-weight:800;letter-spacing:-.6px}
 .toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:12px;opacity:0;transition:.2s;pointer-events:none;z-index:9;max-width:90%;font-weight:600}
 .toast.on{transform:translateX(-50%);opacity:1}
-.menu-btn{display:none}
+.menu-btn{display:inline-flex}
 kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;font-weight:700}
 .presets{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 16px}
 .presets .chip{padding:6px 13px}
@@ -692,9 +721,10 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
 .tgs code{font:12px ui-monospace,Menlo,monospace;background:var(--sf2);border-radius:5px;padding:0 5px}
 .tlink{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 13px;border-radius:99px;background:#229ed9;color:#fff;font-weight:700;font-size:12.5px;text-decoration:none}
 .tlink:hover{background:#1c8bc0}
-.scrim{position:absolute;inset:0;background:rgba(10,12,16,.45);z-index:4;animation:fade .2s}.scrim.side{display:none;z-index:3}@keyframes fade{from{opacity:0}}
+.scrim{position:absolute;inset:0;background:rgba(10,12,16,.45);z-index:4;animation:fade .2s}.scrim.side{z-index:3}@keyframes fade{from{opacity:0}}
 .body{position:relative}
 @media(max-width:900px){
+ .fp{padding:10px 12px;gap:8px}.frow{flex-basis:100%}.frow .pills{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.frow .pills::-webkit-scrollbar{display:none}.fl small{display:none}
  aside{position:absolute;z-index:4;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .22s;width:min(320px,88%);box-shadow:16px 0 40px rgba(0,0,0,.16);padding:18px 16px 40px}
  aside.open{transform:none}.menu-btn{display:inline-flex}.mob{display:flex}.scrim.side{display:block}
  header{padding:10px 12px;gap:8px;height:auto;flex-wrap:wrap}
@@ -776,15 +806,9 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
  <div class="pf"><button class="btn ghost" data-act="tgtest">${ic('send', 16)}Send test</button><button class="btn" data-act="tgclose">Done</button></div></div>`;
   }
   function sidebar() {
-    return `<aside class="${sideOpen ? 'open' : ''}">
+    return `<aside class="${sideOpen ? 'open' : ''}"${sideOpen ? '' : ' inert'}>
  <div class="mob" style="gap:8px;flex-wrap:wrap"><button class="chip" data-act="theme">${ic('moon', 14)}Theme</button><button class="chip" data-act="tgopen">${ic('send', 14)}Telegram ${store.tg.on && tgReady() ? 'on' : 'off'}</button><button class="chip" data-act="side">${ic('x', 14)}Close menu</button></div>
  ${typeof captureUI === 'function' && !OFFSITE ? captureUI() : scanUI()}
- <div><h4>${ic('sliders', 15)}Filters</h4>
-  <label class="row"><span>Min discount</span><b>${store.minDisc}%</b></label><input type="range" min="0" max="90" step="5" value="${store.minDisc}" data-in="minDisc">
-  <label class="row" style="margin-top:14px"><span>Max price</span><b>${store.maxPrice ? $inr(store.maxPrice) : 'Any'}</b></label><input type="range" min="0" max="2000" step="50" value="${store.maxPrice}" data-in="maxPrice">
-  <label class="sw" style="margin-top:16px"><input type="checkbox" data-in="stockOnly" ${store.stockOnly ? 'checked' : ''}> In stock only</label>
-  <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="favOnly" ${S.favOnly ? 'checked' : ''}> Saved only</label>
-  <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="newOnly" ${S.newOnly ? 'checked' : ''}> New or price dropped</label></div>
  <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="json">${ic('download', 14)}JSON</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button><button class="chip" data-act="selftest">${ic('check', 14)}Self-test</button></div>${S.selfTest ? `<p class="note" style="margin-top:10px">Self-test: ${S.selfTest.pass ? 'PASS' : 'FAIL'} — ${S.selfTest.got}/${S.selfTest.total} sample products parsed${S.selfTest.bad ? `, ${S.selfTest.bad} incomplete` : ''}.</p>` : ''}
   <p class="note" style="margin-top:14px"><kbd>/</kbd> search &nbsp;<kbd>S</kbd> scan &nbsp;<kbd>Esc</kbd> close</p></div>
 </aside>`;
@@ -853,25 +877,57 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   }
   function mainView() {
     if (OFFSITE) return `<main id="main">${offsiteCard()}</main>`;
-    if (!S.products.size && !S.scanning) return `<main id="main">${checklist()}</main>`;
+    if (!S.products.size && !S.scanning) return `<main id="main">${filterPanel()}${checklist()}</main>`;
     const list = filtered();
     const tabs = [['best', 'Best deals'], ['all', 'All deals'], ['saved', 'Saved' + (store.favs.length ? ' · ' + store.favs.length : '')]];
     const head = `<div class="tabs">${tabs.map(([k, l]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-v="${k}">${l}</button>`).join('')}${S.scanning ? `<span class="live">${ic('scan', 14)}Scanning ${S.done}/${S.total}</span>` : ''}</div>`;
     let body;
     if (S.tab === 'best') {
-      body = bestView(list) || `<div class="empty"><span class="ei">${ic(S.scanning ? 'scan' : 'tag', 26)}</span><b>${S.scanning ? 'Finding the best deals…' : 'No deals at this discount'}</b>${S.scanning ? 'They appear here as each category comes in.' : 'Lower the minimum discount in the menu.'}</div>`;
+      body = bestView(list) || `<div class="empty"><span class="ei">${ic(S.scanning ? 'scan' : 'tag', 26)}</span><b>${S.scanning ? 'Finding the best deals…' : 'No deals at this discount'}</b>${S.scanning ? 'They appear here as each category comes in.' : 'Pick a lower discount or clear a filter.'}</div>`;
     } else {
       const cats = [...new Set([...S.products.values()].map(p => p.cat.split(' › ')[0]))];
       const fav = new Set(store.favs);
+      const subs = S.cat ? [...new Set([...S.products.values()].filter(p => p.cat.split(' › ')[0] === S.cat && p.cat.includes(' › ')).map(p => p.cat))] : [];
+      const bc = {};
+      filtered('brand').forEach(p => { if (p.brand) bc[p.brand] = (bc[p.brand] || 0) + 1; });
+      if (S.brand && !bc[S.brand]) bc[S.brand] = 0;
+      const brands = Object.keys(bc).sort((x, y) => bc[y] - bc[x] || x.localeCompare(y));
       const tools = S.tab === 'all' ? `<div class="tools">
   <select data-in="cat"><option value="">All categories</option>${cats.map(c => `<option ${S.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+  ${subs.length > 1 ? `<select data-in="sub"><option value="">All of ${esc(S.cat)}</option>${subs.map(c => `<option value="${esc(c)}" ${S.sub === c ? 'selected' : ''}>${esc(c.split(' › ').pop())}</option>`).join('')}</select>` : ''}
+  ${brands.length ? `<select data-in="brand"><option value="">All brands (${brands.length})</option>${brands.map(b => `<option value="${esc(b)}" ${S.brand === b ? 'selected' : ''}>${esc(b)} (${bc[b]})</option>`).join('')}</select>` : ''}
   <select data-in="sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}" ${store.sort === k ? 'selected' : ''}>${v[0]}</option>`).join('')}</select>
  </div>` : '';
       body = tools + (list.length ? `<div class="grid ${store.view}">${list.slice(0, S.shown).map(p => card(p, fav.has(p.id), store.list)).join('')}</div>
    ${list.length > S.shown ? `<div style="text-align:center;margin-top:24px"><button class="btn ghost" data-act="more">Show more (${list.length - S.shown} left)</button></div>` : ''}`
         : `<div class="empty"><span class="ei">${ic(S.tab === 'saved' ? 'heart' : 'tag', 26)}</span><b>${S.tab === 'saved' ? 'Nothing saved yet' : 'Nothing matches'}</b>${S.tab === 'saved' ? 'Tap the heart on any deal to keep an eye on it.' : 'Try another category or a lower minimum discount.'}</div>`);
     }
-    return `<main id="main">${head}${body}</main>`;
+    return `<main id="main">${head}${filterPanel(list.length)}${body}</main>`;
+  }
+  function activeFilters() {
+    const f = [];
+    if (S.q) f.push(['q', `“${S.q}”`]);
+    if (S.kw) f.push(['kw', S.kw]);
+    if (store.minDisc) f.push(['disc', store.minDisc + '%+ off']);
+    store.bands.forEach(id => { const b = BANDS.find(x => x[0] === id); if (b) f.push(['band:' + id, b[1]]); });
+    if (S.tab === 'all' && S.cat) f.push(['cat', S.sub ? S.sub.split(' › ').pop() : S.cat]);
+    if (S.brand) f.push(['brand', S.brand]);
+    if (S.newOnly) f.push(['newOnly', 'New or dropped']);
+    if (S.favOnly) f.push(['favOnly', 'Saved only']);
+    return f;
+  }
+  function filterPanel(n) {
+    const row = (label, pills) => `<div class="frow"><span class="fl">${label}</span><div class="pills">${pills}</div></div>`;
+    return `<section class="fp">
+ ${row('Discount', DISCS.map(d => `<button class="pill ${store.minDisc === d ? 'on' : ''}" data-act="disc" data-v="${d}">${d ? d + '%+' : 'Any'}</button>`).join(''))}
+ ${row('Price <small>up to 2</small>', BANDS.map(([id, l]) => `<button class="pill ${store.bands.includes(id) ? 'on' : ''}" data-act="band" data-v="${id}">${l}</button>`).join(''))}
+ ${row('Show', `<button class="pill tgl ${store.stockOnly ? 'on' : ''}" data-act="flag" data-v="stockOnly">${ic('check', 13)}In stock</button><button class="pill tgl ${S.newOnly ? 'on' : ''}" data-act="flag" data-v="newOnly">${ic('arrowdown', 13)}New or dropped</button><button class="pill tgl ${S.favOnly ? 'on' : ''}" data-act="flag" data-v="favOnly">${ic('heart', 13)}Saved</button>`)}
+ <div class="frow wide">${row('Quick', QUICK.map(k => `<button class="pill kw ${S.kw === k ? 'on' : ''}" data-act="kw" data-v="${esc(k)}">${esc(k)}</button>`).join('')).replace(/^<div class="frow">|<\/div>$/g, '')}</div>
+ ${n == null ? '' : filterBar(n)}</section>`;
+  }
+  function filterBar(n) {
+    const f = activeFilters();
+    return `<div class="fbar"><span class="cnt"><b>${n}</b> ${n === 1 ? 'deal' : 'deals'}</span>${f.map(([k, l]) => `<button class="ac" data-act="rmf" data-v="${esc(k)}">${esc(l)}${ic('x', 12)}</button>`).join('')}${f.length > 1 ? `<button class="lnk" data-act="clearf">Clear all</button>` : ''}</div>`;
   }
   function drawer() {
     const items = Object.entries(store.list).map(([id, q]) => [S.products.get(id) || store._cache && store._cache[id], q]).filter(x => x[0]);
@@ -892,7 +948,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     app.className = 'app' + (dark ? ' dark' : '');
     app.innerHTML = `<header><button class="ib menu-btn" data-act="side" title="Menu">${ic('menu')}</button>
  <div class="logo"><span class="mk">${ic('arrowdown', 20)}</span><div><b>PriceDrop Hunter</b><small><i class="plat">${esc(PLATFORM)}</i>${OFFSITE ? '<span class="flag">Not on store</span>' : ''}</small></div></div>
- <label class="search">${ic('search', 17)}<input data-in="q" placeholder="Search products or brands (comma = or)" value="${esc(S.q)}"><kbd>/</kbd></label><span class="sp"></span>
+ <label class="search">${ic('search', 17)}<input data-in="q" placeholder="Search products or brands" title="Comma = or" value="${esc(S.q)}"><kbd>/</kbd></label><span class="sp"></span>
  ${capture ? '' : S.scanning ? `<button class="sb stop" data-act="stop">${ic('stop', 16)}<span class="lb">Stop</span></button>` : `<button class="sb" data-act="scan">${ic('scan', 16)}<span class="lb">Scan</span></button>`}
  <button class="hb tgb" data-act="tgopen" title="Telegram alerts">${ic('send', 16)}<span class="lb">Telegram</span><span class="dot ${store.tg.on && tgReady() ? 'on' : ''}"></span></button>
  <button class="ib" data-act="theme" title="${dark ? 'Light' : 'Dark'} mode">${ic(dark ? 'sun' : 'moon')}</button>
@@ -1002,7 +1058,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     if (k === 'q') { S.q = e.target.value; reFilter(); return; }
     if (k === 'tgToken' || k === 'tgChat') { store.tg[k === 'tgToken' ? 'token' : 'chat'] = e.target.value.trim(); save(); return; }
     if (k === 'tgMin') { store.tg.minDisc = +e.target.value; save(); const b = root.getElementById('tgminv'); if (b) b.textContent = store.tg.minDisc + '% off'; return; }
-    if (k === 'depth' || k === 'minDisc' || k === 'maxPrice') { store[k] = +e.target.value; save(); S.shown = 60; render(); return; }
+    if (k === 'depth') { store[k] = +e.target.value; save(); S.shown = 60; render(); return; }
   });
   root.addEventListener('change', e => {
     const k = e.target.dataset && e.target.dataset.in; if (!k) return;
@@ -1015,7 +1071,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     if (k === 'stockOnly') { store.stockOnly = v; save(); }
     else if (k === 'sort') { store.sort = v; save(); }
     else if (k === 'favOnly') S.favOnly = v; else if (k === 'newOnly') S.newOnly = v;
-    else if (k === 'cat') S.cat = v; else if (k === 'brand') S.brand = v;
+    else if (k === 'cat') { S.cat = v; S.sub = ''; S.brand = ''; } else if (k === 'sub') { S.sub = v; S.brand = ''; } else if (k === 'brand') S.brand = v;
     else return;
     S.shown = 60; render();
   });
@@ -1046,9 +1102,18 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
         if (store.favs.includes(id)) { store.favs = store.favs.filter(x => x !== id); delete store.favAt[id]; }
         else { store.favs = store.favs.concat(id); const p = S.products.get(id); if (p) store.favAt[id] = p.price; }
         save(); render(); break;
+      case 'disc': store.minDisc = +el.dataset.v; save(); S.shown = 60; render(); break;
+      case 'band': { const v = el.dataset.v; store.bands = store.bands.includes(v) ? store.bands.filter(x => x !== v) : store.bands.concat(v).slice(-2); save(); S.shown = 60; render(); break; }
+      case 'flag': { const v = el.dataset.v; if (v === 'stockOnly') { store.stockOnly = !store.stockOnly; save(); } else S[v] = !S[v]; S.shown = 60; render(); break; }
+      case 'kw': S.kw = S.kw === el.dataset.v ? '' : el.dataset.v; S.shown = 60; render(); break;
+      case 'rmf': { const v = el.dataset.v;
+        if (v === 'q') S.q = ''; else if (v === 'kw') S.kw = ''; else if (v === 'disc') { store.minDisc = 0; save(); } else if (v.startsWith('band:')) { store.bands = store.bands.filter(x => x !== v.slice(5)); save(); }
+        else if (v === 'cat') { S.cat = ''; S.sub = ''; } else if (v === 'brand') S.brand = ''; else S[v] = false;
+        S.shown = 60; render(); break; }
+      case 'clearf': S.q = ''; S.kw = ''; S.cat = ''; S.sub = ''; S.brand = ''; S.newOnly = false; S.favOnly = false; store.minDisc = 0; store.bands = []; save(); S.shown = 60; render(); break;
       case 'preset': S.preset = S.preset === id ? '' : id; S.shown = 60; render(); break;
-      case 'tab': S.tab = el.dataset.v; S.shown = 60; if (S.tab !== 'all') S.cat = ''; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
-      case 'seeall': S.tab = 'all'; S.cat = id; S.shown = 60; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
+      case 'tab': S.tab = el.dataset.v; S.shown = 60; if (S.tab !== 'all') { S.cat = ''; S.sub = ''; } render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
+      case 'seeall': S.tab = 'all'; S.cat = id; S.sub = ''; S.shown = 60; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
       case 'hide': store.hidden.push(id); save(); render(); toast('Hidden — undo via Data › Unhide'); break;
       case 'unhide': store.hidden = []; save(); render(); break;
       case 'add': store.list[id] = (store.list[id] || 0) + 1; { const p = S.products.get(id); if (p) store._cache[id] = p; } save(); render(); break;
