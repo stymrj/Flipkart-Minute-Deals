@@ -27,7 +27,7 @@ eval(slice('  function price(v) {', '  const allowed = ', 'parser'));
 const byDisc = eval(slice('  const byDisc = ', '  function bestView', 'byDisc').replace(/^\s*const byDisc =\s*/, '').replace(/;\s*$/, ''));
 eval(slice('  function card(p, fav, qtyMap) {', '  const byDisc = ', 'card'));
 eval(slice('  function listText() {', '  // Add products from any source', 'serialise'));
-eval(slice('  // Comma separates OR groups', '  function filtered() {', 'matchQuery'));
+eval(slice('  // Comma separates OR groups', '  function filtered(skip) {', 'matchQuery'));
 
 let failures = 0;
 const check = (label, ok, extra) => {
@@ -99,6 +99,10 @@ check('search: single word matches', matchQuery(atta, 'atta') === true);
 check('search: comma is OR', matchQuery(atta, 'rice, atta') === true);
 check('search: spaces are AND', matchQuery(atta, 'atta rice') === false);
 check('search: empty query matches all', matchQuery(atta, '') === true);
+check('price bands: none selected matches any price', inBands({ price: 999 }, []) === true);
+check('price bands: ₹50–100 includes 50, excludes 100', inBands({ price: 50 }, ['50']) && !inBands({ price: 100 }, ['50']));
+check('price bands: two bands are OR', inBands({ price: 30 }, ['u50', '200']) && inBands({ price: 250 }, ['u50', '200']) && !inBands({ price: 120 }, ['u50', '200']));
+check('price bands: above ₹500 has no upper limit', inBands({ price: 4999 }, ['500']));
 
 if (failures) { console.log('FAIL: ' + failures + ' check(s) failed'); process.exit(1); }
 console.log('PASS: all 12 cards render');

@@ -37,7 +37,7 @@
 
   const KEY = 'fkm_v2';
   const defaults = {
-    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, maxPrice: 0, depth: 3,
+    theme: 'auto', view: 'grid', sort: 'disc', minDisc: 30, bands: [], depth: 3,
     stockOnly: true, groups: GROUPS.map(g => g.id),
     favs: [], hidden: [], list: {}, prices: {}, lastScan: 0
   };
@@ -47,6 +47,8 @@
   store.groups = (store.groups || []).filter(id => GROUPS.some(g => g.id === id));
   if (!store.groups.length) store.groups = defaults.groups.slice();
   delete store.auto; // every scan is started by hand
+  delete store.maxPrice; // replaced by price bands
+  if (!Array.isArray(store.bands)) store.bands = [];
   // v3: Hunter scans every category by itself and leads with the biggest discounts.
   if (store.v !== 4) { store.groups = GROUPS.map(g => g.id); store.sort = 'disc'; store.depth = (typeof P !== 'undefined' && P.defaults && P.defaults.depth) || 3; store.v = 4; save(); }
 
@@ -370,7 +372,7 @@
 
   // ───────────────────────── State ─────────────────────────
   const S = { products: new Map(), scanning: false, done: 0, total: 0, errors: 0, ctl: { stop: false },
-    q: '', brand: '', cat: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
+    q: '', brand: '', cat: '', sub: '', preset: '', pick: false, tgm: false, favOnly: false, newOnly: false, shown: 60, tab: 'best', panel: false, startedAt: 0, diag: null, selfTest: null };
 
   // ───────────────────────── Scanner ─────────────────────────
   async function scan() {
@@ -466,16 +468,25 @@
     const t = (p.title + ' ' + p.cat).toLowerCase();
     return groups.some(g => g.every(w => t.includes(w)));
   }
-  function filtered() {
+  const BANDS = [['u50', 'Under ₹50', 0, 50], ['50', '₹50–100', 50, 100], ['100', '₹100–200', 100, 200], ['200', '₹200–500', 200, 500], ['500', 'Above ₹500', 500, Infinity]];
+  const DISCS = [0, 30, 50, 60, 70];
+  const QUICK = ['Atta', 'Rice', 'Dal', 'Oil', 'Ghee', 'Milk', 'Biscuits', 'Chocolate', 'Snacks', 'Tea, Coffee', 'Detergent', 'Shampoo', 'Soap', 'Diapers'];
+  // A product passes when its price is inside any selected band (none selected = any price).
+  function inBands(p, bands) {
+    if (!bands || !bands.length) return true;
+    return BANDS.some(([id, , lo, hi]) => bands.includes(id) && p.price >= lo && p.price < hi);
+  }
+  function filtered(skip) {
     const fav = new Set(store.favs), hid = new Set(store.hidden);
     const out = [];
     S.products.forEach(p => {
       if (hid.has(p.id)) return;
       if (store.stockOnly && !p.inStock) return;
       if (p.disc < store.minDisc) return;
-      if (store.maxPrice && p.price > store.maxPrice) return;
-      if (S.brand && p.brand !== S.brand) return;
+      if (!inBands(p, store.bands)) return;
+      if (skip !== 'brand' && S.brand && p.brand !== S.brand) return;
       if (S.tab === 'all' && S.cat && p.cat.split(' › ')[0] !== S.cat) return;
+      if (S.tab === 'all' && S.sub && p.cat !== S.sub) return;
       if ((S.favOnly || S.tab === 'saved') && !fav.has(p.id)) return;
       if (S.newOnly && !p.isNew && !p.was) return;
       if (S.preset && !PRESETS[S.preset][1](p)) return;
@@ -555,9 +566,25 @@ header{display:flex;align-items:center;gap:10px;padding:0 18px;height:68px;flex:
 .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--ac);transition:width .3s}
 .body{flex:1;display:flex;min-height:0}
 aside{width:284px;flex:none;background:var(--sf);border-right:1px solid var(--bd);overflow:auto;padding:22px 20px 40px;display:flex;flex-direction:column;gap:28px}
+aside>*{flex:none}
 aside h4{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
 aside h4 .i{color:var(--pr)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+.flt h5{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mt);margin:16px 0 7px;display:flex;align-items:baseline;gap:6px}
+.flt h5 small{text-transform:none;letter-spacing:0;font-weight:700;color:var(--pr);margin-left:auto}
+.flt h4 .lnk{margin-left:auto}
+.lnk{font-size:12px;font-weight:700;color:var(--pr);text-transform:none;letter-spacing:0}
+.lnk:hover{text-decoration:underline}
+.pills{display:grid;gap:6px}.pills.c5{grid-template-columns:repeat(5,1fr)}.pills.c3{grid-template-columns:repeat(3,1fr)}.pills.c2{grid-template-columns:repeat(2,1fr)}.pills.c1{grid-template-columns:1fr}
+.pill{display:flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:4px 6px;border:1px solid var(--bd);border-radius:7px;background:var(--sf);font-size:12px;font-weight:700;color:var(--tx);text-align:center;line-height:1.2;transition:background .12s,border-color .12s}
+.pill:hover{border-color:var(--ok)}
+.pill.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.pill.tgl{justify-content:flex-start;padding:4px 10px}
+.pill.tgl .i{opacity:.35}.pill.tgl.on .i{opacity:1}
+.fbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin-bottom:14px}
+.fbar .cnt{background:var(--tx);color:var(--bg);border-radius:6px;padding:3px 9px;font-size:12.5px;margin-right:4px}
+.ac{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--ok);color:var(--ok);background:transparent;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700}
+.ac:hover{background:var(--ok);color:#fff}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);background:var(--sf);border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:600;white-space:nowrap}
 .chip:hover{border-color:var(--tx)}
 .chip.on{background:var(--pr);border-color:var(--pr);color:#fff}
@@ -590,22 +617,22 @@ select{height:38px;border:1px solid var(--bd);border-radius:10px;background:var(
 .seg{display:inline-flex;background:var(--sf2);border-radius:10px;padding:3px}
 .seg button{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;font-size:13px;font-weight:700;border-radius:8px;color:var(--mt)}
 .seg button.on{background:var(--sf);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:12px}
 .grid.list{grid-template-columns:1fr;gap:10px}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(16,18,24,.08)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(16,18,24,.1);border-color:var(--pr)}
 .card.oos .im,.card.oos .inf{opacity:.5}
 .list .card{flex-direction:row}.list .card:hover{transform:none}
 .list .im{width:110px;height:110px;flex:none;aspect-ratio:auto}
-.im{aspect-ratio:1;background:var(--sf2) center/cover no-repeat;position:relative}
-.dc{position:absolute;left:10px;top:10px;background:var(--ok);color:#fff;border-radius:8px;font-size:12px;font-weight:800;padding:3px 8px}
+.im{aspect-ratio:1;background:#fff center/contain no-repeat;background-origin:content-box;padding:12px;position:relative;border-bottom:1px solid var(--bd)}
+.dc{position:absolute;left:8px;top:8px;background:var(--ok);color:#fff;border-radius:5px;font-size:12.5px;font-weight:900;padding:4px 7px;box-shadow:0 2px 6px rgba(11,138,61,.35);letter-spacing:.01em}
 .dc.hot{background:var(--hot)}
 .tg{position:absolute;left:10px;top:38px;display:inline-flex;align-items:center;gap:4px;background:var(--ac);color:var(--on);border-radius:6px;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;padding:2px 7px}
 .fv{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;background:#fff;color:#7a808c;display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.14)}
 .fv:hover{color:var(--hot)}
 .fv.on{color:var(--hot)}.fv.on svg{fill:currentColor}
-.inf{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
-.ti{font-size:14px;font-weight:650;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--tx);text-decoration:none}
+.inf{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.ti{font-size:13px;font-weight:650;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--tx);text-decoration:none}
 a.ti:hover{color:var(--pr)}
 .ct{font-size:12px;color:var(--mt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px}
@@ -695,6 +722,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
 .scrim{position:absolute;inset:0;background:rgba(10,12,16,.45);z-index:4;animation:fade .2s}.scrim.side{display:none;z-index:3}@keyframes fade{from{opacity:0}}
 .body{position:relative}
 @media(max-width:900px){
+.tools select{flex:1 1 140px;max-width:none}
  aside{position:absolute;z-index:4;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .22s;width:min(320px,88%);box-shadow:16px 0 40px rgba(0,0,0,.16);padding:18px 16px 40px}
  aside.open{transform:none}.menu-btn{display:inline-flex}.mob{display:flex}.scrim.side{display:block}
  header{padding:10px 12px;gap:8px;height:auto;flex-wrap:wrap}
@@ -779,12 +807,14 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     return `<aside class="${sideOpen ? 'open' : ''}">
  <div class="mob" style="gap:8px;flex-wrap:wrap"><button class="chip" data-act="theme">${ic('moon', 14)}Theme</button><button class="chip" data-act="tgopen">${ic('send', 14)}Telegram ${store.tg.on && tgReady() ? 'on' : 'off'}</button><button class="chip" data-act="side">${ic('x', 14)}Close menu</button></div>
  ${typeof captureUI === 'function' && !OFFSITE ? captureUI() : scanUI()}
- <div><h4>${ic('sliders', 15)}Filters</h4>
-  <label class="row"><span>Min discount</span><b>${store.minDisc}%</b></label><input type="range" min="0" max="90" step="5" value="${store.minDisc}" data-in="minDisc">
-  <label class="row" style="margin-top:14px"><span>Max price</span><b>${store.maxPrice ? $inr(store.maxPrice) : 'Any'}</b></label><input type="range" min="0" max="2000" step="50" value="${store.maxPrice}" data-in="maxPrice">
-  <label class="sw" style="margin-top:16px"><input type="checkbox" data-in="stockOnly" ${store.stockOnly ? 'checked' : ''}> In stock only</label>
-  <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="favOnly" ${S.favOnly ? 'checked' : ''}> Saved only</label>
-  <label class="sw" style="margin-top:10px"><input type="checkbox" data-in="newOnly" ${S.newOnly ? 'checked' : ''}> New or price dropped</label></div>
+ <div class="flt"><h4>${ic('sliders', 15)}Filters${activeFilters().length ? `<button class="lnk" data-act="clearf">Clear all</button>` : ''}</h4>
+  <h5>Min discount</h5><div class="pills c5">${DISCS.map(d => `<button class="pill ${store.minDisc === d ? 'on' : ''}" data-act="disc" data-v="${d}">${d ? d + '%+' : 'Any'}</button>`).join('')}</div>
+  <h5>Price range <small>choose up to 2</small></h5><div class="pills c3">${BANDS.map(([id, l]) => `<button class="pill ${store.bands.includes(id) ? 'on' : ''}" data-act="band" data-v="${id}">${l}</button>`).join('')}</div>
+  <h5>Show</h5><div class="pills c1">
+   <button class="pill tgl ${store.stockOnly ? 'on' : ''}" data-act="flag" data-v="stockOnly">${ic('check', 13)}In stock only</button>
+   <button class="pill tgl ${S.newOnly ? 'on' : ''}" data-act="flag" data-v="newOnly">${ic('arrowdown', 13)}New or price dropped</button>
+   <button class="pill tgl ${S.favOnly ? 'on' : ''}" data-act="flag" data-v="favOnly">${ic('heart', 13)}Saved only</button></div>
+  <h5>Quick search</h5><div class="pills c2">${QUICK.map(k => `<button class="pill ${S.q.toLowerCase() === k.toLowerCase() ? 'on' : ''}" data-act="kw" data-v="${esc(k)}">${esc(k)}</button>`).join('')}</div></div>
  <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="json">${ic('download', 14)}JSON</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button><button class="chip" data-act="selftest">${ic('check', 14)}Self-test</button></div>${S.selfTest ? `<p class="note" style="margin-top:10px">Self-test: ${S.selfTest.pass ? 'PASS' : 'FAIL'} — ${S.selfTest.got}/${S.selfTest.total} sample products parsed${S.selfTest.bad ? `, ${S.selfTest.bad} incomplete` : ''}.</p>` : ''}
   <p class="note" style="margin-top:14px"><kbd>/</kbd> search &nbsp;<kbd>S</kbd> scan &nbsp;<kbd>Esc</kbd> close</p></div>
 </aside>`;
@@ -859,19 +889,40 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     const head = `<div class="tabs">${tabs.map(([k, l]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-v="${k}">${l}</button>`).join('')}${S.scanning ? `<span class="live">${ic('scan', 14)}Scanning ${S.done}/${S.total}</span>` : ''}</div>`;
     let body;
     if (S.tab === 'best') {
-      body = bestView(list) || `<div class="empty"><span class="ei">${ic(S.scanning ? 'scan' : 'tag', 26)}</span><b>${S.scanning ? 'Finding the best deals…' : 'No deals at this discount'}</b>${S.scanning ? 'They appear here as each category comes in.' : 'Lower the minimum discount in the menu.'}</div>`;
+      body = bestView(list) || `<div class="empty"><span class="ei">${ic(S.scanning ? 'scan' : 'tag', 26)}</span><b>${S.scanning ? 'Finding the best deals…' : 'No deals at this discount'}</b>${S.scanning ? 'They appear here as each category comes in.' : 'Pick a lower discount or clear a filter.'}</div>`;
     } else {
       const cats = [...new Set([...S.products.values()].map(p => p.cat.split(' › ')[0]))];
       const fav = new Set(store.favs);
+      const subs = S.cat ? [...new Set([...S.products.values()].filter(p => p.cat.split(' › ')[0] === S.cat && p.cat.includes(' › ')).map(p => p.cat))] : [];
+      const bc = {};
+      filtered('brand').forEach(p => { if (p.brand) bc[p.brand] = (bc[p.brand] || 0) + 1; });
+      const brands = Object.keys(bc).sort((x, y) => bc[y] - bc[x] || x.localeCompare(y));
       const tools = S.tab === 'all' ? `<div class="tools">
   <select data-in="cat"><option value="">All categories</option>${cats.map(c => `<option ${S.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+  ${subs.length > 1 ? `<select data-in="sub"><option value="">All of ${esc(S.cat)}</option>${subs.map(c => `<option value="${esc(c)}" ${S.sub === c ? 'selected' : ''}>${esc(c.split(' › ').pop())}</option>`).join('')}</select>` : ''}
+  ${brands.length ? `<select data-in="brand"><option value="">All brands (${brands.length})</option>${brands.map(b => `<option value="${esc(b)}" ${S.brand === b ? 'selected' : ''}>${esc(b)} (${bc[b]})</option>`).join('')}</select>` : ''}
   <select data-in="sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}" ${store.sort === k ? 'selected' : ''}>${v[0]}</option>`).join('')}</select>
  </div>` : '';
       body = tools + (list.length ? `<div class="grid ${store.view}">${list.slice(0, S.shown).map(p => card(p, fav.has(p.id), store.list)).join('')}</div>
    ${list.length > S.shown ? `<div style="text-align:center;margin-top:24px"><button class="btn ghost" data-act="more">Show more (${list.length - S.shown} left)</button></div>` : ''}`
         : `<div class="empty"><span class="ei">${ic(S.tab === 'saved' ? 'heart' : 'tag', 26)}</span><b>${S.tab === 'saved' ? 'Nothing saved yet' : 'Nothing matches'}</b>${S.tab === 'saved' ? 'Tap the heart on any deal to keep an eye on it.' : 'Try another category or a lower minimum discount.'}</div>`);
     }
-    return `<main id="main">${head}${body}</main>`;
+    return `<main id="main">${head}${filterBar(list.length)}${body}</main>`;
+  }
+  function activeFilters() {
+    const f = [];
+    if (S.q) f.push(['q', `“${S.q}”`]);
+    if (store.minDisc) f.push(['disc', store.minDisc + '%+ off']);
+    store.bands.forEach(id => { const b = BANDS.find(x => x[0] === id); if (b) f.push(['band:' + id, b[1]]); });
+    if (S.tab === 'all' && S.cat) f.push(['cat', S.sub ? S.sub.split(' › ').pop() : S.cat]);
+    if (S.brand) f.push(['brand', S.brand]);
+    if (S.newOnly) f.push(['newOnly', 'New or dropped']);
+    if (S.favOnly) f.push(['favOnly', 'Saved only']);
+    return f;
+  }
+  function filterBar(n) {
+    const f = activeFilters();
+    return `<div class="fbar"><span class="cnt"><b>${n}</b> ${n === 1 ? 'deal' : 'deals'}</span>${f.map(([k, l]) => `<button class="ac" data-act="rmf" data-v="${esc(k)}">${esc(l)}${ic('x', 12)}</button>`).join('')}${f.length > 1 ? `<button class="lnk" data-act="clearf">Clear all</button>` : ''}</div>`;
   }
   function drawer() {
     const items = Object.entries(store.list).map(([id, q]) => [S.products.get(id) || store._cache && store._cache[id], q]).filter(x => x[0]);
@@ -1002,7 +1053,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     if (k === 'q') { S.q = e.target.value; reFilter(); return; }
     if (k === 'tgToken' || k === 'tgChat') { store.tg[k === 'tgToken' ? 'token' : 'chat'] = e.target.value.trim(); save(); return; }
     if (k === 'tgMin') { store.tg.minDisc = +e.target.value; save(); const b = root.getElementById('tgminv'); if (b) b.textContent = store.tg.minDisc + '% off'; return; }
-    if (k === 'depth' || k === 'minDisc' || k === 'maxPrice') { store[k] = +e.target.value; save(); S.shown = 60; render(); return; }
+    if (k === 'depth') { store[k] = +e.target.value; save(); S.shown = 60; render(); return; }
   });
   root.addEventListener('change', e => {
     const k = e.target.dataset && e.target.dataset.in; if (!k) return;
@@ -1015,7 +1066,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
     if (k === 'stockOnly') { store.stockOnly = v; save(); }
     else if (k === 'sort') { store.sort = v; save(); }
     else if (k === 'favOnly') S.favOnly = v; else if (k === 'newOnly') S.newOnly = v;
-    else if (k === 'cat') S.cat = v; else if (k === 'brand') S.brand = v;
+    else if (k === 'cat') { S.cat = v; S.sub = ''; } else if (k === 'sub') S.sub = v; else if (k === 'brand') S.brand = v;
     else return;
     S.shown = 60; render();
   });
@@ -1046,9 +1097,18 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
         if (store.favs.includes(id)) { store.favs = store.favs.filter(x => x !== id); delete store.favAt[id]; }
         else { store.favs = store.favs.concat(id); const p = S.products.get(id); if (p) store.favAt[id] = p.price; }
         save(); render(); break;
+      case 'disc': store.minDisc = +el.dataset.v; save(); S.shown = 60; render(); break;
+      case 'band': { const v = el.dataset.v; store.bands = store.bands.includes(v) ? store.bands.filter(x => x !== v) : store.bands.concat(v).slice(-2); save(); S.shown = 60; render(); break; }
+      case 'flag': { const v = el.dataset.v; if (v === 'stockOnly') { store.stockOnly = !store.stockOnly; save(); } else S[v] = !S[v]; S.shown = 60; render(); break; }
+      case 'kw': S.q = S.q.toLowerCase() === el.dataset.v.toLowerCase() ? '' : el.dataset.v; S.shown = 60; render(); break;
+      case 'rmf': { const v = el.dataset.v;
+        if (v === 'q') S.q = ''; else if (v === 'disc') { store.minDisc = 0; save(); } else if (v.startsWith('band:')) { store.bands = store.bands.filter(x => x !== v.slice(5)); save(); }
+        else if (v === 'cat') { S.cat = ''; S.sub = ''; } else if (v === 'brand') S.brand = ''; else S[v] = false;
+        S.shown = 60; render(); break; }
+      case 'clearf': S.q = ''; S.cat = ''; S.sub = ''; S.brand = ''; S.newOnly = false; S.favOnly = false; store.minDisc = 0; store.bands = []; save(); S.shown = 60; render(); break;
       case 'preset': S.preset = S.preset === id ? '' : id; S.shown = 60; render(); break;
-      case 'tab': S.tab = el.dataset.v; S.shown = 60; if (S.tab !== 'all') S.cat = ''; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
-      case 'seeall': S.tab = 'all'; S.cat = id; S.shown = 60; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
+      case 'tab': S.tab = el.dataset.v; S.shown = 60; if (S.tab !== 'all') { S.cat = ''; S.sub = ''; } render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
+      case 'seeall': S.tab = 'all'; S.cat = id; S.sub = ''; S.shown = 60; render(); { const m = root.getElementById('main'); if (m) m.scrollTop = 0; } break;
       case 'hide': store.hidden.push(id); save(); render(); toast('Hidden — undo via Data › Unhide'); break;
       case 'unhide': store.hidden = []; save(); render(); break;
       case 'add': store.list[id] = (store.list[id] || 0) + 1; { const p = S.products.get(id); if (p) store._cache[id] = p; } save(); render(); break;
