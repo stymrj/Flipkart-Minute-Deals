@@ -806,7 +806,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
  <div class="pf"><button class="btn ghost" data-act="tgtest">${ic('send', 16)}Send test</button><button class="btn" data-act="tgclose">Done</button></div></div>`;
   }
   function sidebar() {
-    return `<aside class="${sideOpen ? 'open' : ''}">
+    return `<aside class="${sideOpen ? 'open' : ''}"${sideOpen ? '' : ' inert'}>
  <div class="mob" style="gap:8px;flex-wrap:wrap"><button class="chip" data-act="theme">${ic('moon', 14)}Theme</button><button class="chip" data-act="tgopen">${ic('send', 14)}Telegram ${store.tg.on && tgReady() ? 'on' : 'off'}</button><button class="chip" data-act="side">${ic('x', 14)}Close menu</button></div>
  ${typeof captureUI === 'function' && !OFFSITE ? captureUI() : scanUI()}
  <div><h4>${ic('download', 15)}Export</h4><div class="chips"><button class="chip" data-act="csv">${ic('download', 14)}CSV</button><button class="chip" data-act="json">${ic('download', 14)}JSON</button><button class="chip" data-act="copyall">${ic('copy', 14)}Copy top 20</button><button class="chip" data-act="unhide">${ic('eyeoff', 14)}Unhide (${store.hidden.length})</button><button class="chip" data-act="selftest">${ic('check', 14)}Self-test</button></div>${S.selfTest ? `<p class="note" style="margin-top:10px">Self-test: ${S.selfTest.pass ? 'PASS' : 'FAIL'} — ${S.selfTest.got}/${S.selfTest.total} sample products parsed${S.selfTest.bad ? `, ${S.selfTest.bad} incomplete` : ''}.</p>` : ''}
