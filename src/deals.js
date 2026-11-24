@@ -877,7 +877,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
   }
   function mainView() {
     if (OFFSITE) return `<main id="main">${offsiteCard()}</main>`;
-    if (!S.products.size && !S.scanning) return `<main id="main">${checklist()}</main>`;
+    if (!S.products.size && !S.scanning) return `<main id="main">${filterPanel()}${checklist()}</main>`;
     const list = filtered();
     const tabs = [['best', 'Best deals'], ['all', 'All deals'], ['saved', 'Saved' + (store.favs.length ? ' · ' + store.favs.length : '')]];
     const head = `<div class="tabs">${tabs.map(([k, l]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-v="${k}">${l}</button>`).join('')}${S.scanning ? `<span class="live">${ic('scan', 14)}Scanning ${S.done}/${S.total}</span>` : ''}</div>`;
@@ -923,7 +923,7 @@ kbd{border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:11px;fo
  ${row('Price <small>up to 2</small>', BANDS.map(([id, l]) => `<button class="pill ${store.bands.includes(id) ? 'on' : ''}" data-act="band" data-v="${id}">${l}</button>`).join(''))}
  ${row('Show', `<button class="pill tgl ${store.stockOnly ? 'on' : ''}" data-act="flag" data-v="stockOnly">${ic('check', 13)}In stock</button><button class="pill tgl ${S.newOnly ? 'on' : ''}" data-act="flag" data-v="newOnly">${ic('arrowdown', 13)}New or dropped</button><button class="pill tgl ${S.favOnly ? 'on' : ''}" data-act="flag" data-v="favOnly">${ic('heart', 13)}Saved</button>`)}
  <div class="frow wide">${row('Quick', QUICK.map(k => `<button class="pill kw ${S.kw === k ? 'on' : ''}" data-act="kw" data-v="${esc(k)}">${esc(k)}</button>`).join('')).replace(/^<div class="frow">|<\/div>$/g, '')}</div>
- ${filterBar(n)}</section>`;
+ ${n == null ? '' : filterBar(n)}</section>`;
   }
   function filterBar(n) {
     const f = activeFilters();
